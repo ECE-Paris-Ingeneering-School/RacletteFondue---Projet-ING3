@@ -3,7 +3,7 @@ package Modele;
 /**
  * Classe Utilisateur
  */
-abstract class Utilisateur {
+public abstract class Utilisateur {
 
     private int utilisateurId;
     private String utilisateurNom;
