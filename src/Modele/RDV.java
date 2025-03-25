@@ -1,7 +1,8 @@
 package Modele;
 
-import java.util.Date;
-
+/**
+ * Classe des RDV
+ */
 public class RDV {
 
     private Specialiste specialiste;
@@ -9,10 +10,15 @@ public class RDV {
     private long date;
 
 
+    /**
+     * Constructeur des RDV avec tous les paramètres
+     */
     public RDV(Specialiste pspecialiste, Patient ppatient, long pdate) {
+
         this.specialiste = pspecialiste;
         this.patient = ppatient;
         this.date = pdate;
+
     }
 
 

@@ -1,6 +1,8 @@
 package Modele;
 
-
+/**
+ * Classe Utilisateur
+ */
 abstract class Utilisateur {
 
     private int utilisateurId;
@@ -13,11 +15,16 @@ abstract class Utilisateur {
     private String utilisateurPassword;
     private String utilisateurTel; //Si jamais l'utilisateur met des espaces ou des points
 
+    /**
+     * Constructeur de l'utilisateur avec sans paramètre
+     */
     public Utilisateur(){
 
     }
 
-    /**Constructeur de l'utilisateur avec paramètre */
+    /**
+     * Constructeur de l'utilisateur avec tous les paramètres
+     */
     public Utilisateur (int putilisateurId, String putilisateurNom, String putilisateurPrenom,  int putilisateurAge, Adresse padresse, char putilisateurSexe, String putilisateurMail, String putilisateurPassword, String putilisateurTel){
 
         this.utilisateurId = putilisateurId;
@@ -31,39 +38,65 @@ abstract class Utilisateur {
         this.utilisateurTel = putilisateurTel;
     }
 
-    /**Getteur pour rendre public les attributs de la classe utilisateur*/
+    /**
+     * Getteur retournant l'identifiant de l'utilisateur
+     */
     public int getUtilisateurId(){
         return utilisateurId;
     }
 
+    /**
+     * Getteur retournant le nom de l'utilisateur
+     */
     public String getUtilisateurNom() {
         return utilisateurNom;
     }
 
+    /**
+     * Getteur retournant le prénom de l'utilisateur
+     */
     public String getUtilisateurPrenom() {
         return utilisateurPrenom;
     }
 
+    /**
+     * Getteur retournant l'age de l'utilisateur
+     */
     public int getUtilisateurAge() {
         return utilisateurAge;
     }
 
+    /**
+     * Getteur retournant l'adresse de l'utilisateur
+     */
     public Adresse getUtilisateurAdresse() {
         return utilisateurAdresse;
     }
 
+    /**
+     * Getteur retournant le sexe de l'utilisateur
+     */
     public char getUtilisateurSexe() {
         return utilisateurSexe;
     }
 
+    /**
+     * Getteur retournant le mail de l'utilisateur
+     */
     public String getUtilisateurMail() {
         return utilisateurMail;
     }
 
+    /**
+     * Getteur retournant le mot de passe de l'utilisateur
+     */
     public String getUtilisateurPassword() {
         return utilisateurPassword;
     }
 
+    /**
+     * Getteur retournant le numéro de téléphone de l'utilisateur
+     */
     public String getUtilisateurTel() {
         return utilisateurTel;
     }
