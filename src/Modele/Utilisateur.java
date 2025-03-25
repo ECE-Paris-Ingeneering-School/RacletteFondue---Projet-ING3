@@ -7,7 +7,7 @@ abstract class Utilisateur {
     private String utilisateurNom;
     private String utilisateurPrenom;
     private int utilisateurAge;
-    private Adresse adresse;
+    private Adresse utilisateurAdresse;
     private char utilisateurSexe;
     private String utilisateurMail;
     private String utilisateurPassword;
@@ -24,7 +24,7 @@ abstract class Utilisateur {
         this.utilisateurNom = putilisateurNom;
         this.utilisateurPrenom = putilisateurPrenom;
         this.utilisateurAge = putilisateurAge;
-        this.adresse = padresse;
+        this.utilisateurAdresse = padresse;
         this.utilisateurSexe = putilisateurSexe;
         this.utilisateurMail = putilisateurMail;
         this.utilisateurPassword = putilisateurPassword;
@@ -48,8 +48,8 @@ abstract class Utilisateur {
         return utilisateurAge;
     }
 
-    public Adresse getAdresse() {
-        return adresse;
+    public Adresse getUtilisateurAdresse() {
+        return utilisateurAdresse;
     }
 
     public char getUtilisateurSexe() {
