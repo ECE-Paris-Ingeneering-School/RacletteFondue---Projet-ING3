@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Inscription extends JDialog {
-    private JPanel inscriptionPanel;
-    private JButton btnInscription;
+public class Connexion extends JDialog {
+    private JPanel connexionPanel;
+    private JButton btnConnexion;
     private JTextField tfMail;
     private JTextField tfNom;
     private JTextField tfPrenom;
@@ -15,27 +15,26 @@ public class Inscription extends JDialog {
     private JPasswordField pfMdp;
     private JPasswordField pfConfirmeMdp;
     private JTextField tfAdressePostale;
-    private JRadioButton hommeRadioButton;
-    private JRadioButton femmeRadioButton;
+    private JButton sInscrireButton;
 
 
-    public Inscription (JFrame parent){
+    public Connexion (JFrame parent){
         super(parent);
         setTitle("Créer un compte");
-        setContentPane(inscriptionPanel);
+        setContentPane(connexionPanel);
         setMinimumSize(new Dimension(650, 600));
         setModal(true);
         setLocationRelativeTo(parent);
         setVisible(true);
-        btnInscription.addActionListener(new ActionListener() {
+        btnConnexion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                utilisateurInscription();
+                utilisateurConnexion();
             }
         });
     }
 
-    private void utilisateurInscription() {
+    private void utilisateurConnexion() {
         String mail = tfMail.getText();
         String mdp = String.valueOf(pfConfirmeMdp.getPassword());
         String confirmeMdp = String.valueOf(pfConfirmeMdp.getPassword());
@@ -46,7 +45,6 @@ public class Inscription extends JDialog {
         String numero = tfNumero.getText();
         String adressePostale = tfAdressePostale.getText();
         //Adresse adressePostale = tfAdressePostale.getText();
-        
 
         if (mail.isEmpty() || mdp.isEmpty() || confirmeMdp.isEmpty() || nom.isEmpty() || prenom.isEmpty() || age.isEmpty() || numero.isEmpty() || adressePostale.isEmpty()){
             JOptionPane.showMessageDialog(this,
@@ -72,8 +70,8 @@ public class Inscription extends JDialog {
 
 
     public static void main(String[] args) {
-        Inscription monFormulaire = new Inscription(null);
-        monFormulaire.utilisateurInscription();
+        Connexion monFormulaire = new Connexion(null);
+        monFormulaire.utilisateurConnexion();
         System.exit(0);
 
     }
