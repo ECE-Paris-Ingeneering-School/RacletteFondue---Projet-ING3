@@ -13,9 +13,9 @@ public class Inscription extends JFrame {
     public JTextField ageField;
     public JTextField telephoneField;
     public JTextField adresseField;
-    JRadioButton hommeRadio;
-    JRadioButton femmeRadio;
-    JButton inscrireButton;
+    public JRadioButton hommeRadio;
+    public JRadioButton femmeRadio;
+    public JButton inscrireButton;
 
     public Inscription() {
         setTitle("Créer un compte");

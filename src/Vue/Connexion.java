@@ -2,12 +2,15 @@ package Vue;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Connexion extends JFrame {
 
     public JTextField mailField;
     public JPasswordField passwordField;
-    JButton connexionButton;
+    public JButton connexionButton;
+    public JLabel createAccountLabel;
 
     public Connexion() {
         setTitle("Connexion");
@@ -70,8 +73,19 @@ public class Connexion extends JFrame {
         connexionButton.setForeground(Color.WHITE); // Changer la couleur du texte
         connexionButton.setFocusPainted(false);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(connexionButton);
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        buttonPanel.add(connexionButton, gbc);
+
+        // Texte cliquable
+        createAccountLabel = new JLabel("Pas de compte ? Créer en un !");
+        createAccountLabel.setFont(new Font("Verdana", Font.PLAIN, 16));
+        createAccountLabel.setForeground(Color.BLUE);
+        createAccountLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        gbc.gridy++;
+        buttonPanel.add(createAccountLabel, gbc);
+
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
