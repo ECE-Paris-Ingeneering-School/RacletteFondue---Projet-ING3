@@ -1,7 +1,7 @@
 package Modele;
 
 
-abstract class Utilisateur {
+public abstract class Utilisateur {
 
     private int utilisateurId;
     private String utilisateurNom;
@@ -12,13 +12,14 @@ abstract class Utilisateur {
     private String utilisateurMail;
     private String utilisateurPassword;
     private String utilisateurTel; //Si jamais l'utilisateur met des espaces ou des points
+    private String utilisateurImage;
 
     public Utilisateur(){
 
     }
 
     /**Constructeur de l'utilisateur avec paramètre */
-    public Utilisateur (int putilisateurId, String putilisateurNom, String putilisateurPrenom,  int putilisateurAge, Adresse padresse, char putilisateurSexe, String putilisateurMail, String putilisateurPassword, String putilisateurTel){
+    public Utilisateur (int putilisateurId, String putilisateurNom, String putilisateurPrenom,  int putilisateurAge, Adresse padresse, char putilisateurSexe, String putilisateurMail, String putilisateurPassword, String putilisateurTel, String putilisateurImage){
 
         this.utilisateurId = putilisateurId;
         this.utilisateurNom = putilisateurNom;
@@ -29,6 +30,7 @@ abstract class Utilisateur {
         this.utilisateurMail = putilisateurMail;
         this.utilisateurPassword = putilisateurPassword;
         this.utilisateurTel = putilisateurTel;
+        this.utilisateurImage = putilisateurImage;
     }
 
     /**Getteur pour rendre public les attributs de la classe utilisateur*/
@@ -66,5 +68,11 @@ abstract class Utilisateur {
 
     public String getUtilisateurTel() {
         return utilisateurTel;
+    }
+
+    public String getUtilisateurImage() { return utilisateurImage; }
+
+    public void setUtilisateurAdresse(Adresse utilisateurAdresse) {
+        this.utilisateurAdresse = utilisateurAdresse;
     }
 }

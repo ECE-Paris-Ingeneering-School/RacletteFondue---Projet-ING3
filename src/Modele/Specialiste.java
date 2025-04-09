@@ -7,8 +7,8 @@ public class Specialiste extends Utilisateur {
     private double specialisteTarif;
 
 
-    public Specialiste(int putilisateurId, String putilisateurNom, String putilisateurPrenom, int putilisateurAge, Adresse padresse, char putilisateurSexe, String putilisateurMail, String putilisateurPassword, String putilisateurTel, String pspecialisteSpecialite, String pspecialisteDescription, double pspecialisteTarif) {
-        super(putilisateurId, putilisateurNom, putilisateurPrenom, putilisateurAge, padresse, putilisateurSexe, putilisateurMail, putilisateurPassword, putilisateurTel);
+    public Specialiste(int putilisateurId, String putilisateurNom, String putilisateurPrenom, int putilisateurAge, Adresse padresse, char putilisateurSexe, String putilisateurMail, String putilisateurPassword, String putilisateurTel, String putilisateurImage, String pspecialisteSpecialite, String pspecialisteDescription, double pspecialisteTarif) {
+        super(putilisateurId, putilisateurNom, putilisateurPrenom, putilisateurAge, padresse, putilisateurSexe, putilisateurMail, putilisateurPassword, putilisateurTel, putilisateurImage);
         this.specialisteSpecialite = pspecialisteSpecialite;
         this.specialisteDescription = pspecialisteDescription;
         this.specialisteTarif = pspecialisteTarif;

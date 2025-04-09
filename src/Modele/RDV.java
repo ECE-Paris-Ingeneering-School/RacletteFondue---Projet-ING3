@@ -6,10 +6,10 @@ public class RDV {
 
     private Specialiste specialiste;
     private Patient patient;
-    private long date;
+    private int date;
 
 
-    public RDV(Specialiste pspecialiste, Patient ppatient, long pdate) {
+    public RDV(Specialiste pspecialiste, Patient ppatient, int pdate) {
         this.specialiste = pspecialiste;
         this.patient = ppatient;
         this.date = pdate;
@@ -24,7 +24,7 @@ public class RDV {
         return patient;
     }
 
-    public long getDate() {
+    public int getDate() {
         return date;
     }
 
