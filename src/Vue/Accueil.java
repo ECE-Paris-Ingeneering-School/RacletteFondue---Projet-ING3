@@ -20,6 +20,7 @@ public class Accueil extends JFrame{
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(titleLabel);
         mainPanel.add(Box.createVerticalStrut(20));
