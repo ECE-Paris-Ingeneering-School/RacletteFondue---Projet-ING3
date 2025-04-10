@@ -79,7 +79,7 @@ public class Connexion extends JFrame {
         buttonPanel.add(connexionButton, gbc);
 
         // Texte cliquable
-        createAccountLabel = new JLabel("Pas de compte ? Créer en un !");
+        createAccountLabel = new JLabel("Pas de compte ? Créez-en un !");
         createAccountLabel.setFont(new Font("Verdana", Font.PLAIN, 16));
         createAccountLabel.setForeground(Color.BLUE);
         createAccountLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
