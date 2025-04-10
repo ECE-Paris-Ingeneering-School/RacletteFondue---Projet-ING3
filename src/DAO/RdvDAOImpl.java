@@ -11,7 +11,7 @@ import java.sql.Statement;
 /**
  * implémentation MySQL du stockage dans la base de données des méthodes définies dans l'interface RDVDao.
  */
-public class RdvDAOImpl implements RdvDAO {
+/*public class RdvDAOImpl implements RdvDAO {
 
     private DaoFactory daoFactory;
 
@@ -55,6 +55,6 @@ public class RdvDAOImpl implements RdvDAO {
             }
 
 
-    };
+    }
 
-}
+}*/
