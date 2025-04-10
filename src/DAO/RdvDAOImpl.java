@@ -145,7 +145,7 @@ public class RdvDAOImpl implements RdvDAO {
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
 
         DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
 
@@ -171,6 +171,6 @@ public class RdvDAOImpl implements RdvDAO {
 
 
 
-    }
+    }*/
 
 }

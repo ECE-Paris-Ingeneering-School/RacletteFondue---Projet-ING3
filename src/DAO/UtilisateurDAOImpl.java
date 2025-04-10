@@ -45,7 +45,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             int adresseCodePostal = 0;
             String adresseVille = null;
             String adresseRue = null;
-            int adresseNumero = 0;
+            String adresseNumero = 0;
 
 
             // récupération des produits de la base de données avec la requete SELECT
@@ -72,12 +72,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                     adresseCodePostal = donneesAdresse.getInt("adresseCodePostal");
                     adresseVille = donneesAdresse.getString("adresseVille");
                     adresseRue = donneesAdresse.getString("adresseRue");
-                    adresseNumero = donneesAdresse.getInt("adresseNumero");
+                    adresseNumero = donneesAdresse.getString("adresseNumero");
 
                 }
 
                 // Instanciation de l'adresse du utilisateur
-                utilisateurAdresse = new Adresse(0,adresseCodePostal, adresseVille, adresseRue, adresseNumero);
+                utilisateurAdresse = new Adresse(adresseCodePostal, adresseVille, adresseRue, adresseNumero);
 
             }
 
