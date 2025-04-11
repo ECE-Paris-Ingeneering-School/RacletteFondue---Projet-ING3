@@ -21,6 +21,12 @@ public class RechercheDocteur extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        setContentPane(buildPanel());
+
+    }
+
+    public JPanel buildPanel() {
+
         // Panel principal
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -143,8 +149,8 @@ public class RechercheDocteur extends JFrame {
 
 
         mainPanel.add(scrollPane);
-        add(mainPanel);
-        setVisible(true);
+
+        return mainPanel;
     }
 
     public static void main(String[] args) {

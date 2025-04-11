@@ -20,6 +20,7 @@ public class FenetrePrincipale {
     public final String ACCUEIL = "Accueil";
     public final String RENDEZVOUS = "Rendez-vous";
     public final String COMPTE = "Compte";
+    public final String RECHERCHE = "Recherche";
 
     // Initialisation des objets de chaque page
     public Connexion connexion;
@@ -27,6 +28,7 @@ public class FenetrePrincipale {
     public Accueil accueil;
     public RendezVous rendezvous;
     public Compte compte;
+    public RechercheDocteur recherche;
 
     // Initialisation des panels de chaque page
     public CardLayout cl;
@@ -36,6 +38,7 @@ public class FenetrePrincipale {
     public JPanel accueilPanel;
     public JPanel rendezvousPanel;
     public JPanel comptePanel;
+    public JPanel recherchePanel;
 
     /**
      * Constructeur de la fenêtre principale
@@ -51,6 +54,7 @@ public class FenetrePrincipale {
         accueil = new Accueil();
         rendezvous = new RendezVous();
         compte = new Compte();
+        recherche = new RechercheDocteur();
 
         // Instanciation des panels
         this.connexionPanel = connexion.buildPanel();
@@ -58,6 +62,7 @@ public class FenetrePrincipale {
         this.accueilPanel = accueil.buildPanel();
         this.rendezvousPanel = rendezvous.buildPanel();
         this.comptePanel = compte.buildPanel();
+        this.recherchePanel = recherche.buildPanel();
 
         // Ajout des listeners sur les pages
         // Connexion
@@ -80,6 +85,12 @@ public class FenetrePrincipale {
         compte.btnAccueil.addActionListener(listener);
         compte.btnRendezVous.addActionListener(listener);
 
+        // Recherche
+        recherche.btnAccueil.addActionListener(listener);
+        recherche.btnRendezVous.addActionListener(listener);
+        recherche.btnCompte.addActionListener(listener);
+        recherche.searchButton.addActionListener(listener);
+
         // Création de la fenêtre principale
         JFrame fenetrePrincipale = new JFrame();
 
@@ -92,6 +103,7 @@ public class FenetrePrincipale {
         conteneurPrincipal.add(accueilPanel, ACCUEIL);
         conteneurPrincipal.add(rendezvousPanel, RENDEZVOUS);
         conteneurPrincipal.add(comptePanel, COMPTE);
+        conteneurPrincipal.add(recherchePanel, RECHERCHE);
 
         // Paramétrage de la fenetre principale
         fenetrePrincipale.add(conteneurPrincipal);
