@@ -154,6 +154,9 @@ public class RechercheDocteur extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(RechercheDocteur::new);
+
+        SwingUtilities.invokeLater(() -> {
+            new RechercheDocteur().setVisible(true);
+        });
     }
 }
