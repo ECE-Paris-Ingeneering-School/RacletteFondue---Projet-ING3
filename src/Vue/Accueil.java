@@ -90,6 +90,8 @@ public class Accueil extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Accueil::new);
+        SwingUtilities.invokeLater(() -> {
+            new Accueil().setVisible(true);
+        });
     }
 }

@@ -18,11 +18,15 @@ public class FenetrePrincipale {
     public final String CONNEXION = "Connexion";
     public final String INSCRIPTION = "Inscription";
     public final String ACCUEIL = "Accueil";
+    public final String RENDEZVOUS = "Rendez-vous";
+    public final String COMPTE = "Compte";
 
     // Initialisation des objets de chaque page
     public Connexion connexion;
     public Inscription inscription;
     public Accueil accueil;
+    public RendezVous rendezvous;
+    public Compte compte;
 
     // Initialisation des panels de chaque page
     public CardLayout cl;
@@ -30,6 +34,8 @@ public class FenetrePrincipale {
     public JPanel connexionPanel;
     public JPanel inscriptionPanel;
     public JPanel accueilPanel;
+    public JPanel rendezvousPanel;
+    public JPanel comptePanel;
 
     /**
      * Constructeur de la fenêtre principale
@@ -43,11 +49,15 @@ public class FenetrePrincipale {
         connexion = new Connexion();
         inscription = new Inscription();
         accueil = new Accueil();
+        rendezvous = new RendezVous();
+        compte = new Compte();
 
         // Instanciation des panels
         this.connexionPanel = connexion.buildPanel();
         this.inscriptionPanel = inscription.buildPanel();
         this.accueilPanel = accueil.buildPanel();
+        this.rendezvousPanel = rendezvous.buildPanel();
+        this.comptePanel = compte.buildPanel();
 
         // Ajout des listeners sur les pages
         // Connexion
@@ -57,6 +67,17 @@ public class FenetrePrincipale {
         // Inscription
         inscription.inscrireButton.addActionListener(listener);
 
+        // Accueil
+        accueil.btnRendezVous.addActionListener(listener);
+        accueil.btnCompte.addActionListener(listener);
+
+        // RendezVous
+        rendezvous.btnAccueil.addActionListener(listener);
+        rendezvous.btnCompte.addActionListener(listener);
+
+        // Compte
+        compte.btnAccueil.addActionListener(listener);
+        compte.btnRendezVous.addActionListener(listener);
 
         // Création de la fenêtre principale
         JFrame fenetrePrincipale = new JFrame();
@@ -68,6 +89,8 @@ public class FenetrePrincipale {
         conteneurPrincipal.add(connexionPanel, CONNEXION);
         conteneurPrincipal.add(inscriptionPanel, INSCRIPTION);
         conteneurPrincipal.add(accueilPanel, ACCUEIL);
+        conteneurPrincipal.add(rendezvousPanel, RENDEZVOUS);
+        conteneurPrincipal.add(comptePanel, COMPTE);
 
         // Paramétrage de la fenetre principale
         fenetrePrincipale.add(conteneurPrincipal);

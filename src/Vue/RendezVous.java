@@ -5,11 +5,46 @@ import java.awt.*;
 
 public class RendezVous extends JFrame {
 
+    public JButton btnAccueil;
+    public JButton btnRendezVous;
+    public JButton btnCompte;
+
     public RendezVous() {
         setTitle("Rendez-vous");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        setContentPane(buildPanel());
+    }
+
+    private JPanel aVenirPanel(String nom, String specialite, String date, String heure) {
+        JPanel aVenir = new JPanel();
+        aVenir.setLayout(new BoxLayout(aVenir, BoxLayout.Y_AXIS));
+        aVenir.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        aVenir.setPreferredSize(new Dimension(400, 100));
+        aVenir.setMaximumSize(new Dimension(500, 100));
+        aVenir.setBackground(Color.WHITE);
+        aVenir.setAlignmentX(Component.LEFT_ALIGNMENT);
+        aVenir.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30)); // marges
+
+        JLabel nomLabel = new JLabel("👤 " + nom);
+        nomLabel.setFont(new Font("Verdana", Font.BOLD, 18));
+
+        JLabel speLabel = new JLabel(specialite);
+        speLabel.setFont(new Font("Verdana", Font.PLAIN, 16));
+
+        JLabel dateLabel = new JLabel(date + "  " + heure);
+        dateLabel.setFont(new Font("Verdana", Font.PLAIN, 16));
+
+        aVenir.add(nomLabel);
+        aVenir.add(speLabel);
+        aVenir.add(dateLabel);
+
+        return aVenir;
+    }
+
+    public JPanel buildPanel() {
 
         // Panel principal
         JPanel mainPanel = new JPanel();
@@ -28,20 +63,20 @@ public class RendezVous extends JFrame {
         // Menu navigation
         JPanel menuPanel = new JPanel();
 
-        JButton btnAccueil = new JButton("Accueil");
+        btnAccueil = new JButton("Accueil");
         btnAccueil.setPreferredSize(new Dimension(250, 70));
         btnAccueil.setFont(new Font("Verdana", Font.BOLD, 20));
         btnAccueil.setBackground(new Color(221, 235, 247));
         btnAccueil.setFocusPainted(false);
 
-        JButton btnRendezVous = new JButton("Rendez-vous");
+        btnRendezVous = new JButton("Rendez-vous");
         btnRendezVous.setPreferredSize(new Dimension(250, 70));
         btnRendezVous.setFont(new Font("Verdana", Font.BOLD, 20));
         btnRendezVous.setForeground(Color.WHITE);
         btnRendezVous.setBackground(new Color(45, 104, 196));
         btnRendezVous.setFocusPainted(false);
 
-        JButton btnCompte = new JButton("Compte");
+        btnCompte = new JButton("Compte");
         btnCompte.setPreferredSize(new Dimension(250, 70));
         btnCompte.setFont(new Font("Verdana", Font.BOLD, 20));
         btnAccueil.setBackground(new Color(221, 235, 247));
@@ -88,37 +123,14 @@ public class RendezVous extends JFrame {
         mainPanel.add(contentPanel);
         mainPanel.add(Box.createVerticalStrut(30));
 
-        add(mainPanel);
-        setVisible(true);
+        return mainPanel;
     }
 
-    private JPanel aVenirPanel(String nom, String specialite, String date, String heure) {
-        JPanel aVenir = new JPanel();
-        aVenir.setLayout(new BoxLayout(aVenir, BoxLayout.Y_AXIS));
-        aVenir.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        aVenir.setPreferredSize(new Dimension(400, 100));
-        aVenir.setMaximumSize(new Dimension(500, 100));
-        aVenir.setBackground(Color.WHITE);
-        aVenir.setAlignmentX(Component.LEFT_ALIGNMENT);
-        aVenir.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30)); // marges
-
-        JLabel nomLabel = new JLabel("👤 " + nom);
-        nomLabel.setFont(new Font("Verdana", Font.BOLD, 18));
-
-        JLabel speLabel = new JLabel(specialite);
-        speLabel.setFont(new Font("Verdana", Font.PLAIN, 16));
-
-        JLabel dateLabel = new JLabel(date + "  " + heure);
-        dateLabel.setFont(new Font("Verdana", Font.PLAIN, 16));
-
-        aVenir.add(nomLabel);
-        aVenir.add(speLabel);
-        aVenir.add(dateLabel);
-
-        return aVenir;
-    }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(RendezVous::new);
+
+        SwingUtilities.invokeLater(() -> {
+            new RendezVous().setVisible(true);
+        });
     }
 }

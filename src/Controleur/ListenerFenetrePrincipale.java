@@ -88,6 +88,18 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 fenetre.inscription.erreurLabel.setText(ex.getMessage());
             }
+
+        } else if (source == fenetre.rendezvous.btnAccueil || source == fenetre.compte.btnAccueil) {
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.ACCUEIL);
+
+        } else if (source == fenetre.accueil.btnRendezVous || source == fenetre.compte.btnRendezVous) {
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RENDEZVOUS);
+
+        } else if (source == fenetre.accueil.btnCompte || source == fenetre.rendezvous.btnCompte) {
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.COMPTE);
         }
     }
 
