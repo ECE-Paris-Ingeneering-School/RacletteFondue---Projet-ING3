@@ -100,6 +100,14 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
         } else if (source == fenetre.accueil.btnCompte || source == fenetre.rendezvous.btnCompte) {
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.COMPTE);
+
+        } else if (source == fenetre.accueil.searchButton) {
+
+            String recherche = fenetre.accueil.searchField.getText();
+
+            // ICI Requete du DAO pour rechercher dans la base de données
+
+            //fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.)
         }
     }
 

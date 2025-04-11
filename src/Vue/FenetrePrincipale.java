@@ -70,6 +70,7 @@ public class FenetrePrincipale {
         // Accueil
         accueil.btnRendezVous.addActionListener(listener);
         accueil.btnCompte.addActionListener(listener);
+        accueil.searchButton.addActionListener(listener);
 
         // RendezVous
         rendezvous.btnAccueil.addActionListener(listener);
