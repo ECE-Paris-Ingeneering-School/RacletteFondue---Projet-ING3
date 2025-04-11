@@ -44,22 +44,13 @@ public class RechercheDocteur extends JFrame {
         JPanel menuPanel = new JPanel();
 
         btnAccueil = new JButton("Accueil");
-        btnAccueil.setPreferredSize(new Dimension(250, 70));
-        btnAccueil.setFont(new Font("Verdana", Font.BOLD, 20));
-        btnAccueil.setBackground(new Color(221, 235, 247));
-        btnAccueil.setFocusPainted(false);
+        styleMenuButton(btnAccueil);
 
         btnRendezVous = new JButton("Rendez-vous");
-        btnRendezVous.setPreferredSize(new Dimension(250, 70));
-        btnRendezVous.setFont(new Font("Verdana", Font.BOLD, 20));
-        btnRendezVous.setBackground(new Color(221, 235, 247));
-        btnRendezVous.setFocusPainted(false);
+        styleMenuButton(btnRendezVous);
 
         btnCompte = new JButton("Compte");
-        btnCompte.setPreferredSize(new Dimension(250, 70));
-        btnCompte.setFont(new Font("Verdana", Font.BOLD, 20));
-        btnCompte.setBackground(new Color(221, 235, 247));
-        btnCompte.setFocusPainted(false);
+        styleMenuButton(btnCompte);
 
         menuPanel.add(btnAccueil);
         menuPanel.add(btnRendezVous);
@@ -100,7 +91,7 @@ public class RechercheDocteur extends JFrame {
         };
 
         // Nombre de résultats
-        JLabel resultCountLabel = new JLabel("Nb de résultat: " + doctors.length);
+        JLabel resultCountLabel = new JLabel("Nombre de résultats : " + doctors.length);
         resultCountLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         resultCountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(resultCountLabel);
@@ -151,6 +142,13 @@ public class RechercheDocteur extends JFrame {
         mainPanel.add(scrollPane);
 
         return mainPanel;
+    }
+
+    private void styleMenuButton(JButton button) {
+        button.setPreferredSize(new Dimension(250, 70));
+        button.setFont(new Font("Verdana", Font.BOLD, 20));
+        button.setBackground(new Color(221, 235, 247));
+        button.setFocusPainted(false);
     }
 
     public static void main(String[] args) {
