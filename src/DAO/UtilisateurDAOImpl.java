@@ -47,7 +47,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             int adresseCodePostal = 0;
             String adresseVille = null;
             String adresseRue = null;
-            String adresseNumero = 0;
+            String adresseNumero = "0";
 
 
             // récupération des produits de la base de données avec la requete SELECT

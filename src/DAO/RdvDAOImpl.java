@@ -135,7 +135,7 @@ public class RdvDAOImpl implements RdvDAO {
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
-            // Suppression de l'utilisateur
+            // Suppression du rdv
             statement.executeUpdate("DELETE FROM rdv WHERE rdv.rdvSpecialiste  = \""+rdv.getSpecialiste().getUtilisateurId() +"\" AND rdv.rdvPatient = \""+rdv.getPatient().getUtilisateurId()+"\"AND rdv.rdvDate = " + rdv.getDate());
 
         } catch (SQLException e) {
@@ -145,17 +145,29 @@ public class RdvDAOImpl implements RdvDAO {
         }
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
 
-        DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
+        /*DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
 
-        Adresse adresse = new Adresse(0,92260, "FAR", "11 rue des Ormeaux", 2);
+        Adresse adresse = new Adresse(92260, "FAR", "11 rue des Ormeaux", "2");
 
-        Patient patient = new Patient(6, "KAIROUZ", "Thais", 21, adresse, 'F', "test@gmail.com", "feur", "01", "");
+        Patient patient = new Patient(13, "KAIROUZ", "Thais", 21, adresse, 'F', "test2@gmail.com", "feur", "01", "");
 
-        Specialiste specialiste = new Specialiste(7,"Shrek","Pierre",69,adresse,'M',"shrek@com","feur","0","","proctologue"," ",69.69);
+        Specialiste specialiste = new Specialiste(14,"Shrek","Pierre",69,adresse,'M',"shrek@com","feur","0","","proctologue"," ",69.69);
+
+        UtilisateurDAOImpl utilisateurDAO = new UtilisateurDAOImpl(dao);
 
         RdvDAOImpl rdvDao = new RdvDAOImpl(dao);
+
+        try {
+
+            utilisateurDAO.ajouterUtilisateur(patient);
+            utilisateurDAO.ajouterUtilisateur(specialiste);
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+        }
 
         RDV rdv = new RDV(specialiste,patient,0102024);
 
@@ -168,9 +180,7 @@ public class RdvDAOImpl implements RdvDAO {
             System.out.println(rdvi.getDate());
         }
 
-
-
-
-    }*/
+    */
+    }
 
 }
