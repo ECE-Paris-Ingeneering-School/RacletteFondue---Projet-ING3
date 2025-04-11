@@ -1,7 +1,10 @@
 package Vue;
 
+import Modele.Specialiste;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class RechercheDocteur extends JFrame {
 
@@ -14,15 +17,16 @@ public class RechercheDocteur extends JFrame {
     public JLabel locationLabel;
     public JLabel availabilityLabel;
 
+    public ArrayList<Specialiste> resultatRecherche = null;
 
     public RechercheDocteur() {
+
         setTitle("Recherche");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         setContentPane(buildPanel());
-
     }
 
     public JPanel buildPanel() {
@@ -70,11 +74,11 @@ public class RechercheDocteur extends JFrame {
         // Barre de recherche
         JPanel searchPanel = new JPanel();
 
-        searchField = new JTextField("Dermatologue", 30); // Champ de recherche avec texte
+        searchField = new JTextField("Nom, spécialité, lieu...", 30); // Champ de recherche avec texte
         searchField.setFont(new Font("Verdana", Font.PLAIN, 18));
         searchField.setPreferredSize(new Dimension(400, 40));
         searchField.setBackground(new Color(255, 255, 255));
-        searchField.setEditable(false);
+        searchField.setEditable(true);
 
         searchButton = new JButton("🔍");
         searchButton.setPreferredSize(new Dimension(80, 40));
@@ -87,7 +91,7 @@ public class RechercheDocteur extends JFrame {
         mainPanel.add(Box.createVerticalStrut(20)); // Réduire l'espace vertical ici
 
         // Liste des docteurs
-        String[][] doctors = {
+        /*String[][] doctors = {
                 {"Dr. Juiph", "Lyon", "voir les dispo"},
                 {"Dr. Leroy", "Paris", "voir les dispo"},
                 {"Dr. Charbel", "Paris", "voir les dispo"},
@@ -97,10 +101,20 @@ public class RechercheDocteur extends JFrame {
                 {"Dr. Leclaire", "Paris", "voir les dispo"},
                 {"Dr. Daix", "Paris", "voir les dispo"},
                 {"Dr. Chibre", "Paris", "voir les dispo"},
-        };
+        };*/
+
+        JLabel resultCountLabel;
 
         // Nombre de résultats
-        JLabel resultCountLabel = new JLabel("Nb de résultat: " + doctors.length);
+        if (resultatRecherche != null) {
+
+            resultCountLabel = new JLabel("Nb de résultat: " + resultatRecherche.size());
+
+        } else {
+
+            resultCountLabel = new JLabel("Aucun résultat");
+        }
+
         resultCountLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         resultCountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(resultCountLabel);
@@ -111,31 +125,35 @@ public class RechercheDocteur extends JFrame {
         searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS));
         searchResultPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        for (String[] doctor : doctors) {
-            JPanel doctorPanel = new JPanel(new BorderLayout());
-            doctorPanel.setPreferredSize(new Dimension(600, 50));
-            doctorPanel.setMaximumSize(new Dimension(600, 50));
-            doctorPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
-            doctorPanel.setBackground(new Color(221, 235, 247));
+        if (resultatRecherche != null) {
 
-            nameLabel = new JLabel(doctor[0] + ", ");
-            nameLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
-            nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            doctorPanel.add(nameLabel, BorderLayout.WEST);
+            for (Specialiste specialiste : resultatRecherche) {
+
+                JPanel doctorPanel = new JPanel(new BorderLayout());
+                doctorPanel.setPreferredSize(new Dimension(600, 50));
+                doctorPanel.setMaximumSize(new Dimension(600, 50));
+                doctorPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+                doctorPanel.setBackground(new Color(221, 235, 247));
+
+                nameLabel = new JLabel(specialiste.getUtilisateurNom() + ", ");
+                nameLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+                nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                doctorPanel.add(nameLabel, BorderLayout.WEST);
 
 
-            locationLabel = new JLabel(doctor[1]);
-            locationLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
-            doctorPanel.add(locationLabel, BorderLayout.CENTER);
+                locationLabel = new JLabel(specialiste.getUtilisateurAdresse().getAdresseVille());
+                locationLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+                doctorPanel.add(locationLabel, BorderLayout.CENTER);
 
-            availabilityLabel = new JLabel(doctor[2]);
-            availabilityLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
-            availabilityLabel.setForeground(new Color(45, 104, 196));
-            availabilityLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            doctorPanel.add(availabilityLabel, BorderLayout.EAST);
+                availabilityLabel = new JLabel(specialiste.getSpecialisteSpecialite());
+                availabilityLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+                availabilityLabel.setForeground(new Color(45, 104, 196));
+                availabilityLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                doctorPanel.add(availabilityLabel, BorderLayout.EAST);
 
-            searchResultPanel.add(doctorPanel);
-            searchResultPanel.add(Box.createVerticalStrut(10));
+                searchResultPanel.add(doctorPanel);
+                searchResultPanel.add(Box.createVerticalStrut(10));
+            }
         }
 
         // Ajouter le panneau de résultats dans un JScrollPane pour le rendre défilable
@@ -154,6 +172,10 @@ public class RechercheDocteur extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(RechercheDocteur::new);
+
+
+        SwingUtilities.invokeLater(() -> {
+            new RechercheDocteur().setVisible(true);
+        });
     }
 }

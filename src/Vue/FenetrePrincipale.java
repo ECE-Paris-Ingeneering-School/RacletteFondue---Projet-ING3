@@ -1,15 +1,20 @@
 package Vue;
 
 import Controleur.ListenerFenetrePrincipale;
+import Modele.Specialiste;
 import Modele.Utilisateur;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Classe permettant de gérer la fenêtre principale du programme
  * **/
 public class FenetrePrincipale {
+
+    // Listener
+    public ListenerFenetrePrincipale listener;
 
     // Utilisateur actuel
     public Utilisateur utilisateurActuel;
@@ -46,7 +51,7 @@ public class FenetrePrincipale {
     public FenetrePrincipale() {
 
         // Instanciation du listener principal
-        ListenerFenetrePrincipale listener = new ListenerFenetrePrincipale(this);
+        listener = new ListenerFenetrePrincipale(this);
 
         // Instanciation des objets de chaque page
         connexion = new Connexion();
@@ -76,6 +81,7 @@ public class FenetrePrincipale {
         accueil.btnRendezVous.addActionListener(listener);
         accueil.btnCompte.addActionListener(listener);
         accueil.searchButton.addActionListener(listener);
+        accueil.searchField.addMouseListener(listener);
 
         // RendezVous
         rendezvous.btnAccueil.addActionListener(listener);
@@ -90,6 +96,7 @@ public class FenetrePrincipale {
         recherche.btnRendezVous.addActionListener(listener);
         recherche.btnCompte.addActionListener(listener);
         recherche.searchButton.addActionListener(listener);
+        recherche.searchField.addMouseListener(listener);
 
         // Création de la fenêtre principale
         JFrame fenetrePrincipale = new JFrame();
@@ -113,6 +120,25 @@ public class FenetrePrincipale {
         fenetrePrincipale.setLocationRelativeTo(null);
         fenetrePrincipale.setVisible(true);
 
+    }
+
+    public void updateRecherche(ArrayList<Specialiste> listeSpecialistes) {
+
+        recherche.resultatRecherche = listeSpecialistes;
+
+        conteneurPrincipal.remove(recherchePanel);
+
+        recherchePanel = recherche.buildPanel();
+        recherche.btnAccueil.addActionListener(listener);
+        recherche.btnRendezVous.addActionListener(listener);
+        recherche.btnCompte.addActionListener(listener);
+        recherche.searchButton.addActionListener(listener);
+        recherche.searchField.addMouseListener(listener);
+
+        conteneurPrincipal.add(recherchePanel, RECHERCHE);
+
+        recherche.revalidate();
+        recherche.repaint();
     }
 
     public static void main(String[] args) {

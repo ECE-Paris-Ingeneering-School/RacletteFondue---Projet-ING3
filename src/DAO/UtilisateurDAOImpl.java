@@ -209,10 +209,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
         ArrayList<Specialiste> listeSpecialisteRecherches = new ArrayList<>();
         int[] pertinence = new int[3];
-        int maxIteration =0;
-        int indexMaxIteration=0;
+        int maxIteration = 0;
+        int indexMaxIteration = 0;
 
-        Specialiste specialisteTrouve =null;
+        Specialiste specialisteTrouve = null;
         int utilisateurId = 0;
         String utilisateurNom = null;
         String utilisateurPrenom = null;
@@ -224,9 +224,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         String utilisateurTelephone = null;
         String utilisateurImage = null;
 
-        String specialiteSpecialite =null;
-        String specialisteDescription=null;
-        double specialisteTarif=0.0;
+        String specialiteSpecialite = null;
+        String specialisteDescription = null;
+        double specialisteTarif = 0.0;
 
         Adresse specialisteAdresse = null;
         int adresseCodePostal = 0;
@@ -249,38 +249,48 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             ResultSet resultat;
             resultat = statements[0].executeQuery("SELECT COUNT(*) FROM utilisateur,specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND specialiste.specialisteSpecialite LIKE \""+ motRecherche + "\"" );
             resultat.next();
-            pertinence[0]=resultat.getInt(1);
+            pertinence[0] = resultat.getInt(1);
 
             resultat = statements[1].executeQuery("SELECT COUNT(*) FROM utilisateur,specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurNom LIKE \""+ motRecherche + "\"");
             resultat.next();
-            pertinence[1]= resultat.getInt(1);
+            pertinence[1] = resultat.getInt(1);
 
             resultat = statements[2].executeQuery("SELECT COUNT(*) FROM utilisateur,specialiste,adresse WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId AND adresse.adresseVille LIKE \""+ motRecherche + "\"");
             resultat.next();
-            pertinence[2]= resultat.getInt(1);
+            pertinence[2] = resultat.getInt(1);
 
 
-            //On séléctionne l'element le plus pertinent
-            for (int i = 1; i < pertinence.length; i++) {
+            //On sélectionne l'element le plus pertinent
+            for (int i = 0; i < pertinence.length; i++) {
                 if (pertinence[i] > maxIteration) {
                     maxIteration = pertinence[i];
                     indexMaxIteration = i;
                 }
             }
 
+            if (maxIteration == 0) {
+
+                return null;
+            }
+
             //On trie les spécialistes en fonction de l'element le plus pertinent
-            if (indexMaxIteration == 0){
+            if (indexMaxIteration == 0) {
+
                 resultat = statements[3].executeQuery("SELECT * FROM adresse, utilisateur, specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (specialiste.specialisteSpecialite = \""+ motRecherche +"\") DESC, specialiste.specialisteSpecialite ASC;");
-            }else if(indexMaxIteration == 1){
-                resultat=statements[3].executeQuery("SELECT * FROM adresse, utilisateur, specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (utilisateur.utilisateurNom = \""+ motRecherche +"\") DESC, utilisateur.utilisateurNom ASC;");
+
+            }else if(indexMaxIteration == 1) {
+
+                resultat = statements[3].executeQuery("SELECT * FROM adresse, utilisateur, specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (utilisateur.utilisateurNom = \""+ motRecherche +"\") DESC, utilisateur.utilisateurNom ASC;");
 
             } else  {
-                resultat=statements[3].executeQuery("SELECT * FROM adresse, utilisateur, specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (adresse.adresseVille = \""+ motRecherche +"\") DESC, adresse.adresseVille ASC;");
+
+                resultat = statements[3].executeQuery("SELECT * FROM adresse, utilisateur, specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (adresse.adresseVille = \""+ motRecherche +"\") DESC, adresse.adresseVille ASC;");
 
             }
 
 
-            while (resultat.next()){
+            while (resultat.next()) {
+
                 utilisateurId = resultat.getInt("utilisateurId");
                 utilisateurNom = resultat.getString("utilisateurNom");
                 utilisateurPrenom = resultat.getString("utilisateurPrenom");
@@ -322,7 +332,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
         return listeSpecialisteRecherches;
     }
-
 
     public void ajouterUtilisateur(Utilisateur utilisateur) throws EmailExistantException {
 

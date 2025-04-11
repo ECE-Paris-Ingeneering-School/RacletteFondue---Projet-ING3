@@ -2,9 +2,11 @@ package Controleur;
 
 import Modele.Adresse;
 import Modele.Patient;
+import Modele.Specialiste;
 import Modele.Utilisateur;
 import Vue.FenetrePrincipale;
 import DAO.*;
+import Vue.RechercheDocteur;
 
 
 import javax.swing.*;
@@ -12,6 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class ListenerFenetrePrincipale implements ActionListener, MouseListener {
 
@@ -116,6 +121,10 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             // ICI Requete du DAO pour rechercher dans la base de données
 
+            ArrayList<Specialiste> listeSpecialistes = utilisateurDAO.rechercheSpecialiste(recherche);
+
+            fenetre.updateRecherche(listeSpecialistes);
+
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RECHERCHE);
 
         }
@@ -135,6 +144,19 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
     @Override
     public void mousePressed(MouseEvent e) {
 
+        Object source = e.getSource();
+
+        if (source == fenetre.accueil.searchField || source == fenetre.recherche.searchField) {
+
+            if (Objects.equals(fenetre.accueil.searchField.getText(), "Nom, spécialité, lieu...") && source == fenetre.accueil.searchField) {
+
+                fenetre.accueil.searchField.setText("");
+
+            } else if (Objects.equals(fenetre.recherche.searchField.getText(), "Nom, spécialité, lieu...") && source == fenetre.recherche.searchField) {
+
+                fenetre.recherche.searchField.setText("");
+            }
+        }
     }
 
     @Override
@@ -144,6 +166,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
     @Override
     public void mouseEntered(MouseEvent e) {
+
 
     }
 
