@@ -1,5 +1,7 @@
 package DAO;
 
+import Modele.Exceptions.ConnexionException;
+import Modele.Exceptions.EmailExistantException;
 import Modele.Utilisateur;
 import java.util.ArrayList;
 
@@ -26,7 +28,7 @@ public interface UtilisateurDAO {
      * Méthode permettant d'ajouter un utilisateur dans la base de données
      * @param utilisateur l'objet utilisateur à ajouter
      * **/
-    public void ajouterUtilisateur(Utilisateur utilisateur);
+    public void ajouterUtilisateur(Utilisateur utilisateur) throws EmailExistantException;
 
     /**
      * Méthode permettant de supprimer un utilisateur de la base de données
@@ -48,5 +50,5 @@ public interface UtilisateurDAO {
      * @param mdp Le mot de passe utilisé dans le formulaire de connexion
      * @return L'identifiant de l'utilisateur connecté, ou 0 s'il n'existe pas
      * **/
-    public int connexionUtilisateur(String mail, String mdp);
+    public int connexionUtilisateur(String mail, String mdp) throws ConnexionException;
 }

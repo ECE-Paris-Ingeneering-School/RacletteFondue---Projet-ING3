@@ -16,20 +16,25 @@ public class Inscription extends JFrame {
     public JRadioButton hommeRadio;
     public JRadioButton femmeRadio;
     public JButton inscrireButton;
+    public JLabel erreurLabel;
 
     public Inscription() {
         setTitle("Créer un compte");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1920, 1080);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+
+        setContentPane(buildPanel());
+    }
+
+    public JPanel buildPanel() {
 
         // Titre "Inscription"
         JLabel titleLabel = new JLabel("Inscription");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(titleLabel, BorderLayout.NORTH);
+        //add(titleLabel, BorderLayout.NORTH);
 
         // Panel principal avec GridBagLayout
         JPanel formPanel = new JPanel(new GridBagLayout());
@@ -164,7 +169,15 @@ public class Inscription extends JFrame {
         gbc.gridx = 1;
         formPanel.add(adresseField, gbc);
 
-        add(formPanel, BorderLayout.CENTER);
+        erreurLabel = new JLabel("");
+        erreurLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        erreurLabel.setForeground(Color.RED);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(erreurLabel, gbc);
+
+        //add(formPanel, BorderLayout.CENTER);
 
         // Bouton S'inscrire
         inscrireButton = new JButton("S'inscrire");
@@ -176,7 +189,17 @@ public class Inscription extends JFrame {
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(inscrireButton);
-        add(buttonPanel, BorderLayout.SOUTH);
+        //add(buttonPanel, BorderLayout.SOUTH);
+
+        JPanel panelGeneral = new JPanel();
+
+        panelGeneral.setLayout(new BorderLayout());
+
+        panelGeneral.add(titleLabel, BorderLayout.NORTH);
+        panelGeneral.add(formPanel, BorderLayout.CENTER);
+        panelGeneral.add(buttonPanel, BorderLayout.SOUTH);
+
+        return panelGeneral;
     }
 
     public static void main(String[] args) {

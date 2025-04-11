@@ -1,5 +1,12 @@
 package Modele;
 
+import Modele.Exceptions.AgeException;
+import Modele.Exceptions.ChampsVidesException;
+import Modele.Exceptions.ConfirmationPasswordException;
+import Modele.Exceptions.TelephoneException;
+
+import javax.swing.*;
+
 /**
  * Classe Utilisateur
  */
@@ -26,7 +33,7 @@ public abstract class Utilisateur {
     /**
      * Constructeur de l'utilisateur avec tous les paramètres
      */
-    public Utilisateur (int putilisateurId, String putilisateurNom, String putilisateurPrenom,  int putilisateurAge, Adresse padresse, char putilisateurSexe, String putilisateurMail, String putilisateurPassword, String putilisateurTel, String putilisateurImage){
+    public Utilisateur (int putilisateurId, String putilisateurNom, String putilisateurPrenom,  int putilisateurAge, Adresse padresse, char putilisateurSexe, String putilisateurMail, String putilisateurPassword, String putilisateurTel, String putilisateurImage) {
 
         this.utilisateurId = putilisateurId;
         this.utilisateurNom = putilisateurNom;
@@ -38,6 +45,47 @@ public abstract class Utilisateur {
         this.utilisateurPassword = putilisateurPassword;
         this.utilisateurTel = putilisateurTel;
         this.utilisateurImage = putilisateurImage;
+    }
+
+    public static void verifUtilisateur(String mailField, String passwordField, String confirmPasswordField, String nomField, String prenomField, String ageField, String telephoneField, JRadioButton hommeRadio, JRadioButton femmeRadio) throws AgeException, ChampsVidesException, ConfirmationPasswordException, TelephoneException {
+
+        if (mailField.isEmpty() || passwordField.isEmpty() || confirmPasswordField.isEmpty() || nomField.isEmpty() || prenomField.isEmpty() || ageField.isEmpty() || telephoneField.isEmpty() || (!hommeRadio.isSelected() & !femmeRadio.isSelected())) {
+
+            throw new ChampsVidesException();
+        }
+
+        if (!passwordField.equals(confirmPasswordField)) {
+
+            throw new ConfirmationPasswordException();
+        }
+
+        try {
+
+            int age = Integer.parseInt(ageField);
+
+            if (age < 1) {
+
+                throw new AgeException();
+            }
+
+        } catch (Exception e) {
+
+            throw new AgeException();
+        }
+
+        try {
+
+            int telephone = Integer.parseInt(telephoneField);
+
+            if (telephone < 0) {
+
+                throw new TelephoneException();
+            }
+
+        } catch (Exception e) {
+
+            throw new TelephoneException();
+        }
     }
 
     /**

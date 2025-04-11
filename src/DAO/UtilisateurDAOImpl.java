@@ -1,5 +1,7 @@
 package DAO;
 import Modele.*;
+import Modele.Exceptions.ConnexionException;
+import Modele.Exceptions.EmailExistantException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -190,13 +192,21 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return utilisateursListe;
     }
 
-    public void ajouterUtilisateur(Utilisateur utilisateur) {
+    public void ajouterUtilisateur(Utilisateur utilisateur) throws EmailExistantException {
 
         try {
 
             // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
+
+            ResultSet resultat = statement.executeQuery("SELECT count(*) FROM utilisateur WHERE utilisateurMail=\"" + utilisateur.getUtilisateurMail() + "\"");
+            resultat.next();
+
+            if (resultat.getInt(1) != 0) {
+
+                throw new EmailExistantException();
+            }
 
             // Requete SQL
             String requete = String.format("INSERT INTO utilisateur(utilisateurNom,utilisateurPrenom,utilisateurAge,utilisateurSexe,utilisateurMail,utilisateurPassword,utilisateurTel,utilisateurImage) VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\")",
@@ -215,7 +225,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             preparedStatement.executeUpdate();
 
             String requete2 = "SELECT MAX(utilisateurId) FROM utilisateur";
-            ResultSet resultat = statement.executeQuery(requete2);
+            resultat = statement.executeQuery(requete2);
             resultat.next();
 
             int utilisateurId = resultat.getInt(1);
@@ -238,7 +248,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                     utilisateur.getUtilisateurAdresse().getAdresseCodePostal(),
                     utilisateur.getUtilisateurAdresse().getAdresseVille(),
                     utilisateur.getUtilisateurAdresse().getAdresseRue(),
-                    utilisateur.getUtilisateurAdresse().getAdresseNumero()
+                    Integer.parseInt(utilisateur.getUtilisateurAdresse().getAdresseNumero())
                     );
 
             preparedStatement = connexion.prepareStatement(requete);
@@ -345,7 +355,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     }
 
-    public int connexionUtilisateur(String mail, String mdp) {
+    public int connexionUtilisateur(String mail, String mdp) throws ConnexionException {
 
         try {
 
@@ -367,7 +377,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
             } else {
 
-                return 0;
+                throw new ConnexionException();
             }
 
         } catch (SQLException e) {
@@ -390,8 +400,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         Patient patient = new Patient(6, "KAIROUZ", "Thais", 21, adresse, 'F', "test@gmail.com", "feur", "01", "");
         */
 
-        System.out.println(daoUtilisateur.connexionUtilisateur("test@gmail.com", "feur"));
-
+        //System.out.println(daoUtilisateur.connexionUtilisateur("test@gmail.com", "feur"));
 
     }
 }
