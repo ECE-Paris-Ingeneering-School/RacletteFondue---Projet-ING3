@@ -3,13 +3,25 @@ package Vue;
 import javax.swing.*;
 import java.awt.*;
 
-public class Accueil extends JFrame{
+public class Accueil extends JFrame {
+
+    public JButton btnAccueil;
+    public JButton btnRendezVous;
+    public JButton btnCompte;
+    public JTextField searchField;
+    public JButton searchButton;
 
     public Accueil() {
         setTitle("Accueil");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        setContentPane(buildPanel());
+
+    }
+
+    public JPanel buildPanel() {
 
         // Panel principal
         JPanel mainPanel = new JPanel();
@@ -28,20 +40,20 @@ public class Accueil extends JFrame{
         // Menu boutons
         JPanel menuPanel = new JPanel();
 
-        JButton btnAccueil = new JButton("Accueil");
+        btnAccueil = new JButton("Accueil");
         btnAccueil.setPreferredSize(new Dimension(250, 70));
         btnAccueil.setFont(new Font("Verdana", Font.BOLD, 20));
         btnAccueil.setForeground(Color.WHITE);
         btnAccueil.setBackground(new Color(45, 104, 196));
         btnAccueil.setFocusPainted(false);
 
-        JButton btnRendezVous = new JButton("Rendez-vous");
+        btnRendezVous = new JButton("Rendez-vous");
         btnRendezVous.setPreferredSize(new Dimension(250, 70));
         btnRendezVous.setFont(new Font("Verdana", Font.BOLD, 20));
         btnRendezVous.setBackground(new Color(221, 235, 247));
         btnRendezVous.setFocusPainted(false);
 
-        JButton btnCompte = new JButton("Compte");
+        btnCompte = new JButton("Compte");
         btnCompte.setPreferredSize(new Dimension(250, 70));
         btnCompte.setFont(new Font("Verdana", Font.BOLD, 20));
         btnCompte.setBackground(new Color(221, 235, 247));
@@ -56,12 +68,12 @@ public class Accueil extends JFrame{
         // Barre de recherche
         JPanel searchPanel = new JPanel();
 
-        JTextField searchField = new JTextField("Nom, spécialité, lieu...", 30); // Agrandit la largeur du champ de recherche
+        searchField = new JTextField("Nom, spécialité, lieu...", 30); // Agrandit la largeur du champ de recherche
         searchField.setFont(new Font("Verdana", Font.PLAIN, 18));
         searchField.setPreferredSize(new Dimension(400, 40));
 
 
-        JButton searchButton = new JButton("🔍");
+        searchButton = new JButton("🔍");
         searchButton.setPreferredSize(new Dimension(80, 40));
         searchButton.setBackground(new Color(221, 235, 247));
         searchButton.setFocusPainted(false);
@@ -72,8 +84,9 @@ public class Accueil extends JFrame{
         mainPanel.add(Box.createVerticalStrut(30));
 
 
-        add(mainPanel);
-        setVisible(true);
+        //add(mainPanel);
+
+        return mainPanel;
     }
 
     public static void main(String[] args) {

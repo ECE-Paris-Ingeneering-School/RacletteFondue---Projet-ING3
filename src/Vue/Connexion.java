@@ -11,20 +11,26 @@ public class Connexion extends JFrame {
     public JPasswordField passwordField;
     public JButton connexionButton;
     public JLabel createAccountLabel;
+    public JLabel erreurLabel;
 
     public Connexion() {
+
         setTitle("Connexion");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1920, 900);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+
+        setContentPane(buildPanel());
+    }
+
+    public JPanel buildPanel() {
 
         // Titre "Connexion"
         JLabel titleLabel = new JLabel("Connexion");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(titleLabel, BorderLayout.NORTH);
+        //add(titleLabel, BorderLayout.NORTH);
 
         // Panel principal avec GridBagLayout
         JPanel formPanel = new JPanel(new GridBagLayout());
@@ -51,6 +57,11 @@ public class Connexion extends JFrame {
         passwordField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
         passwordField.setFont(new Font("Verdana", Font.PLAIN, 18));
 
+        erreurLabel = new JLabel("");
+        erreurLabel.setFont(labelFont);
+        erreurLabel.setForeground(Color.RED);
+
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         formPanel.add(mailLabel, gbc);
@@ -63,7 +74,11 @@ public class Connexion extends JFrame {
         gbc.gridx = 1;
         formPanel.add(passwordField, gbc);
 
-        add(formPanel, BorderLayout.CENTER);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        formPanel.add(erreurLabel, gbc);
+
+        //add(formPanel, BorderLayout.CENTER);
 
         // Bouton Connexion
         connexionButton = new JButton("Connexion");
@@ -84,9 +99,21 @@ public class Connexion extends JFrame {
         createAccountLabel.setForeground(Color.BLUE);
         createAccountLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         gbc.gridy++;
+
         buttonPanel.add(createAccountLabel, gbc);
 
-        add(buttonPanel, BorderLayout.SOUTH);
+
+        //add(buttonPanel, BorderLayout.SOUTH);
+
+        JPanel panelGeneral = new JPanel();
+
+        panelGeneral.setLayout(new BorderLayout());
+
+        panelGeneral.add(titleLabel, BorderLayout.NORTH);
+        panelGeneral.add(formPanel, BorderLayout.CENTER);
+        panelGeneral.add(buttonPanel, BorderLayout.SOUTH);
+
+        return panelGeneral;
     }
 
     public static void main(String[] args) {
