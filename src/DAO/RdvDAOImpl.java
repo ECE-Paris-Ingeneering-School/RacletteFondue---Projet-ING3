@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * implémentation MySQL du stockage dans la base de données des méthodes définies dans l'interface RDVDao.
  */
-public class RdvDAOImpl implements RdvDAO {
+/*public class RdvDAOImpl implements RdvDAO {
 
     private DaoFactory daoFactory;
 
@@ -147,7 +147,7 @@ public class RdvDAOImpl implements RdvDAO {
 
     public static void main(String[] args) {
 
-        /*DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
+        DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
 
         Adresse adresse = new Adresse(92260, "FAR", "11 rue des Ormeaux", "2");
 
@@ -180,7 +180,7 @@ public class RdvDAOImpl implements RdvDAO {
             System.out.println(rdvi.getDate());
         }
 
-    */
+
     }
 
-}
+}*/
