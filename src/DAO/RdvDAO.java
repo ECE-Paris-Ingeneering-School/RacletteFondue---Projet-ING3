@@ -1,6 +1,9 @@
 package DAO;
 
 import Modele.RDV;
+import Modele.Utilisateur;
+
+import java.util.ArrayList;
 
 /**
  * Interface contenant les méthodes d'accès aux données de la table RDV, indépendamment de la méthode de stockage
@@ -8,12 +11,11 @@ import Modele.RDV;
 public interface RdvDAO {
 
     /**
-     * Méthode permettant de chercher un rdv
-     * @param patientId L'ID du patient
-     * @param specialisteID L'ID du spécialiste
-     * @return L'objet patient trouvé correspondant à l'ID du patient
+     * Méthode permettant de chercher tous les RDV d'un utilisateur
+     * @param utilisateurId L'ID du patient ou du spécialiste dont on veut les RDV
+     * @return La listre de tous les RDV de l'utilisateur
      * **/
-    public RDV chercherRDV(int patientId, int specialisteID,int rdvDate);
+    public ArrayList<RDV> chercherRDV(int utilisateurId);
 
     /**
      * Méthode permettant d'ajouter un RDV dans la base de données
@@ -27,10 +29,4 @@ public interface RdvDAO {
      * **/
     public void supprimerRDV(RDV rdv);
 
-    /**
-     * Méthode permettant de modifier un RDV dans la base de données
-     * @param rdv L'objet patient à modifier
-     * @return L'objet modifié
-     * **/
-    public RDV modifierRDV(RDV rdv);
 }
