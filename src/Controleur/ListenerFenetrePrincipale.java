@@ -88,6 +88,36 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 fenetre.inscription.erreurLabel.setText(ex.getMessage());
             }
+
+        } else if (source == fenetre.rendezvous.btnAccueil || source == fenetre.compte.btnAccueil || source == fenetre.recherche.btnAccueil) {
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.ACCUEIL);
+
+        } else if (source == fenetre.accueil.btnRendezVous || source == fenetre.compte.btnRendezVous || source == fenetre.recherche.btnRendezVous) {
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RENDEZVOUS);
+
+        } else if (source == fenetre.accueil.btnCompte || source == fenetre.rendezvous.btnCompte || source == fenetre.recherche.btnCompte) {
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.COMPTE);
+
+        } else if (source == fenetre.accueil.searchButton || source == fenetre.recherche.searchButton) {
+
+            String recherche;
+
+            if (source == fenetre.accueil.searchButton) {
+
+                recherche = fenetre.accueil.searchField.getText();
+
+            } else {
+
+                recherche = fenetre.recherche.searchField.getText();
+            }
+
+            // ICI Requete du DAO pour rechercher dans la base de données
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RECHERCHE);
+
         }
     }
 

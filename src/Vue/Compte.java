@@ -5,12 +5,21 @@ import java.awt.*;
 
 public class Compte extends JFrame {
 
+    public JButton btnAccueil;
+    public JButton btnRendezVous;
+    public JButton btnCompte;
+    public JButton btnModifierCompte;
 
     public Compte() {
         setTitle("Compte");
         setSize(1550, 820);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        setContentPane(buildPanel());
+    }
+
+    public JPanel buildPanel() {
 
         // Panel principal
         JPanel mainPanel = new JPanel();
@@ -32,19 +41,19 @@ public class Compte extends JFrame {
         // Menu boutons
         JPanel menuPanel = new JPanel();
 
-        JButton btnAccueil = new JButton("Accueil");
+        btnAccueil = new JButton("Accueil");
         btnAccueil.setPreferredSize(new Dimension(250, 70));
         btnAccueil.setFont(new Font("Verdana", Font.BOLD, 20));
         btnAccueil.setBackground(new Color(221, 235, 247));
         btnAccueil.setFocusPainted(false);
 
-        JButton btnRendezVous = new JButton("Rendez-vous");
+        btnRendezVous = new JButton("Rendez-vous");
         btnRendezVous.setPreferredSize(new Dimension(250, 70));
         btnRendezVous.setFont(new Font("Verdana", Font.BOLD, 20));
         btnRendezVous.setBackground(new Color(221, 235, 247));
         btnRendezVous.setFocusPainted(false);
 
-        JButton btnCompte = new JButton("Compte");
+        btnCompte = new JButton("Compte");
         btnCompte.setPreferredSize(new Dimension(250, 70));
         btnCompte.setFont(new Font("Verdana", Font.BOLD, 20));
         btnCompte.setForeground(Color.WHITE);
@@ -130,7 +139,7 @@ public class Compte extends JFrame {
         personnelPanel.add(Box.createVerticalStrut(20));
 
         // Crée le bouton
-        JButton btnModifierCompte = new JButton("Modifier");
+        btnModifierCompte = new JButton("Modifier");
         btnModifierCompte.setPreferredSize(new Dimension(120, 40));
         btnModifierCompte.setFont(new Font("Verdana", Font.BOLD, 18));
         btnModifierCompte.setBackground(new Color(221, 235, 247));
@@ -145,11 +154,15 @@ public class Compte extends JFrame {
         mainPanel.add(Box.createVerticalStrut(30));
 
 
-        add(mainPanel);
-        setVisible(true);
+        //add(mainPanel);
+
+        return mainPanel;
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Vue.Compte::new);
+
+        SwingUtilities.invokeLater(() -> {
+            new Compte().setVisible(true);
+        });
     }
 }

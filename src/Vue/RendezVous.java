@@ -192,6 +192,9 @@ public class RendezVous extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(RendezVous::new);
+
+        SwingUtilities.invokeLater(() -> {
+            new RendezVous().setVisible(true);
+        });
     }
 }
