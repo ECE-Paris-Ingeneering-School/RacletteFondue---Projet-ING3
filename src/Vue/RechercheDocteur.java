@@ -135,17 +135,16 @@ public class RechercheDocteur extends JFrame {
                 doctorPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
                 doctorPanel.setBackground(new Color(221, 235, 247));
 
-                nameLabel = new JLabel(specialiste.getUtilisateurNom() + ", ");
+                nameLabel = new JLabel("Dr. " + specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / ");
                 nameLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
                 nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 doctorPanel.add(nameLabel, BorderLayout.WEST);
-
 
                 locationLabel = new JLabel(specialiste.getUtilisateurAdresse().getAdresseVille());
                 locationLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
                 doctorPanel.add(locationLabel, BorderLayout.CENTER);
 
-                availabilityLabel = new JLabel(specialiste.getSpecialisteSpecialite());
+                availabilityLabel = new JLabel("Voir les dispo");
                 availabilityLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
                 availabilityLabel.setForeground(new Color(45, 104, 196));
                 availabilityLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
