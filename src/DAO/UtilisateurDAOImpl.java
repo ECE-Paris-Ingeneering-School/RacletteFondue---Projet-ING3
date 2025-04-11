@@ -236,7 +236,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
             } else if (utilisateur instanceof Specialiste) {
 
-                requete = "INSERT INTO specialiste(specialisteId) VALUES ("+ utilisateurId + ")";
+                String ajoutDescription = ((Specialiste) utilisateur).getSpecialisteDescription();
+                String ajoutSpecialite = ((Specialiste) utilisateur).getSpecialisteSpecialite();
+                double ajoutTarif = ((Specialiste) utilisateur).getSpecialisteTarif();
+
+                requete = "INSERT INTO specialiste(specialisteId,specialisteSpecialite,specialisteDescription,specialisteTarif) VALUES (\""+ utilisateurId + "\",\"" +ajoutSpecialite + "\",\""+ajoutDescription+"\",\""+ajoutTarif+"\")";
             }
 
             preparedStatement = connexion.prepareStatement(requete);
@@ -268,6 +272,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
+
+            // Suppression des Rdv
+            statement.executeUpdate("DELETE FROM rdv WHERE rdvPatient=" + utilisateur.getUtilisateurId()+" OR rdvSpecialiste=" + utilisateur.getUtilisateurId());
 
             // Suppression du type d'utilisateur
             if (utilisateur instanceof Patient) {

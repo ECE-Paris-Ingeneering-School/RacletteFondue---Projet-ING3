@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * implémentation MySQL du stockage dans la base de données des méthodes définies dans l'interface RDVDao.
  */
-/*public class RdvDAOImpl implements RdvDAO {
+public class RdvDAOImpl implements RdvDAO {
 
     private DaoFactory daoFactory;
 
@@ -145,15 +145,15 @@ import java.util.ArrayList;
         }
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
 
         DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
 
         Adresse adresse = new Adresse(92260, "FAR", "11 rue des Ormeaux", "2");
 
-        Patient patient = new Patient(13, "KAIROUZ", "Thais", 21, adresse, 'F', "test2@gmail.com", "feur", "01", "");
+        Patient patient = new Patient(6, "KAIROUZ", "Thais", 21, adresse, 'F', "test4@gmail.com", "feur", "01", "");
 
-        Specialiste specialiste = new Specialiste(14,"Shrek","Pierre",69,adresse,'M',"shrek@com","feur","0","","proctologue"," ",69.69);
+        Specialiste specialiste = new Specialiste(7,"Shrek","Pierre",69,adresse,'M',"shrek5@com","feur","0","","proctologue"," ",69.69);
 
         UtilisateurDAOImpl utilisateurDAO = new UtilisateurDAOImpl(dao);
 
@@ -161,17 +161,19 @@ import java.util.ArrayList;
 
         try {
 
-            utilisateurDAO.ajouterUtilisateur(patient);
             utilisateurDAO.ajouterUtilisateur(specialiste);
+
 
         } catch (Exception e) {
 
             System.out.println(e.getMessage());
         }
 
-        RDV rdv = new RDV(specialiste,patient,0102024);
+        RDV rdv = new RDV(specialiste,patient, 33321813);
 
         rdvDao.ajouterRDV(rdv);
+
+
 
         ArrayList<RDV> listRDV = new ArrayList<>();
         listRDV=rdvDao.chercherRDV(7);
@@ -181,6 +183,6 @@ import java.util.ArrayList;
         }
 
 
-    }
+    }*/
 
-}*/
+}
