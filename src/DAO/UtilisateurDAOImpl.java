@@ -159,6 +159,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     public ArrayList<Utilisateur> getAllUtilisateur() {
 
         ArrayList<Utilisateur> utilisateursListe = new ArrayList<>();
+        ArrayList<Utilisateur> patientListe = new ArrayList<>();
+        ArrayList<Utilisateur> specialisteListe = new ArrayList<>();
 
         try {
 
@@ -178,19 +180,149 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
                 if (chercherUtilisateur(i).getUtilisateurId() != 0) {
 
-                    utilisateursListe.add(chercherUtilisateur(i));
-                }
+                    if (chercherUtilisateur(i) instanceof Admin){
+                        utilisateursListe.add(chercherUtilisateur(i));
+                    }
+                    else if (chercherUtilisateur(i) instanceof Specialiste){
+                        specialisteListe.add(chercherUtilisateur(i));
 
+                    }
+                    else {
+                        patientListe.add(chercherUtilisateur(i));
+                    }
+                }
             }
+
+            utilisateursListe.addAll(specialisteListe);
+            utilisateursListe.addAll(patientListe);
 
         } catch (SQLException e) {
 
             e.printStackTrace();
-            System.out.println("Recherche de l'adresse impossible");
+            System.out.println("Recherche des utilisateurs impossible");
         }
 
         return utilisateursListe;
     }
+
+    public ArrayList<Specialiste> rechercheSpecialiste(String motRecherche){
+
+        ArrayList<Specialiste> listeSpecialisteRecherches = new ArrayList<>();
+        int[] pertinence = new int[3];
+        int maxIteration =0;
+        int indexMaxIteration=0;
+
+        Specialiste specialisteTrouve =null;
+        int utilisateurId = 0;
+        String utilisateurNom = null;
+        String utilisateurPrenom = null;
+        int utilisateurAge = 0;
+        String temp = null;
+        char utilisateurSexe = 'a';
+        String utilisateurMail = null;
+        String utilisateurPassword = null;
+        String utilisateurTelephone = null;
+        String utilisateurImage = null;
+
+        String specialiteSpecialite =null;
+        String specialisteDescription=null;
+        double specialisteTarif=0.0;
+
+        Adresse specialisteAdresse = null;
+        int adresseCodePostal = 0;
+        String adresseVille = null;
+        String adresseRue = null;
+        String adresseNumero = "0";
+
+
+        try {
+
+            // Connexion
+            Connection connexion = daoFactory.getConnection();
+            Statement[] statements = new Statement[4];
+            for (int i=0; i<statements.length; i++) {
+
+                statements[i] = connexion.createStatement();
+            }
+
+            // On cherche dans les différentes catégories d'interet le nombre d'occurence du mot recherché
+            ResultSet resultat;
+            resultat = statements[0].executeQuery("SELECT COUNT(*) FROM utilisateur,specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND specialiste.specialisteSpecialite LIKE \""+ motRecherche + "\"" );
+            resultat.next();
+            pertinence[0]=resultat.getInt(1);
+
+            resultat = statements[1].executeQuery("SELECT COUNT(*) FROM utilisateur,specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurNom LIKE \""+ motRecherche + "\"");
+            resultat.next();
+            pertinence[1]= resultat.getInt(1);
+
+            resultat = statements[2].executeQuery("SELECT COUNT(*) FROM utilisateur,specialiste,adresse WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId AND adresse.adresseVille LIKE \""+ motRecherche + "\"");
+            resultat.next();
+            pertinence[2]= resultat.getInt(1);
+
+
+            //On séléctionne l'element le plus pertinent
+            for (int i = 1; i < pertinence.length; i++) {
+                if (pertinence[i] > maxIteration) {
+                    maxIteration = pertinence[i];
+                    indexMaxIteration = i;
+                }
+            }
+
+            //On trie les spécialistes en fonction de l'element le plus pertinent
+            if (indexMaxIteration == 0){
+                resultat = statements[3].executeQuery("SELECT * FROM adresse, utilisateur, specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (specialiste.specialisteSpecialite = \""+ motRecherche +"\") DESC, specialiste.specialisteSpecialite ASC;");
+            }else if(indexMaxIteration == 1){
+                resultat=statements[3].executeQuery("SELECT * FROM adresse, utilisateur, specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (utilisateur.utilisateurNom = \""+ motRecherche +"\") DESC, utilisateur.utilisateurNom ASC;");
+
+            } else  {
+                resultat=statements[3].executeQuery("SELECT * FROM adresse, utilisateur, specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (adresse.adresseVille = \""+ motRecherche +"\") DESC, adresse.adresseVille ASC;");
+
+            }
+
+
+            while (resultat.next()){
+                utilisateurId = resultat.getInt("utilisateurId");
+                utilisateurNom = resultat.getString("utilisateurNom");
+                utilisateurPrenom = resultat.getString("utilisateurPrenom");
+                utilisateurAge = resultat.getInt("utilisateurAge");
+                temp = resultat.getString("utilisateurSexe");
+                utilisateurSexe = temp.charAt(0);
+                utilisateurMail = resultat.getString("utilisateurMail");
+                utilisateurPassword = resultat.getString("utilisateurPassword");
+                utilisateurTelephone = resultat.getString("utilisateurTel");
+                utilisateurImage = resultat.getString("utilisateurImage");
+
+                specialiteSpecialite = resultat.getString("specialisteSpecialite");
+                specialisteDescription = resultat.getString("specialisteDescription");
+                specialisteTarif = resultat.getDouble("specialisteTarif");
+
+                adresseCodePostal = resultat.getInt("adresseCodePostal");
+                adresseVille = resultat.getString("adresseVille");
+                adresseRue = resultat.getString("adresseRue");
+                adresseNumero = resultat.getString("adresseNumero");
+
+                specialisteAdresse = new Adresse(adresseCodePostal, adresseVille, adresseRue, adresseNumero);
+
+                specialisteTrouve = new Specialiste(utilisateurId,utilisateurNom,utilisateurPrenom,utilisateurAge,specialisteAdresse,utilisateurSexe,utilisateurMail,utilisateurPassword,utilisateurTelephone,utilisateurImage,specialiteSpecialite,specialisteDescription,specialisteTarif);
+
+                listeSpecialisteRecherches.add(specialisteTrouve);
+
+
+            }
+
+
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            System.out.println("Recherche des spécialistes impossible");
+        }
+
+
+
+        return listeSpecialisteRecherches;
+    }
+
 
     public void ajouterUtilisateur(Utilisateur utilisateur) throws EmailExistantException {
 
@@ -401,6 +533,15 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
 
         UtilisateurDAOImpl daoUtilisateur = new UtilisateurDAOImpl(dao);
+
+        ArrayList<Specialiste> listeSpecialiste = new ArrayList<>();
+
+        listeSpecialiste = daoUtilisateur.rechercheSpecialiste("Conducteur");
+
+        for (Specialiste specialiste_i : listeSpecialiste){
+            System.out.println(specialiste_i.getUtilisateurNom()+" "+ specialiste_i.getUtilisateurPrenom()+" "+specialiste_i.getUtilisateurAdresse().getAdresseVille()+" "+specialiste_i.getSpecialisteSpecialite());
+        }
+
 
         /*Adresse adresse = new Adresse(92000, "FAR", "11 rue des Ormeaux", "2");
 
