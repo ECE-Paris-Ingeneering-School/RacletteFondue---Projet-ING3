@@ -10,9 +10,10 @@ public class DisponibiliteRDV extends JFrame {
 
 
     public DisponibiliteRDV() {
-        setTitle("Disponibilité");
+        setTitle("Disponibilités");
         setSize(900, 500);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
         // Titre "Disponibilité"
