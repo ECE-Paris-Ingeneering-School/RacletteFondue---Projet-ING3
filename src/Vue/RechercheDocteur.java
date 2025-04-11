@@ -88,8 +88,9 @@ public class RechercheDocteur extends JFrame {
                 {"Dr. Leclaire", "Paris", "voir les dispo"},
                 {"Dr. Daix", "Paris", "voir les dispo"},
                 {"Dr. Chibre", "Paris", "voir les dispo"},
-                {"Dr. RoyLe", "Paris", "voir les dispo"},
-                {"Dr. ToGuThLu", "Paris", "voir les dispo"},
+                {"Dr. Leclaire", "Paris", "voir les dispo"},
+                {"Dr. Daix", "Paris", "voir les dispo"},
+                {"Dr. Chibre", "Paris", "voir les dispo"},
         };
 
         // Nombre de résultats
@@ -136,6 +137,10 @@ public class RechercheDocteur extends JFrame {
         scrollPane.setPreferredSize(new Dimension(600, 300)); // Ajuster la largeur pour correspondre à celle des docteurs
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(238, 238, 238), 1));
+        scrollPane.setPreferredSize(new Dimension(650, 450));
+        scrollPane.setMaximumSize(new Dimension(650, 450));
+
 
         mainPanel.add(scrollPane);
         add(mainPanel);
