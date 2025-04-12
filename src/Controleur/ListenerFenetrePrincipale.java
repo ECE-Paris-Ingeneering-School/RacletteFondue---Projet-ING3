@@ -94,15 +94,24 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 fenetre.inscription.erreurLabel.setText(ex.getMessage());
             }
 
-        } else if (source == fenetre.rendezvous.btnAccueil || source == fenetre.compte.btnAccueil || source == fenetre.recherche.btnAccueil) {
+        } else if (source == fenetre.rendezvous.btnAccueil
+                || source == fenetre.compte.btnAccueil
+                || source == fenetre.recherche.btnAccueil
+                || source == fenetre.info.btnAccueil) {
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.ACCUEIL);
 
-        } else if (source == fenetre.accueil.btnRendezVous || source == fenetre.compte.btnRendezVous || source == fenetre.recherche.btnRendezVous) {
+        } else if (source == fenetre.accueil.btnRendezVous
+                || source == fenetre.compte.btnRendezVous
+                || source == fenetre.recherche.btnRendezVous
+                || source == fenetre.info.btnRendezVous) {
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RENDEZVOUS);
 
-        } else if (source == fenetre.accueil.btnCompte || source == fenetre.rendezvous.btnCompte || source == fenetre.recherche.btnCompte) {
+        } else if (source == fenetre.accueil.btnCompte
+                || source == fenetre.rendezvous.btnCompte
+                || source == fenetre.recherche.btnCompte
+                || source == fenetre.info.btnCompte) {
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.COMPTE);
 
@@ -125,6 +134,11 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.updateRecherche(listeSpecialistes);
 
+            // Print keys and values
+            for (JLabel i : fenetre.recherche.mapSpecialistes.keySet()) {
+                System.out.println("key: " + i.getText() + " value: " + fenetre.recherche.mapSpecialistes.get(i).getUtilisateurNom());
+            }
+
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RECHERCHE);
 
         }
@@ -138,15 +152,8 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
         if (source == fenetre.connexion.createAccountLabel) {
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INSCRIPTION);
-        }
-    }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-        Object source = e.getSource();
-
-        if (source == fenetre.accueil.searchField || source == fenetre.recherche.searchField) {
+        } else if (source == fenetre.accueil.searchField || source == fenetre.recherche.searchField) { // Nettoyage de la barre de recherche au click de l'utilisateur
 
             if (Objects.equals(fenetre.accueil.searchField.getText(), "Nom, spécialité, lieu...") && source == fenetre.accueil.searchField) {
 
@@ -156,7 +163,27 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 fenetre.recherche.searchField.setText("");
             }
+
         }
+
+        for (JLabel nameLabel : fenetre.recherche.mapSpecialistes.keySet()) {
+
+            if (source == nameLabel) {
+
+                System.out.println("Le nameLabel est :" + nameLabel.getText());
+
+                fenetre.updateInfoDocteur(fenetre.recherche.mapSpecialistes.get(nameLabel));
+
+                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INFODOCTEUR);
+
+                System.out.println("feur");
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
     }
 
     @Override

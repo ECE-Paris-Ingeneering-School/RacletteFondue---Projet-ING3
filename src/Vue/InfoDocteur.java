@@ -1,5 +1,7 @@
 package Vue;
 
+import Modele.Specialiste;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,12 +21,18 @@ public class InfoDocteur extends JFrame {
     public JTextArea accessValueLabel;
     public JButton prendreRDVButton;
 
+    public Specialiste specialiste;
 
     public InfoDocteur() {
         setTitle("Information spécialiste");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        setContentPane(buildPanel());
+    }
+
+    public JPanel buildPanel() {
 
         // Panel principal
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -71,8 +79,13 @@ public class InfoDocteur extends JFrame {
         gbc.gridwidth = 2;
         mainPanel.add(menuPanel, gbc);
 
+        if (specialiste == null) {
+
+            return mainPanel;
+        }
+
         // Nom du docteur
-        doctorNameLabel = new JLabel("Dr. Juiph");
+        doctorNameLabel = new JLabel("Dr. " + specialiste.getUtilisateurNom());
         doctorNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
         doctorNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         gbc.gridx = 0;
@@ -81,7 +94,7 @@ public class InfoDocteur extends JFrame {
         mainPanel.add(doctorNameLabel, gbc);
 
         // Présentation
-        presentationValueLabel = new JTextArea("Le chirurgien-dentiste, aussi appelé dentiste, prend en charge les problèmes bucco-dentaires. Ce spécialiste de la dentition s'occupe aussi bien des dents, des gencives et des nerfs que des maxillaires. Les patients peuvent notamment le consulter pour un détartrage, le soin d'une carie, le soulagement de gencives irritées ou encore pour la réparation d'une dent abîmée.");
+        presentationValueLabel = new JTextArea(specialiste.getSpecialisteDescription());
         presentationValueLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         presentationValueLabel.setEditable(false);
         presentationValueLabel.setBackground(null);
@@ -109,7 +122,7 @@ public class InfoDocteur extends JFrame {
         leftColumn.add(tarifLabel);
         leftColumn.add(Box.createVerticalStrut(10));
 
-        tarifValueLabel = new JLabel("60€");
+        tarifValueLabel = new JLabel(String.valueOf(specialiste.getSpecialisteTarif()) + " €");
         tarifValueLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         leftColumn.add(tarifValueLabel);
         leftColumn.add(Box.createVerticalStrut(20));
@@ -137,7 +150,7 @@ public class InfoDocteur extends JFrame {
         rightColumn.add(expertiseLabel);
         rightColumn.add(Box.createVerticalStrut(20));
 
-        expertiseValueLabel = new JLabel("chirurgien-dentiste ");
+        expertiseValueLabel = new JLabel(specialiste.getSpecialisteSpecialite());
         expertiseValueLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         rightColumn.add(expertiseValueLabel);
         rightColumn.add(Box.createVerticalStrut(20));
@@ -147,7 +160,7 @@ public class InfoDocteur extends JFrame {
         rightColumn.add(accessLabel);
         rightColumn.add(Box.createVerticalStrut(20));
 
-        accessValueLabel = new JTextArea("189 rue de Javel, code : 92B4, 6e étage avec ascenseur");
+        accessValueLabel = new JTextArea(specialiste.getUtilisateurAdresse().getAdresseNumero() + " " + specialiste.getUtilisateurAdresse().getAdresseRue());
         accessValueLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         accessValueLabel.setBackground(null);
         accessValueLabel.setBorder(null);
@@ -174,11 +187,13 @@ public class InfoDocteur extends JFrame {
         gbc.gridwidth = 2;
         mainPanel.add(prendreRDVButton, gbc);
 
-        add(mainPanel);
-        setVisible(true);
+        return mainPanel;
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(InfoDocteur::new);
+
+        SwingUtilities.invokeLater(() -> {
+            new InfoDocteur().setVisible(true);
+        });
     }
 }

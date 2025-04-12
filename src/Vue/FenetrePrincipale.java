@@ -26,6 +26,7 @@ public class FenetrePrincipale {
     public final String RENDEZVOUS = "Rendez-vous";
     public final String COMPTE = "Compte";
     public final String RECHERCHE = "Recherche";
+    public final String INFODOCTEUR = "Information spécialiste";
 
     // Initialisation des objets de chaque page
     public Connexion connexion;
@@ -34,6 +35,7 @@ public class FenetrePrincipale {
     public RendezVous rendezvous;
     public Compte compte;
     public RechercheDocteur recherche;
+    public InfoDocteur info;
 
     // Initialisation des panels de chaque page
     public CardLayout cl;
@@ -44,6 +46,7 @@ public class FenetrePrincipale {
     public JPanel rendezvousPanel;
     public JPanel comptePanel;
     public JPanel recherchePanel;
+    public JPanel infoPanel;
 
     /**
      * Constructeur de la fenêtre principale
@@ -60,6 +63,7 @@ public class FenetrePrincipale {
         rendezvous = new RendezVous();
         compte = new Compte();
         recherche = new RechercheDocteur();
+        info = new InfoDocteur();
 
         // Instanciation des panels
         this.connexionPanel = connexion.buildPanel();
@@ -68,6 +72,7 @@ public class FenetrePrincipale {
         this.rendezvousPanel = rendezvous.buildPanel();
         this.comptePanel = compte.buildPanel();
         this.recherchePanel = recherche.buildPanel();
+        this.infoPanel = info.buildPanel();
 
         // Ajout des listeners sur les pages
         // Connexion
@@ -91,13 +96,6 @@ public class FenetrePrincipale {
         compte.btnAccueil.addActionListener(listener);
         compte.btnRendezVous.addActionListener(listener);
 
-        // Recherche
-        recherche.btnAccueil.addActionListener(listener);
-        recherche.btnRendezVous.addActionListener(listener);
-        recherche.btnCompte.addActionListener(listener);
-        recherche.searchButton.addActionListener(listener);
-        recherche.searchField.addMouseListener(listener);
-
         // Création de la fenêtre principale
         JFrame fenetrePrincipale = new JFrame();
 
@@ -111,6 +109,7 @@ public class FenetrePrincipale {
         conteneurPrincipal.add(rendezvousPanel, RENDEZVOUS);
         conteneurPrincipal.add(comptePanel, COMPTE);
         conteneurPrincipal.add(recherchePanel, RECHERCHE);
+        conteneurPrincipal.add(infoPanel, INFODOCTEUR);
 
         // Paramétrage de la fenetre principale
         fenetrePrincipale.add(conteneurPrincipal);
@@ -127,6 +126,7 @@ public class FenetrePrincipale {
         recherche.resultatRecherche = listeSpecialistes;
 
         conteneurPrincipal.remove(recherchePanel);
+        recherche.mapSpecialistes.clear();
 
         recherchePanel = recherche.buildPanel();
         recherche.btnAccueil.addActionListener(listener);
@@ -135,10 +135,32 @@ public class FenetrePrincipale {
         recherche.searchButton.addActionListener(listener);
         recherche.searchField.addMouseListener(listener);
 
+        for (JLabel nameLabel : recherche.mapSpecialistes.keySet()) {
+
+            if (nameLabel != null) nameLabel.addMouseListener(listener);
+        }
+
         conteneurPrincipal.add(recherchePanel, RECHERCHE);
 
         recherche.revalidate();
         recherche.repaint();
+    }
+
+    public void updateInfoDocteur(Specialiste specialiste) {
+
+        info.specialiste = specialiste;
+
+        conteneurPrincipal.remove(infoPanel);
+
+        infoPanel = info.buildPanel();
+        info.btnAccueil.addActionListener(listener);
+        info.btnRendezVous.addActionListener(listener);
+        info.btnCompte.addActionListener(listener);
+
+        conteneurPrincipal.add(infoPanel, INFODOCTEUR);
+
+        info.revalidate();
+        info.repaint();
     }
 
     public static void main(String[] args) {

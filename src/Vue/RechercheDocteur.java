@@ -5,6 +5,8 @@ import Modele.Specialiste;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RechercheDocteur extends JFrame {
 
@@ -18,8 +20,11 @@ public class RechercheDocteur extends JFrame {
     public JLabel availabilityLabel;
 
     public ArrayList<Specialiste> resultatRecherche = null;
+    public Map<JLabel, Specialiste> mapSpecialistes = null;
 
     public RechercheDocteur() {
+
+        mapSpecialistes = new HashMap<JLabel, Specialiste>();
 
         setTitle("Recherche");
         setSize(1920, 1080);
@@ -130,6 +135,9 @@ public class RechercheDocteur extends JFrame {
                 nameLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
                 nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 doctorPanel.add(nameLabel, BorderLayout.WEST);
+
+                // On associe l'objet à son label pour le référencer plus tard
+                mapSpecialistes.put(nameLabel, specialiste);
 
                 locationLabel = new JLabel(specialiste.getUtilisateurAdresse().getAdresseVille());
                 locationLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
