@@ -5,7 +5,7 @@ import Modele.Specialiste;
 import javax.swing.*;
 import java.awt.*;
 
-public class InfoDocteur extends JFrame {
+public class ModifierInfoDocteur extends JFrame {
 
     public JLabel titleLabel;
 
@@ -19,11 +19,11 @@ public class InfoDocteur extends JFrame {
     public JLabel paiementValueLabel;
     public JLabel expertiseValueLabel;
     public JTextArea accessValueLabel;
-    public JButton prendreRDVButton;
+    public JButton modifierButton;
 
     public Specialiste specialiste;
 
-    public InfoDocteur() {
+    public ModifierInfoDocteur() {
         setTitle("Information spécialiste");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,19 +55,19 @@ public class InfoDocteur extends JFrame {
 
         btnAccueil = new JButton("Accueil");
         btnAccueil.setPreferredSize(new Dimension(250, 70));
-        btnAccueil.setFont(new Font("Verdana", Font.BOLD, 20));
+        btnAccueil.setFont(new Font("Tahoma", Font.BOLD, 20));
         btnAccueil.setBackground(new Color(221, 235, 247));
         btnAccueil.setFocusPainted(false);
 
         btnRendezVous = new JButton("Rendez-vous");
         btnRendezVous.setPreferredSize(new Dimension(250, 70));
-        btnRendezVous.setFont(new Font("Verdana", Font.BOLD, 20));
+        btnRendezVous.setFont(new Font("Tahoma", Font.BOLD, 20));
         btnRendezVous.setBackground(new Color(221, 235, 247));
         btnRendezVous.setFocusPainted(false);
 
         btnCompte = new JButton("Compte");
         btnCompte.setPreferredSize(new Dimension(250, 70));
-        btnCompte.setFont(new Font("Verdana", Font.BOLD, 20));
+        btnCompte.setFont(new Font("Tahoma", Font.BOLD, 20));
         btnCompte.setBackground(new Color(221, 235, 247));
         btnCompte.setFocusPainted(false);
 
@@ -118,7 +118,7 @@ public class InfoDocteur extends JFrame {
         leftColumn.setLayout(new BoxLayout(leftColumn, BoxLayout.Y_AXIS));
 
         JLabel tarifLabel = new JLabel("Tarif & remboursement");
-        tarifLabel.setFont(new Font("Verdana", Font.PLAIN, 22));
+        tarifLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
         leftColumn.add(tarifLabel);
         leftColumn.add(Box.createVerticalStrut(10));
 
@@ -151,7 +151,7 @@ public class InfoDocteur extends JFrame {
         rightColumn.add(Box.createVerticalStrut(20));
 
         expertiseValueLabel = new JLabel(specialiste.getSpecialisteSpecialite());
-        expertiseValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        expertiseValueLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
         rightColumn.add(expertiseValueLabel);
         rightColumn.add(Box.createVerticalStrut(20));
 
@@ -177,15 +177,16 @@ public class InfoDocteur extends JFrame {
         mainPanel.add(categoriesPanel, gbc);
 
         // Bouton Prendre un rendez-vous
-        prendreRDVButton = new JButton("Prendre un rendez-vous");
-        prendreRDVButton.setFont(new Font("Tahoma", Font.BOLD, 20));
-        prendreRDVButton.setForeground(Color.WHITE);
-        prendreRDVButton.setBackground(new Color(45, 104, 196));
-        prendreRDVButton.setFocusPainted(false);
+        modifierButton = new JButton("Modifier");
+        modifierButton.setFont(new Font("Tahoma", Font.BOLD, 20));
+        modifierButton.setPreferredSize(new Dimension(250, 70));
+        modifierButton.setForeground(Color.WHITE);
+        modifierButton.setBackground(new Color(45, 104, 196));
+        modifierButton.setFocusPainted(false);
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2;
-        mainPanel.add(prendreRDVButton, gbc);
+        mainPanel.add(modifierButton, gbc);
 
         return mainPanel;
     }
