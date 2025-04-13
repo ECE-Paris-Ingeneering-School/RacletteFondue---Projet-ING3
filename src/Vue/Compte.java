@@ -25,10 +25,8 @@ public class Compte extends JFrame {
 
     public Utilisateur utilisateur;
 
-    public Compte(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-
-        setTitle("Créer un compte");
+    public Compte() {
+        setTitle("Informations du compte");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1920, 1080);
         setLocationRelativeTo(null);
@@ -78,6 +76,11 @@ public class Compte extends JFrame {
         menuPanel.add(btnCompte);
         mainPanel.add(menuPanel);
         mainPanel.add(Box.createVerticalStrut(20));
+
+        if (utilisateur == null) {
+
+            return mainPanel;
+        }
 
         // Label "Informations personnelles"
         JLabel infoPerso = new JLabel("Informations personnelles");
@@ -222,10 +225,9 @@ public class Compte extends JFrame {
     }
 
     public static void main(String[] args) {
-        Utilisateur utilisateur = new Patient(1, "Dupont", "Juiph", 30, null, 'M', "juiph.dupont@utilisateurdemerde.com", "jesuisjuif", "0750653945", null);
 
         SwingUtilities.invokeLater(() -> {
-            new Compte(utilisateur).setVisible(true);
+            new Compte().setVisible(true);
         });
     }
 }

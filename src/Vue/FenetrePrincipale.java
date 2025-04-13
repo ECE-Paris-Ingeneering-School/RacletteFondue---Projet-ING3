@@ -61,7 +61,7 @@ public class FenetrePrincipale {
         inscription = new Inscription();
         accueil = new Accueil();
         rendezvous = new RendezVous();
-        compte = new Compte(utilisateurActuel);
+        compte = new Compte();
         recherche = new RechercheDocteur();
         info = new InfoDocteur();
 
@@ -161,6 +161,23 @@ public class FenetrePrincipale {
 
         info.revalidate();
         info.repaint();
+    }
+
+    public void updateCompte() {
+
+        compte.utilisateur = utilisateurActuel;
+
+        conteneurPrincipal.remove(comptePanel);
+
+        comptePanel = compte.buildPanel();
+        compte.btnAccueil.addActionListener(listener);
+        compte.btnRendezVous.addActionListener(listener);
+        compte.modifierButton.addActionListener(listener);
+
+        conteneurPrincipal.add(comptePanel, COMPTE);
+
+        compte.revalidate();
+        compte.repaint();
     }
 
     public static void main(String[] args) {

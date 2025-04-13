@@ -113,6 +113,8 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 || source == fenetre.recherche.btnCompte
                 || source == fenetre.info.btnCompte) {
 
+            fenetre.updateCompte();
+
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.COMPTE);
 
         } else if (source == fenetre.accueil.searchButton || source == fenetre.recherche.searchButton) {
@@ -135,9 +137,9 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             fenetre.updateRecherche(listeSpecialistes);
 
             // Print keys and values
-            for (JLabel i : fenetre.recherche.mapSpecialistes.keySet()) {
+            /*for (JLabel i : fenetre.recherche.mapSpecialistes.keySet()) {
                 System.out.println("key: " + i.getText() + " value: " + fenetre.recherche.mapSpecialistes.get(i).getUtilisateurNom());
-            }
+            }*/
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RECHERCHE);
 
