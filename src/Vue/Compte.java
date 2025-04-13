@@ -1,19 +1,36 @@
 package Vue;
 
+import Modele.Patient;
+import Modele.Utilisateur;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
 
 public class Compte extends JFrame {
 
     public JButton btnAccueil;
     public JButton btnRendezVous;
     public JButton btnCompte;
-    public JButton btnModifierCompte;
+    public JTextField nomField;
+    public JTextField prenomField;
+    public JTextField ageField;
+    public JTextField telephoneField;
+    public JTextField mailField;
+    public JPasswordField passwordField;
+    public JButton modifierButton;
+    public JLabel confirmationLabel;
 
-    public Compte() {
-        setTitle("Compte");
-        setSize(1550, 820);
+    public Utilisateur utilisateur;
+
+    public Compte(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+
+        setTitle("Créer un compte");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1920, 1080);
         setLocationRelativeTo(null);
 
         setContentPane(buildPanel());
@@ -21,13 +38,10 @@ public class Compte extends JFrame {
 
     public JPanel buildPanel() {
 
-        // Panel principal
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-
-        // Titre
-
+        // Titre "Compte"
         JLabel titleLabel = new JLabel("Compte");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
@@ -36,7 +50,6 @@ public class Compte extends JFrame {
         mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(titleLabel);
         mainPanel.add(Box.createVerticalStrut(20));
-
 
         // Menu boutons
         JPanel menuPanel = new JPanel();
@@ -66,103 +79,153 @@ public class Compte extends JFrame {
         mainPanel.add(menuPanel);
         mainPanel.add(Box.createVerticalStrut(20));
 
-
-        // Contenu de la page
-        JPanel wrapperPanel = new JPanel();
-        wrapperPanel.setLayout(new BoxLayout(wrapperPanel, BoxLayout.X_AXIS));
-        wrapperPanel.add(Box.createHorizontalGlue());
-        wrapperPanel.add(Box.createHorizontalGlue());
-
-
-
-        // Panel pour les infos personnelles
-        JPanel personnelPanel = new JPanel();
-        personnelPanel.setLayout(new BoxLayout(personnelPanel, BoxLayout.Y_AXIS));
-        personnelPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        personnelPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // marges
-        personnelPanel.setMaximumSize(new Dimension(600, Integer.MAX_VALUE));
-
-
-
-// Titre informations générales
+        // Label "Informations personnelles"
         JLabel infoPerso = new JLabel("Informations personnelles");
         infoPerso.setFont(new Font("Verdana", Font.BOLD, 24));
-        personnelPanel.add(infoPerso);
-        personnelPanel.add(Box.createVerticalStrut(20)); // espace après le titre
+        infoPerso.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mainPanel.add(infoPerso);
+        mainPanel.add(Box.createVerticalStrut(20));
 
-        wrapperPanel.add(personnelPanel);
+        // Panel principal avec GridBagLayout
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Augmenter les marges pour une meilleure lisibilité
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Les champs
+        String[] labels = {
+                "Nom :",
+                "Prénom :",
+                "Age :",
+                "Numéro de téléphone :",
+                "Mail :",
+                "Mot de passe :"
+        };
+
+        Font labelFont = new Font("Tahoma", Font.PLAIN, 18); // Définir une police plus grande
+
+        JLabel nomLabel = new JLabel(labels[0]);
+        nomLabel.setFont(labelFont);
+        nomField = new JTextField(utilisateur.getUtilisateurNom(), 20);
+        nomField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        nomField.setFont(new Font("Verdana", Font.PLAIN, 18));
+
+        JLabel prenomLabel = new JLabel(labels[1]);
+        prenomLabel.setFont(labelFont);
+        prenomField = new JTextField(utilisateur.getUtilisateurPrenom(), 20);
+        prenomField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        prenomField.setFont(new Font("Verdana", Font.PLAIN, 18));
+
+        JLabel ageLabel = new JLabel(labels[2]);
+        ageLabel.setFont(labelFont);
+        ageField = new JTextField(String.valueOf(utilisateur.getUtilisateurAge()), 20);
+        ageField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        ageField.setFont(new Font("Verdana", Font.PLAIN, 18));
+
+        JLabel telephoneLabel = new JLabel(labels[3]);
+        telephoneLabel.setFont(labelFont);
+        telephoneField = new JTextField(utilisateur.getUtilisateurTel(), 20);
+        telephoneField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        telephoneField.setFont(new Font("Verdana", Font.PLAIN, 18));
+
+        JLabel mailLabel = new JLabel(labels[4]);
+        mailLabel.setFont(labelFont);
+        mailField = new JTextField(utilisateur.getUtilisateurMail(), 20);
+        mailField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        mailField.setFont(new Font("Verdana", Font.PLAIN, 18));
+
+        JLabel passwordLabel = new JLabel(labels[5]);
+        passwordLabel.setFont(labelFont);
+        passwordField = new JPasswordField(utilisateur.getUtilisateurPassword(), 20);
+        passwordField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        passwordField.setFont(new Font("Verdana", Font.PLAIN, 18));
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        formPanel.add(nomLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(nomField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(prenomLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(prenomField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(ageLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(ageField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(telephoneLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(telephoneField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(mailLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(mailField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(passwordLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(passwordField, gbc);
+
+        confirmationLabel = new JLabel("");
+        confirmationLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        confirmationLabel.setForeground(Color.GREEN);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(confirmationLabel, gbc);
+
+        // Bouton Modifier
+        modifierButton = new JButton("Modifier");
+        modifierButton.setPreferredSize(new Dimension(150, 50)); // Augmenter la taille du bouton
+        modifierButton.setFont(new Font("Verdana", Font.BOLD, 20)); // Augmenter la taille de la police
+        modifierButton.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
+        modifierButton.setForeground(Color.WHITE); // Changer la couleur du texte
+        modifierButton.setFocusPainted(false);
+
+        /*modifierButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                utilisateur.getUtilisateurNom(nomField.getText());
+                utilisateur.getUtilisateurPrenom(prenomField.getText());
+                utilisateur.getUtilisateurAge(Integer.parseInt(ageField.getText()));
+                utilisateur.getUtilisateurTel(telephoneField.getText());
+                utilisateur.getUtilisateurMail(mailField.getText());
+                utilisateur.getUtilisateurPassword(new String(passwordField.getPassword()));
+
+                confirmationLabel.setText("Les nouvelles informations ont été enregistrées");
+            }
+        });*/
 
 
-// Panel pour "Nom"
-        JPanel nomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel nomPerso = new JLabel("Nom : ");
-        nomPerso.setFont(new Font("Verdana", Font.PLAIN, 18));
-        nomPanel.add(nomPerso);
-        personnelPanel.add(nomPanel);
 
-// Panel pour "Prénom"
-        JPanel prenomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel prenomPerso = new JLabel("Prénom : ");
-        prenomPerso.setFont(new Font("Verdana", Font.PLAIN, 18));
-        prenomPanel.add(prenomPerso);
-        personnelPanel.add(prenomPanel);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(modifierButton);
 
-// Panel pour "Age"
-        JPanel agePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel agePerso = new JLabel("Age : ");
-        agePerso.setFont(new Font("Verdana", Font.PLAIN, 18));
-        agePanel.add(agePerso);
-        personnelPanel.add(agePanel);
+        JPanel panelGeneral = new JPanel();
+        panelGeneral.setLayout(new BorderLayout());
 
-// Panel pour "Tel"
-        JPanel telPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel telPerso = new JLabel("Tel : ");
-        telPerso.setFont(new Font("Verdana", Font.PLAIN, 18));
-        telPanel.add(telPerso);
-        personnelPanel.add(telPanel);
+        panelGeneral.add(mainPanel, BorderLayout.NORTH);
+        panelGeneral.add(formPanel, BorderLayout.CENTER);
+        panelGeneral.add(buttonPanel, BorderLayout.SOUTH);
 
-// Panel pour "Email"
-        JPanel emailPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel emailPerso = new JLabel("Email : ");
-        emailPerso.setFont(new Font("Verdana", Font.PLAIN, 18));
-        emailPanel.add(emailPerso);
-        personnelPanel.add(emailPanel);
-
-// Panel pour "Mot de passe"
-        JPanel mdpPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel mdpPerso = new JLabel("Mot de passe : ");
-        mdpPerso.setFont(new Font("Verdana", Font.PLAIN, 18));
-        mdpPanel.add(mdpPerso);
-        personnelPanel.add(mdpPanel);
-
-// Espace + bouton Modifier
-        personnelPanel.add(Box.createVerticalStrut(20));
-
-        // Crée le bouton
-        btnModifierCompte = new JButton("Modifier");
-        btnModifierCompte.setPreferredSize(new Dimension(120, 40));
-        btnModifierCompte.setFont(new Font("Verdana", Font.BOLD, 18));
-        btnModifierCompte.setBackground(new Color(221, 235, 247));
-        btnModifierCompte.setFocusPainted(false);
-
-        personnelPanel.add(btnModifierCompte);
-        personnelPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-
-        mainPanel.add(wrapperPanel);
-        mainPanel.add(personnelPanel);
-        mainPanel.add(Box.createVerticalStrut(30));
-
-
-        //add(mainPanel);
-
-        return mainPanel;
+        return panelGeneral;
     }
 
     public static void main(String[] args) {
+        Utilisateur utilisateur = new Patient(1, "Dupont", "Juiph", 30, null, 'M', "juiph.dupont@utilisateurdemerde.com", "jesuisjuif", "0750653945", null);
 
         SwingUtilities.invokeLater(() -> {
-            new Compte().setVisible(true);
+            new Compte(utilisateur).setVisible(true);
         });
     }
 }

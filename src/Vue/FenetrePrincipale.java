@@ -61,7 +61,7 @@ public class FenetrePrincipale {
         inscription = new Inscription();
         accueil = new Accueil();
         rendezvous = new RendezVous();
-        compte = new Compte();
+        compte = new Compte(utilisateurActuel);
         recherche = new RechercheDocteur();
         info = new InfoDocteur();
 
