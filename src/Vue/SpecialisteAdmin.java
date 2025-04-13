@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class Specialiste extends JFrame {
+public class SpecialisteAdmin extends JFrame {
 
     public JButton btnSpecialiste;
     public JButton btnDossierPatients;
@@ -16,7 +16,7 @@ public class Specialiste extends JFrame {
 
 
 
-    public Specialiste() {
+    public SpecialisteAdmin() {
         setTitle("Spécialiste");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,7 +27,7 @@ public class Specialiste extends JFrame {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         // Titre
-        JLabel titleLabel = new JLabel("Spécialiste");
+        JLabel titleLabel = new JLabel("Spécialiste - Admin");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -40,19 +40,15 @@ public class Specialiste extends JFrame {
         JPanel menuPanel = new JPanel();
 
         btnSpecialiste = new JButton("Spécialistes");
-        btnSpecialiste.setPreferredSize(new Dimension(250, 70));
-        btnSpecialiste.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnSpecialiste.setBackground(new Color(45, 104, 196));
+        styleMenuButton(btnSpecialiste);
         btnSpecialiste.setForeground(Color.WHITE);
-        btnSpecialiste.setFocusPainted(false);
+        btnSpecialiste.setBackground(new Color(45, 104, 196));
 
 
 
         btnDossierPatients = new JButton("Dossier Patients");
-        btnDossierPatients.setPreferredSize(new Dimension(250, 70));
-        btnDossierPatients.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnDossierPatients.setBackground(new Color(221, 235, 247));
-        btnDossierPatients.setFocusPainted(false);
+        styleMenuButton(btnDossierPatients);
+
 
 
         menuPanel.add(btnSpecialiste);
@@ -158,7 +154,16 @@ public class Specialiste extends JFrame {
         setVisible(true);
     }
 
+
+    private void styleMenuButton(JButton button) {
+        button.setPreferredSize(new Dimension(250, 70));
+        button.setFont(new Font("Verdana", Font.BOLD, 20));
+        button.setBackground(new Color(221, 235, 247));
+        button.setFocusPainted(false);
+    }
+
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Specialiste::new);
+        SwingUtilities.invokeLater(SpecialisteAdmin::new);
     }
 }

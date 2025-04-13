@@ -5,13 +5,12 @@ import Modele.Specialiste;
 import javax.swing.*;
 import java.awt.*;
 
-public class ModifierInfoDocteur extends JFrame {
+public class ModifierInfoDocteurAdmin extends JFrame {
 
     public JLabel titleLabel;
 
-    public JButton btnAccueil;
-    public JButton btnRendezVous;
-    public JButton btnCompte;
+    public JButton btnSpecialiste;
+    public JButton btnDossierPatients;
 
     public JLabel doctorNameLabel;
     public JTextArea presentationValueLabel;
@@ -23,7 +22,7 @@ public class ModifierInfoDocteur extends JFrame {
 
     public Specialiste specialiste;
 
-    public ModifierInfoDocteur() {
+    public ModifierInfoDocteurAdmin() {
         setTitle("Information spécialiste");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,7 +40,7 @@ public class ModifierInfoDocteur extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Titre
-        titleLabel = new JLabel("Information spécialiste");
+        titleLabel = new JLabel("Information spécialiste - ADMIN");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -53,27 +52,17 @@ public class ModifierInfoDocteur extends JFrame {
         // Menu boutons
         JPanel menuPanel = new JPanel();
 
-        btnAccueil = new JButton("Accueil");
-        btnAccueil.setPreferredSize(new Dimension(250, 70));
-        btnAccueil.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnAccueil.setBackground(new Color(221, 235, 247));
-        btnAccueil.setFocusPainted(false);
+        btnSpecialiste = new JButton("Spécialistes");
+        styleMenuButton(btnSpecialiste);
 
-        btnRendezVous = new JButton("Rendez-vous");
-        btnRendezVous.setPreferredSize(new Dimension(250, 70));
-        btnRendezVous.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnRendezVous.setBackground(new Color(221, 235, 247));
-        btnRendezVous.setFocusPainted(false);
 
-        btnCompte = new JButton("Compte");
-        btnCompte.setPreferredSize(new Dimension(250, 70));
-        btnCompte.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnCompte.setBackground(new Color(221, 235, 247));
-        btnCompte.setFocusPainted(false);
+        btnDossierPatients = new JButton("Dossier Patients");
+        styleMenuButton(btnDossierPatients);
 
-        menuPanel.add(btnAccueil);
-        menuPanel.add(btnRendezVous);
-        menuPanel.add(btnCompte);
+
+        menuPanel.add(btnSpecialiste);
+        menuPanel.add(btnDossierPatients);
+
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
@@ -191,10 +180,17 @@ public class ModifierInfoDocteur extends JFrame {
         return mainPanel;
     }
 
+    private void styleMenuButton(JButton button) {
+        button.setPreferredSize(new Dimension(250, 70));
+        button.setFont(new Font("Verdana", Font.BOLD, 20));
+        button.setBackground(new Color(221, 235, 247));
+        button.setFocusPainted(false);
+    }
+
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(() -> {
-            new InfoDocteur().setVisible(true);
+            new ModifierInfoDocteurAdmin().setVisible(true);
         });
     }
 }

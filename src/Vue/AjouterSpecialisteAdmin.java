@@ -3,18 +3,19 @@ package Vue;
 import javax.swing.*;
 import java.awt.*;
 
-public class AjouterSpecialiste extends JFrame {
+public class AjouterSpecialisteAdmin extends JFrame {
 
     public JTextField nomField;
     public JTextField specialiteField;
     public JTextField adresseField;
     public JTextField tarifField;
-    public JTextField paimentField;
+    public JTextField paiementField;
     public JTextField descriptionField;
     public JButton ajouterButton;
+    public JButton annulerButton;
     public JLabel erreurLabel;
 
-    public AjouterSpecialiste() {
+    public AjouterSpecialisteAdmin() {
         setTitle("Ajouter Specialiste");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1920, 1080);
@@ -42,7 +43,7 @@ public class AjouterSpecialiste extends JFrame {
         // Les champs
         String[] labels = {
                 "Nom :", "Spécialité :", "Adresse :",
-                "Tarif :", "Moyen de paiment acceptés :", "Description :"
+                "Tarif :", "Moyen de paiement acceptés :", "Description :"
         };
 
         Font labelFont = new Font("Verdana", Font.PLAIN, 18); // Définir une police plus grande
@@ -57,31 +58,31 @@ public class AjouterSpecialiste extends JFrame {
         JLabel specialiteLabel = new JLabel(labels[1]);
         specialiteLabel.setFont(labelFont);
         specialiteField = new JTextField(20);
-        specialiteField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        specialiteField.setPreferredSize(new Dimension(400, 40));
         specialiteField.setFont(new Font("Verdana", Font.PLAIN, 18));
 
         JLabel adresseLabel = new JLabel(labels[2]);
         adresseLabel.setFont(labelFont);
         adresseField = new JTextField(20);
-        adresseField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        adresseField.setPreferredSize(new Dimension(400, 40));
         adresseField.setFont(new Font("Verdana", Font.PLAIN, 18));
 
         JLabel tarifLabel = new JLabel(labels[3]);
         tarifLabel.setFont(labelFont);
         tarifField = new JTextField(20);
-        tarifField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        tarifField.setPreferredSize(new Dimension(400, 40));
         tarifField.setFont(new Font("Verdana", Font.PLAIN, 18));
 
-        JLabel paimentLabel = new JLabel(labels[4]);
-        paimentLabel.setFont(labelFont);
-        paimentField = new JTextField(20);
-        paimentField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        paimentField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        JLabel paiementLabel = new JLabel(labels[4]);
+        paiementLabel.setFont(labelFont);
+        paiementField = new JTextField(20);
+        paiementField.setPreferredSize(new Dimension(400, 40));
+        paiementField.setFont(new Font("Verdana", Font.PLAIN, 18));
 
         JLabel descriptionLabel = new JLabel(labels[5]);
         descriptionLabel.setFont(labelFont);
         descriptionField = new JTextField(20);
-        descriptionField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        descriptionField.setPreferredSize(new Dimension(400, 40));
         descriptionField.setFont(new Font("Verdana", Font.PLAIN, 18));
 
 
@@ -111,9 +112,9 @@ public class AjouterSpecialiste extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy++;
-        formPanel.add(paimentLabel, gbc);
+        formPanel.add(paiementLabel, gbc);
         gbc.gridx = 1;
-        formPanel.add(paimentField, gbc);
+        formPanel.add(paiementField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy++;
@@ -140,8 +141,18 @@ public class AjouterSpecialiste extends JFrame {
         ajouterButton.setForeground(Color.WHITE); // Changer la couleur du texte
         ajouterButton.setFocusPainted(false);
 
+
+        // Bouton Annuler
+        annulerButton = new JButton("Annuler");
+        annulerButton.setPreferredSize(new Dimension(150, 50));
+        annulerButton.setFont(new Font("Verdana", Font.BOLD, 20));
+        annulerButton.setBackground(new Color(255, 88, 88));
+        annulerButton.setForeground(Color.WHITE);
+        annulerButton.setFocusPainted(false);
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(ajouterButton);
+        buttonPanel.add(annulerButton);
 
         JPanel panelGeneral = new JPanel();
 
@@ -156,7 +167,7 @@ public class AjouterSpecialiste extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new AjouterSpecialiste().setVisible(true);
+            new AjouterSpecialisteAdmin().setVisible(true);
         });
     }
 }
