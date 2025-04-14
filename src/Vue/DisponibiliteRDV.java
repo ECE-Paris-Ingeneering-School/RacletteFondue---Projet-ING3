@@ -8,7 +8,6 @@ public class DisponibiliteRDV extends JFrame {
 
     public JButton button;
 
-
     public DisponibiliteRDV() {
         setTitle("Disponibilités");
         setSize(900, 500);

@@ -268,11 +268,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                 }
             }
 
-            if (maxIteration == 0) {
-
-                return null;
-            }
-
             //On trie les spécialistes en fonction de l'element le plus pertinent
             if (indexMaxIteration == 0) {
 
