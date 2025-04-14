@@ -18,7 +18,7 @@ public class InfoDocteur extends JFrame {
     public JLabel tarifValueLabel;
     public JLabel paiementValueLabel;
     public JLabel expertiseValueLabel;
-    public JTextArea accessValueLabel;
+    public JLabel accessValueLabel;
     public JButton prendreRDVButton;
 
     public Specialiste specialiste;
@@ -101,7 +101,7 @@ public class InfoDocteur extends JFrame {
         // Panel pour les catégories
         JPanel categoriesPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbcCategories = new GridBagConstraints();
-        gbcCategories.insets = new Insets(10, 10, 10, 10);
+        gbcCategories.insets = new Insets(50, 100, 10, 100);
         gbcCategories.fill = GridBagConstraints.HORIZONTAL;
 
         // Colonne de gauche
@@ -109,9 +109,9 @@ public class InfoDocteur extends JFrame {
         leftColumn.setLayout(new BoxLayout(leftColumn, BoxLayout.Y_AXIS));
 
         JLabel tarifLabel = new JLabel("Tarif & remboursement");
-        tarifLabel.setFont(new Font("Verdana", Font.PLAIN, 22));
+        tarifLabel.setFont(new Font("Verdana", Font.BOLD, 22));
         leftColumn.add(tarifLabel);
-        leftColumn.add(Box.createVerticalStrut(10));
+        leftColumn.add(Box.createVerticalStrut(20));
 
         tarifValueLabel = new JLabel(String.valueOf(specialiste.getSpecialisteTarif()) + " €");
         tarifValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -119,7 +119,7 @@ public class InfoDocteur extends JFrame {
         leftColumn.add(Box.createVerticalStrut(20));
 
         JLabel paiementLabel = new JLabel("Moyen de paiement");
-        paiementLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        paiementLabel.setFont(new Font("Tahoma", Font.BOLD, 22));
         leftColumn.add(paiementLabel);
         leftColumn.add(Box.createVerticalStrut(20));
 
@@ -137,7 +137,7 @@ public class InfoDocteur extends JFrame {
         rightColumn.setLayout(new BoxLayout(rightColumn, BoxLayout.Y_AXIS));
 
         JLabel expertiseLabel = new JLabel("Expertise");
-        expertiseLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        expertiseLabel.setFont(new Font("Tahoma", Font.BOLD, 22));
         rightColumn.add(expertiseLabel);
         rightColumn.add(Box.createVerticalStrut(20));
 
@@ -147,11 +147,13 @@ public class InfoDocteur extends JFrame {
         rightColumn.add(Box.createVerticalStrut(20));
 
         JLabel accessLabel = new JLabel("Information d'accès");
-        accessLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        accessLabel.setFont(new Font("Tahoma", Font.BOLD, 22));
         rightColumn.add(accessLabel);
         rightColumn.add(Box.createVerticalStrut(20));
 
-        accessValueLabel = new JTextArea(specialiste.getUtilisateurAdresse().getAdresseNumero() + " " + specialiste.getUtilisateurAdresse().getAdresseRue());
+        String adresse = specialiste.getUtilisateurAdresse().getAdresseNumero() + " " + specialiste.getUtilisateurAdresse().getAdresseRue();
+
+        accessValueLabel = new JLabel(adresse);
         accessValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         accessValueLabel.setBackground(null);
         accessValueLabel.setBorder(null);
