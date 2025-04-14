@@ -14,12 +14,14 @@ public class Compte extends JFrame {
     public JButton btnAccueil;
     public JButton btnRendezVous;
     public JButton btnCompte;
+    public JTextField imageField;
     public JTextField nomField;
     public JTextField prenomField;
     public JTextField ageField;
     public JTextField telephoneField;
     public JTextField mailField;
     public JPasswordField passwordField;
+    public JTextField adresseField;
     public JButton modifierButton;
     public JLabel confirmationLabel;
 
@@ -97,54 +99,74 @@ public class Compte extends JFrame {
 
         // Les champs
         String[] labels = {
+                "Photo de profil :",
                 "Nom :",
                 "Prénom :",
                 "Age :",
                 "Numéro de téléphone :",
                 "Mail :",
-                "Mot de passe :"
+                "Mot de passe :",
+                "Adresse :"
         };
 
         Font labelFont = new Font("Tahoma", Font.PLAIN, 18); // Définir une police plus grande
 
-        JLabel nomLabel = new JLabel(labels[0]);
+        JLabel imageLabel = new JLabel(labels[0]);
+        imageLabel.setFont(labelFont);
+        imageField = new JTextField(utilisateur.getUtilisateurImage(), 20);
+        imageField.setPreferredSize(new Dimension(100, 100)); // Augmenter la taille de l'image
+        imageField.setFont(new Font("Tahoma", Font.PLAIN, 18)); //pas nécessaire pour une image mais je code à l'aveugle
+
+        JLabel nomLabel = new JLabel(labels[1]);
         nomLabel.setFont(labelFont);
         nomField = new JTextField(utilisateur.getUtilisateurNom(), 20);
         nomField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        nomField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        nomField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-        JLabel prenomLabel = new JLabel(labels[1]);
+        JLabel prenomLabel = new JLabel(labels[2]);
         prenomLabel.setFont(labelFont);
         prenomField = new JTextField(utilisateur.getUtilisateurPrenom(), 20);
         prenomField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        prenomField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        prenomField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-        JLabel ageLabel = new JLabel(labels[2]);
+        JLabel ageLabel = new JLabel(labels[3]);
         ageLabel.setFont(labelFont);
         ageField = new JTextField(String.valueOf(utilisateur.getUtilisateurAge()), 20);
         ageField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        ageField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        ageField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-        JLabel telephoneLabel = new JLabel(labels[3]);
+        JLabel telephoneLabel = new JLabel(labels[4]);
         telephoneLabel.setFont(labelFont);
         telephoneField = new JTextField(utilisateur.getUtilisateurTel(), 20);
         telephoneField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        telephoneField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        telephoneField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-        JLabel mailLabel = new JLabel(labels[4]);
+        JLabel mailLabel = new JLabel(labels[5]);
         mailLabel.setFont(labelFont);
         mailField = new JTextField(utilisateur.getUtilisateurMail(), 20);
         mailField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        mailField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        mailField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-        JLabel passwordLabel = new JLabel(labels[5]);
+        JLabel passwordLabel = new JLabel(labels[6]);
         passwordLabel.setFont(labelFont);
         passwordField = new JPasswordField(utilisateur.getUtilisateurPassword(), 20);
         passwordField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        passwordField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        passwordField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+        JLabel adresseLabel = new JLabel(labels[7]);
+        adresseLabel.setFont(labelFont);
+        adresseField = new JTextField(String.valueOf(utilisateur.getUtilisateurAdresse()), 20);
+        adresseField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        adresseField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         gbc.gridx = 0;
         gbc.gridy = 0;
+        formPanel.add(imageLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(imageField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
         formPanel.add(nomLabel, gbc);
         gbc.gridx = 1;
         formPanel.add(nomField, gbc);
@@ -178,6 +200,12 @@ public class Compte extends JFrame {
         formPanel.add(passwordLabel, gbc);
         gbc.gridx = 1;
         formPanel.add(passwordField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(adresseLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(adresseField, gbc);
 
         confirmationLabel = new JLabel("");
         confirmationLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
