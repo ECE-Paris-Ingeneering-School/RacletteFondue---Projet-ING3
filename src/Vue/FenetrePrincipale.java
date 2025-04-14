@@ -180,6 +180,11 @@ public class FenetrePrincipale {
         compte.repaint();
     }
 
+    public void updateRendezvous() {
+
+
+    }
+
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(FenetrePrincipale::new);

@@ -151,7 +151,7 @@ public class InfoDocteur extends JFrame {
         rightColumn.add(accessLabel);
         rightColumn.add(Box.createVerticalStrut(20));
 
-        accessValueLabel = new JTextArea(specialiste.getUtilisateurAdresse().getAdresseNumero() + " " + specialiste.getUtilisateurAdresse().getAdresseRue());
+        accessValueLabel = new JTextArea("                     " + specialiste.getUtilisateurAdresse().getAdresseNumero() + " " + specialiste.getUtilisateurAdresse().getAdresseRue());
         accessValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         accessValueLabel.setBackground(null);
         accessValueLabel.setBorder(null);

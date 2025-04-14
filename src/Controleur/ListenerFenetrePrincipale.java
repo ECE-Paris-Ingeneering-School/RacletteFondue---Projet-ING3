@@ -106,6 +106,8 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 || source == fenetre.recherche.btnRendezVous
                 || source == fenetre.info.btnRendezVous) {
 
+
+
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RENDEZVOUS);
 
         } else if (source == fenetre.accueil.btnCompte
@@ -172,13 +174,10 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             if (source == nameLabel) {
 
-                System.out.println("Le nameLabel est :" + nameLabel.getText());
-
                 fenetre.updateInfoDocteur(fenetre.recherche.mapSpecialistes.get(nameLabel));
 
                 fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INFODOCTEUR);
 
-                System.out.println("feur");
             }
         }
     }
