@@ -62,7 +62,13 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             String prenom = fenetre.inscription.prenomField.getText();
             String age = fenetre.inscription.ageField.getText();
             String telephone = fenetre.inscription.telephoneField.getText();
-            String adresse = fenetre.inscription.adresseField.getText();
+            String numero = fenetre.inscription.numeroField.getText();
+            String rue = fenetre.inscription.rueField.getText();
+            String codePostal = fenetre.inscription.codePostalField.getText();
+            String ville = fenetre.inscription.villeField.getText();
+
+
+
             JRadioButton homme = fenetre.inscription.hommeRadio;
             JRadioButton femme = fenetre.inscription.femmeRadio;
 
@@ -81,7 +87,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                     sexe = 'F';
                 }
 
-                Adresse adressePatient = new Adresse(0, "", "", "0");
+                Adresse adressePatient = new Adresse(Integer.parseInt(codePostal), ville, rue, numero);
 
                 Patient patient = new Patient(0, nom, prenom, Integer.parseInt(age), adressePatient, sexe, mail, password, telephone, "");
 
