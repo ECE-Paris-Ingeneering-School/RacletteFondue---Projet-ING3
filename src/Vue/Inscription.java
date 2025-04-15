@@ -12,7 +12,10 @@ public class Inscription extends JFrame {
     public JTextField prenomField;
     public JTextField ageField;
     public JTextField telephoneField;
-    public JTextField adresseField;
+    public JTextField numeroField;
+    public JTextField rueField;
+    public JTextField codePostalField;
+    public JTextField villeField;
     public JRadioButton hommeRadio;
     public JRadioButton femmeRadio;
     public JButton inscrireButton;
@@ -26,6 +29,30 @@ public class Inscription extends JFrame {
 
         setContentPane(buildPanel());
     }
+
+    private void addPlaceholder(JTextField textField, String placeholder) {
+        textField.setForeground(Color.GRAY);
+        textField.setText(placeholder);
+
+        textField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(Color.GRAY);
+                    textField.setText(placeholder);
+                }
+            }
+        });
+    }
+
 
     public JPanel buildPanel() {
 
@@ -157,17 +184,45 @@ public class Inscription extends JFrame {
         sexePanel.add(femmeRadio);
         formPanel.add(sexePanel, gbc);
 
-        JLabel adresseLabel = new JLabel(labels[8]);
+        JLabel adresseLabel = new JLabel("Adresse :");
         adresseLabel.setFont(labelFont);
-        adresseField = new JTextField(20);
-        adresseField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        adresseField.setFont(new Font("Verdana", Font.PLAIN, 18));
+
+        numeroField = new JTextField(String.valueOf(36), 5);
+        numeroField.setFont(labelFont);
+        numeroField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        addPlaceholder(numeroField, "N°");
+
+        rueField = new JTextField("15", 5);
+        rueField.setFont(labelFont);
+        rueField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        addPlaceholder(rueField, "Rue");
+
+        codePostalField = new JTextField(String.valueOf(13), 10);
+        //codePostalField = new JTextField(String.valueOf(utilisateur.getUtilisateurAdresse().getAdresseCodePostal()), 10);
+        codePostalField.setFont(labelFont);
+        codePostalField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        addPlaceholder(codePostalField, "Code postal");
+
+        villeField = new JTextField("14", 10);
+        //villeField = new JTextField(utilisateur.getUtilisateurAdresse().getAdresseVille(), 10);
+        villeField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
+        villeField.setFont(labelFont);
+        addPlaceholder(villeField, "Ville");
+
+        JPanel adressePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        adressePanel.add(numeroField);
+        adressePanel.add(rueField);
+        adressePanel.add(codePostalField);
+        adressePanel.add(villeField);
 
         gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridwidth = 1;
         formPanel.add(adresseLabel, gbc);
+
         gbc.gridx = 1;
-        formPanel.add(adresseField, gbc);
+        formPanel.add(adressePanel, gbc);
+
 
         erreurLabel = new JLabel("");
         erreurLabel.setFont(new Font("Verdana", Font.PLAIN, 18));

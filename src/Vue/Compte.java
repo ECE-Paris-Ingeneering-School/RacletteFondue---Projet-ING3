@@ -4,26 +4,29 @@ import Modele.Patient;
 import Modele.Utilisateur;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-
 
 public class Compte extends JFrame {
 
     public JButton btnAccueil;
     public JButton btnRendezVous;
     public JButton btnCompte;
+    public JLabel imageField;
+    public JButton btnChangerImage;
     public JTextField nomField;
     public JTextField prenomField;
     public JTextField ageField;
     public JTextField telephoneField;
     public JTextField mailField;
     public JPasswordField passwordField;
+    public JTextField numeroField;
+    public JTextField rueField;
+    public JTextField codePostalField;
+    public JTextField villeField;
     public JButton modifierButton;
     public JLabel confirmationLabel;
 
     public Utilisateur utilisateur;
+
 
     public Compte() {
         setTitle("Informations du compte");
@@ -34,12 +37,35 @@ public class Compte extends JFrame {
         setContentPane(buildPanel());
     }
 
+    private void addPlaceholder(JTextField textField, String placeholder) {
+        textField.setForeground(Color.GRAY);
+        textField.setText(placeholder);
+
+        textField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(Color.GRAY);
+                    textField.setText(placeholder);
+                }
+            }
+        });
+    }
+
+
     public JPanel buildPanel() {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-        // Titre "Compte"
         JLabel titleLabel = new JLabel("Compte");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
@@ -49,24 +75,23 @@ public class Compte extends JFrame {
         mainPanel.add(titleLabel);
         mainPanel.add(Box.createVerticalStrut(20));
 
-        // Menu boutons
         JPanel menuPanel = new JPanel();
 
         btnAccueil = new JButton("Accueil");
         btnAccueil.setPreferredSize(new Dimension(250, 70));
-        btnAccueil.setFont(new Font("Verdana", Font.BOLD, 20));
+        btnAccueil.setFont(new Font("Tahoma", Font.BOLD, 20));
         btnAccueil.setBackground(new Color(221, 235, 247));
         btnAccueil.setFocusPainted(false);
 
         btnRendezVous = new JButton("Rendez-vous");
         btnRendezVous.setPreferredSize(new Dimension(250, 70));
-        btnRendezVous.setFont(new Font("Verdana", Font.BOLD, 20));
+        btnRendezVous.setFont(new Font("Tahoma", Font.BOLD, 20));
         btnRendezVous.setBackground(new Color(221, 235, 247));
         btnRendezVous.setFocusPainted(false);
 
         btnCompte = new JButton("Compte");
         btnCompte.setPreferredSize(new Dimension(250, 70));
-        btnCompte.setFont(new Font("Verdana", Font.BOLD, 20));
+        btnCompte.setFont(new Font("Tahoma", Font.BOLD, 20));
         btnCompte.setForeground(Color.WHITE);
         btnCompte.setBackground(new Color(45, 104, 196));
         btnCompte.setFocusPainted(false);
@@ -77,77 +102,78 @@ public class Compte extends JFrame {
         mainPanel.add(menuPanel);
         mainPanel.add(Box.createVerticalStrut(20));
 
+
         if (utilisateur == null) {
 
             return mainPanel;
         }
 
-        // Label "Informations personnelles"
-        JLabel infoPerso = new JLabel("Informations personnelles");
-        infoPerso.setFont(new Font("Verdana", Font.BOLD, 24));
-        infoPerso.setAlignmentX(Component.CENTER_ALIGNMENT);
-        mainPanel.add(infoPerso);
-        mainPanel.add(Box.createVerticalStrut(20));
 
-        // Panel principal avec GridBagLayout
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Augmenter les marges pour une meilleure lisibilité
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Les champs
-        String[] labels = {
-                "Nom :",
-                "Prénom :",
-                "Age :",
-                "Numéro de téléphone :",
-                "Mail :",
-                "Mot de passe :"
-        };
+        Font labelFont = new Font("Tahoma", Font.PLAIN, 18);
 
-        Font labelFont = new Font("Tahoma", Font.PLAIN, 18); // Définir une police plus grande
+        // Affichage image
+        ImageIcon imageIcon = new ImageIcon("C:\\Users\\lucie\\OneDrive - Groupe INSEEC (POCE)\\Bureau\\ECE\\ECE3\\Paris\\Java\\RacletteFondue---Projet-ING3\\src\\Vue\\timothe.jpg");
+        //ImageIcon imageIcon = new ImageIcon(utilisateur.getUtilisateurImage());
+        Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        imageField = new JLabel(new ImageIcon(image));
 
-        JLabel nomLabel = new JLabel(labels[0]);
-        nomLabel.setFont(labelFont);
-        nomField = new JTextField(utilisateur.getUtilisateurNom(), 20);
-        nomField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        nomField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        btnChangerImage = new JButton("Changer votre photo");
+        //btnChangerImage.setPreferredSize(new Dimension(200, 25)); // Augmenter la taille du bouton
+        btnChangerImage.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnChangerImage.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
+        btnChangerImage.setForeground(Color.WHITE);
+        btnChangerImage.setFocusPainted(false);
 
-        JLabel prenomLabel = new JLabel(labels[1]);
-        prenomLabel.setFont(labelFont);
-        prenomField = new JTextField(utilisateur.getUtilisateurPrenom(), 20);
-        prenomField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        prenomField.setFont(new Font("Verdana", Font.PLAIN, 18));
 
-        JLabel ageLabel = new JLabel(labels[2]);
-        ageLabel.setFont(labelFont);
-        ageField = new JTextField(String.valueOf(utilisateur.getUtilisateurAge()), 20);
-        ageField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        ageField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        btnChangerImage.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            int result = fileChooser.showOpenDialog(this);
 
-        JLabel telephoneLabel = new JLabel(labels[3]);
-        telephoneLabel.setFont(labelFont);
-        telephoneField = new JTextField(utilisateur.getUtilisateurTel(), 20);
-        telephoneField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        telephoneField.setFont(new Font("Verdana", Font.PLAIN, 18));
+            if (result == JFileChooser.APPROVE_OPTION) {
+                java.io.File selectedFile = fileChooser.getSelectedFile();
+                ImageIcon newIcon = new ImageIcon(selectedFile.getAbsolutePath());
+                Image newImage = newIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                imageField.setIcon(new ImageIcon(newImage));
+            }
+        });
 
-        JLabel mailLabel = new JLabel(labels[4]);
-        mailLabel.setFont(labelFont);
-        mailField = new JTextField(utilisateur.getUtilisateurMail(), 20);
-        mailField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        mailField.setFont(new Font("Verdana", Font.PLAIN, 18));
 
-        JLabel passwordLabel = new JLabel(labels[5]);
-        passwordLabel.setFont(labelFont);
-        passwordField = new JPasswordField(utilisateur.getUtilisateurPassword(), 20);
-        passwordField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        passwordField.setFont(new Font("Verdana", Font.PLAIN, 18));
-
+        JLabel imageLabel = new JLabel("Photo de profil :");
+        imageLabel.setFont(labelFont);
         gbc.gridx = 0;
         gbc.gridy = 0;
+        formPanel.add(imageLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(imageField, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy++;
+        formPanel.add(btnChangerImage, gbc);
+
+        // Champs
+        JLabel nomLabel = new JLabel("Nom :");
+        nomLabel.setFont(labelFont);
+        //nomField = new JTextField("Jacquier", 20);
+        nomField = new JTextField(utilisateur.getUtilisateurNom(), 20);
+        nomField.setFont(labelFont);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
         formPanel.add(nomLabel, gbc);
         gbc.gridx = 1;
         formPanel.add(nomField, gbc);
+
+        JLabel prenomLabel = new JLabel("Prénom :");
+        prenomLabel.setFont(labelFont);
+        //prenomField = new JTextField("Ma meuf", 20);
+        prenomField = new JTextField(utilisateur.getUtilisateurPrenom(), 20);
+        prenomField.setFont(labelFont);
 
         gbc.gridx = 0;
         gbc.gridy++;
@@ -155,11 +181,23 @@ public class Compte extends JFrame {
         gbc.gridx = 1;
         formPanel.add(prenomField, gbc);
 
+        JLabel ageLabel = new JLabel("Age :");
+        ageLabel.setFont(labelFont);
+        //ageField = new JTextField(String.valueOf("20"), 20);
+        ageField = new JTextField(String.valueOf(utilisateur.getUtilisateurAge()), 20);
+        ageField.setFont(labelFont);
+
         gbc.gridx = 0;
         gbc.gridy++;
         formPanel.add(ageLabel, gbc);
         gbc.gridx = 1;
         formPanel.add(ageField, gbc);
+
+        JLabel telephoneLabel = new JLabel("Numéro de téléphone :");
+        telephoneLabel.setFont(labelFont);
+        //telephoneField = new JTextField("07.68.65.39.45", 20);
+        telephoneField = new JTextField(utilisateur.getUtilisateurTel(), 20);
+        telephoneField.setFont(labelFont);
 
         gbc.gridx = 0;
         gbc.gridy++;
@@ -167,11 +205,23 @@ public class Compte extends JFrame {
         gbc.gridx = 1;
         formPanel.add(telephoneField, gbc);
 
+        JLabel mailLabel = new JLabel("Mail :");
+        mailLabel.setFont(labelFont);
+        //mailField = new JTextField("lucie.daix@orange.fr", 20);
+        mailField = new JTextField(utilisateur.getUtilisateurMail(), 20);
+        mailField.setFont(labelFont);
+
         gbc.gridx = 0;
         gbc.gridy++;
         formPanel.add(mailLabel, gbc);
         gbc.gridx = 1;
         formPanel.add(mailField, gbc);
+
+        JLabel passwordLabel = new JLabel("Mot de passe :");
+        passwordLabel.setFont(labelFont);
+        //passwordField = new JPasswordField("caca", 20);
+        passwordField = new JPasswordField(utilisateur.getUtilisateurPassword(), 20);
+        passwordField.setFont(labelFont);
 
         gbc.gridx = 0;
         gbc.gridy++;
@@ -179,37 +229,58 @@ public class Compte extends JFrame {
         gbc.gridx = 1;
         formPanel.add(passwordField, gbc);
 
+        JLabel adresseLabel = new JLabel("Adresse :");
+        adresseLabel.setFont(labelFont);
+
+        //numeroField = new JTextField(String.valueOf(36), 5);
+        numeroField = new JTextField(utilisateur.getUtilisateurAdresse().getAdresseNumero(), 5);
+        numeroField.setFont(labelFont);
+        addPlaceholder(numeroField, "N°");
+
+        //rueField = new JTextField("15", 5);
+        rueField = new JTextField(utilisateur.getUtilisateurAdresse().getAdresseRue(), 5);
+        rueField.setFont(labelFont);
+        addPlaceholder(rueField, "Rue");
+
+        //codePostalField = new JTextField(String.valueOf(13), 10);
+        codePostalField = new JTextField(String.valueOf(utilisateur.getUtilisateurAdresse().getAdresseCodePostal()), 10);
+        codePostalField.setFont(labelFont);
+        addPlaceholder(codePostalField, "Code postal");
+
+        //villeField = new JTextField("14", 10);
+        villeField = new JTextField(utilisateur.getUtilisateurAdresse().getAdresseVille(), 10);
+        villeField.setFont(labelFont);
+        addPlaceholder(villeField, "Ville");
+
+        JPanel adressePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        adressePanel.add(numeroField);
+        adressePanel.add(rueField);
+        adressePanel.add(codePostalField);
+        adressePanel.add(villeField);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 1;
+        formPanel.add(adresseLabel, gbc);
+
+        gbc.gridx = 1;
+        formPanel.add(adressePanel, gbc);
+
         confirmationLabel = new JLabel("");
-        confirmationLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        confirmationLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         confirmationLabel.setForeground(Color.GREEN);
 
         gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridwidth = 2;
         formPanel.add(confirmationLabel, gbc);
 
-        // Bouton Modifier
         modifierButton = new JButton("Modifier");
-        modifierButton.setPreferredSize(new Dimension(150, 50)); // Augmenter la taille du bouton
-        modifierButton.setFont(new Font("Verdana", Font.BOLD, 20)); // Augmenter la taille de la police
-        modifierButton.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
-        modifierButton.setForeground(Color.WHITE); // Changer la couleur du texte
+        modifierButton.setPreferredSize(new Dimension(150, 50));
+        modifierButton.setFont(new Font("Tahoma", Font.BOLD, 20));
+        modifierButton.setBackground(new Color(45, 104, 196));
+        modifierButton.setForeground(Color.WHITE);
         modifierButton.setFocusPainted(false);
-
-        /*modifierButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                utilisateur.getUtilisateurNom(nomField.getText());
-                utilisateur.getUtilisateurPrenom(prenomField.getText());
-                utilisateur.getUtilisateurAge(Integer.parseInt(ageField.getText()));
-                utilisateur.getUtilisateurTel(telephoneField.getText());
-                utilisateur.getUtilisateurMail(mailField.getText());
-                utilisateur.getUtilisateurPassword(new String(passwordField.getPassword()));
-
-                confirmationLabel.setText("Les nouvelles informations ont été enregistrées");
-            }
-        });*/
-
-
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(modifierButton);
@@ -225,7 +296,6 @@ public class Compte extends JFrame {
     }
 
     public static void main(String[] args) {
-
         SwingUtilities.invokeLater(() -> {
             new Compte().setVisible(true);
         });
