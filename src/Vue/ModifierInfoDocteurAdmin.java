@@ -11,6 +11,7 @@ public class ModifierInfoDocteurAdmin extends JFrame {
 
     public JButton btnSpecialiste;
     public JButton btnDossierPatients;
+    public JButton btnStatistiques;
 
     public JLabel doctorNameLabel;
     public JTextArea presentationValueLabel;
@@ -55,13 +56,15 @@ public class ModifierInfoDocteurAdmin extends JFrame {
         btnSpecialiste = new JButton("Spécialistes");
         styleMenuButton(btnSpecialiste);
 
-
         btnDossierPatients = new JButton("Dossier Patients");
         styleMenuButton(btnDossierPatients);
 
+        btnStatistiques = new JButton("Statistiques");
+        styleMenuButton(btnStatistiques);
 
         menuPanel.add(btnSpecialiste);
         menuPanel.add(btnDossierPatients);
+        menuPanel.add(btnStatistiques);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -140,7 +143,7 @@ public class ModifierInfoDocteurAdmin extends JFrame {
         rightColumn.add(Box.createVerticalStrut(20));
 
         expertiseValueLabel = new JLabel(specialiste.getSpecialisteSpecialite());
-        expertiseValueLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        expertiseValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         rightColumn.add(expertiseValueLabel);
         rightColumn.add(Box.createVerticalStrut(20));
 
@@ -182,7 +185,7 @@ public class ModifierInfoDocteurAdmin extends JFrame {
 
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
-        button.setFont(new Font("Verdana", Font.BOLD, 20));
+        button.setFont(new Font("Tahoma", Font.BOLD, 20));
         button.setBackground(new Color(221, 235, 247));
         button.setFocusPainted(false);
     }

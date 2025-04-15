@@ -43,19 +43,19 @@ public class Connexion extends JFrame {
                 "Mail :", "Mot de passe :"
         };
 
-        Font labelFont = new Font("Verdana", Font.PLAIN, 18); // Définir une police plus grande
+        Font labelFont = new Font("Tahoma", Font.PLAIN, 18); // Définir une police plus grande
 
         JLabel mailLabel = new JLabel(labels[0]);
         mailLabel.setFont(labelFont);
         mailField = new JTextField(20);
         mailField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        mailField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        mailField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel passwordLabel = new JLabel(labels[1]);
         passwordLabel.setFont(labelFont);
         passwordField = new JPasswordField(20);
         passwordField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        passwordField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        passwordField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         erreurLabel = new JLabel("");
         erreurLabel.setFont(labelFont);
@@ -83,7 +83,7 @@ public class Connexion extends JFrame {
         // Bouton Connexion
         connexionButton = new JButton("Connexion");
         connexionButton.setPreferredSize(new Dimension(200, 50)); // Augmenter la taille du bouton
-        connexionButton.setFont(new Font("Verdana", Font.BOLD, 20)); // Augmenter la taille de la police
+        connexionButton.setFont(new Font("Tahoma", Font.BOLD, 20)); // Augmenter la taille de la police
         connexionButton.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
         connexionButton.setForeground(Color.WHITE); // Changer la couleur du texte
         connexionButton.setFocusPainted(false);
@@ -95,7 +95,7 @@ public class Connexion extends JFrame {
 
         // Texte cliquable
         createAccountLabel = new JLabel("Pas de compte ? Créez-en un !");
-        createAccountLabel.setFont(new Font("Verdana", Font.PLAIN, 16));
+        createAccountLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         createAccountLabel.setForeground(new Color(45, 104, 196));
         createAccountLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         gbc.gridy++;

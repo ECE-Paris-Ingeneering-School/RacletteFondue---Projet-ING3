@@ -31,7 +31,7 @@ public class ConfirmationRDV extends JFrame {
 
         // Texte de confirmation
         confirmationText = new JLabel("Voulez-vous confirmer votre RDV avec Dr. ... le ../../.. à ..:.. ?");
-        confirmationText.setFont(new Font("Verdana", Font.PLAIN, 24));
+        confirmationText.setFont(new Font("Tahoma", Font.PLAIN, 24));
         confirmationText.setHorizontalAlignment(SwingConstants.CENTER);
 
         gbc.gridx = 0;
@@ -44,7 +44,7 @@ public class ConfirmationRDV extends JFrame {
         // Bouton Confirmer
         confirmerButton = new JButton("Confirmer");
         confirmerButton.setPreferredSize(new Dimension(200, 50)); // Augmenter la taille du bouton
-        confirmerButton.setFont(new Font("Verdana", Font.BOLD, 20)); // Augmenter la taille de la police
+        confirmerButton.setFont(new Font("Tahoma", Font.BOLD, 20)); // Augmenter la taille de la police
         confirmerButton.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
         confirmerButton.setForeground(Color.WHITE); // Changer la couleur du texte
         confirmerButton.setFocusPainted(false);

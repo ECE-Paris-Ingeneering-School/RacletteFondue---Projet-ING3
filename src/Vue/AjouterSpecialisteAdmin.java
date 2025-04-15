@@ -46,44 +46,44 @@ public class AjouterSpecialisteAdmin extends JFrame {
                 "Tarif :", "Moyen de paiement acceptés :", "Description :"
         };
 
-        Font labelFont = new Font("Verdana", Font.PLAIN, 18); // Définir une police plus grande
+        Font labelFont = new Font("Tahoma", Font.PLAIN, 18); // Définir une police plus grande
 
         JLabel nomLabel = new JLabel(labels[0]);
         nomLabel.setFont(labelFont);
         nomField = new JTextField(20);
         nomField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        nomField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        nomField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 
         JLabel specialiteLabel = new JLabel(labels[1]);
         specialiteLabel.setFont(labelFont);
         specialiteField = new JTextField(20);
         specialiteField.setPreferredSize(new Dimension(400, 40));
-        specialiteField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        specialiteField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel adresseLabel = new JLabel(labels[2]);
         adresseLabel.setFont(labelFont);
         adresseField = new JTextField(20);
         adresseField.setPreferredSize(new Dimension(400, 40));
-        adresseField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        adresseField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel tarifLabel = new JLabel(labels[3]);
         tarifLabel.setFont(labelFont);
         tarifField = new JTextField(20);
         tarifField.setPreferredSize(new Dimension(400, 40));
-        tarifField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        tarifField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel paiementLabel = new JLabel(labels[4]);
         paiementLabel.setFont(labelFont);
         paiementField = new JTextField(20);
         paiementField.setPreferredSize(new Dimension(400, 40));
-        paiementField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        paiementField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel descriptionLabel = new JLabel(labels[5]);
         descriptionLabel.setFont(labelFont);
         descriptionField = new JTextField(20);
         descriptionField.setPreferredSize(new Dimension(400, 40));
-        descriptionField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        descriptionField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 
         gbc.gridx = 0;
@@ -125,7 +125,7 @@ public class AjouterSpecialisteAdmin extends JFrame {
 
 
         erreurLabel = new JLabel("");
-        erreurLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        erreurLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         erreurLabel.setForeground(Color.RED);
 
         gbc.gridx = 0;
@@ -136,7 +136,7 @@ public class AjouterSpecialisteAdmin extends JFrame {
         // Bouton Ajouter
         ajouterButton = new JButton("Ajouter");
         ajouterButton.setPreferredSize(new Dimension(150, 50)); // Augmenter la taille du bouton
-        ajouterButton.setFont(new Font("Verdana", Font.BOLD, 20)); // Augmenter la taille de la police
+        ajouterButton.setFont(new Font("Tahoma", Font.BOLD, 20)); // Augmenter la taille de la police
         ajouterButton.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
         ajouterButton.setForeground(Color.WHITE); // Changer la couleur du texte
         ajouterButton.setFocusPainted(false);
@@ -145,7 +145,7 @@ public class AjouterSpecialisteAdmin extends JFrame {
         // Bouton Annuler
         annulerButton = new JButton("Annuler");
         annulerButton.setPreferredSize(new Dimension(150, 50));
-        annulerButton.setFont(new Font("Verdana", Font.BOLD, 20));
+        annulerButton.setFont(new Font("Tahoma", Font.BOLD, 20));
         annulerButton.setBackground(new Color(255, 88, 88));
         annulerButton.setForeground(Color.WHITE);
         annulerButton.setFocusPainted(false);

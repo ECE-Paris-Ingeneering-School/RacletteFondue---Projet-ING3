@@ -109,7 +109,7 @@ public class InfoDocteur extends JFrame {
         leftColumn.setLayout(new BoxLayout(leftColumn, BoxLayout.Y_AXIS));
 
         JLabel tarifLabel = new JLabel("Tarif & remboursement");
-        tarifLabel.setFont(new Font("Verdana", Font.BOLD, 22));
+        tarifLabel.setFont(new Font("Tahoma", Font.BOLD, 22));
         leftColumn.add(tarifLabel);
         leftColumn.add(Box.createVerticalStrut(20));
 
@@ -186,7 +186,7 @@ public class InfoDocteur extends JFrame {
 
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
-        button.setFont(new Font("Verdana", Font.BOLD, 20));
+        button.setFont(new Font("Tahoma", Font.BOLD, 20));
         button.setBackground(new Color(221, 235, 247));
         button.setFocusPainted(false);
     }

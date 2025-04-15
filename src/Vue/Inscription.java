@@ -75,49 +75,49 @@ public class Inscription extends JFrame {
                 "Nom :", "Prénom :", "Âge :", "Numéro de téléphone :", "Sexe :", "Adresse postale :"
         };
 
-        Font labelFont = new Font("Verdana", Font.PLAIN, 18); // Définir une police plus grande
+        Font labelFont = new Font("Tahoma", Font.PLAIN, 18); // Définir une police plus grande
 
         JLabel mailLabel = new JLabel(labels[0]);
         mailLabel.setFont(labelFont);
         mailField = new JTextField(20);
         mailField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        mailField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        mailField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel passwordLabel = new JLabel(labels[1]);
         passwordLabel.setFont(labelFont);
         passwordField = new JPasswordField(20);
         passwordField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        passwordField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        passwordField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel confirmPasswordLabel = new JLabel(labels[2]);
         confirmPasswordLabel.setFont(labelFont);
         confirmPasswordField = new JPasswordField(20);
         confirmPasswordField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        confirmPasswordField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        confirmPasswordField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel nomLabel = new JLabel(labels[3]);
         nomLabel.setFont(labelFont);
         nomField = new JTextField(20);
         nomField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        nomField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        nomField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel prenomLabel = new JLabel(labels[4]);
         prenomLabel.setFont(labelFont);
         prenomField = new JTextField(20);
         prenomField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        prenomField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        prenomField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel ageLabel = new JLabel(labels[5]);
         ageLabel.setFont(labelFont);
         ageField = new JTextField(20);
         ageField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        ageField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        ageField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel telephoneLabel = new JLabel(labels[6]);
         telephoneLabel.setFont(labelFont);
         telephoneField = new JTextField(20);
         telephoneField.setPreferredSize(new Dimension(400, 40)); // Augmenter la taille du champ
-        telephoneField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        telephoneField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         // Agrandir les labels Sexe et les boutons radio Homme et Femme
         JLabel sexeLabel = new JLabel(labels[7]);
@@ -225,7 +225,7 @@ public class Inscription extends JFrame {
 
 
         erreurLabel = new JLabel("");
-        erreurLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        erreurLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         erreurLabel.setForeground(Color.RED);
 
         gbc.gridx = 0;
@@ -237,7 +237,7 @@ public class Inscription extends JFrame {
         // Bouton S'inscrire
         inscrireButton = new JButton("S'inscrire");
         inscrireButton.setPreferredSize(new Dimension(150, 50)); // Augmenter la taille du bouton
-        inscrireButton.setFont(new Font("Verdana", Font.BOLD, 20)); // Augmenter la taille de la police
+        inscrireButton.setFont(new Font("Tahoma", Font.BOLD, 20)); // Augmenter la taille de la police
         inscrireButton.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
         inscrireButton.setForeground(Color.WHITE); // Changer la couleur du texte
         inscrireButton.setFocusPainted(false);

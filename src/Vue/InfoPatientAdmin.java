@@ -33,7 +33,7 @@ public class InfoPatientAdmin extends JFrame {
         infoPanel.setMaximumSize(new Dimension(600, 200));
         infoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        Font labelFont = new Font("Verdana", Font.PLAIN, 20);
+        Font labelFont = new Font("Tahoma", Font.PLAIN, 20);
 
         infoPanel.add(createInfoLabel("Nom :", labelFont));
         infoPanel.add(createInfoLabel("__________", labelFont));
@@ -96,7 +96,7 @@ public class InfoPatientAdmin extends JFrame {
         sectionPanel.setLayout(new BoxLayout(sectionPanel, BoxLayout.Y_AXIS));
 
         JLabel sectionTitle = new JLabel(title);
-        sectionTitle.setFont(new Font("Verdana", Font.BOLD, 22));
+        sectionTitle.setFont(new Font("Tahoma", Font.BOLD, 22));
         sectionTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         sectionPanel.add(sectionTitle);
         sectionPanel.add(Box.createVerticalStrut(20));
@@ -136,13 +136,13 @@ public class InfoPatientAdmin extends JFrame {
         textPanel.setOpaque(false);
 
         JLabel nomLabel = new JLabel(nom);
-        nomLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+        nomLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 
         JLabel speLabel = new JLabel(specialite);
-        speLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
+        speLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
         JLabel dateLabel = new JLabel(date + "  " + heure);
-        dateLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
+        dateLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
         textPanel.add(nomLabel);
         textPanel.add(speLabel);
