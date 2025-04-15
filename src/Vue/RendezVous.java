@@ -10,6 +10,9 @@ public class RendezVous extends JFrame {
     public JButton btnCompte;
 
     public RendezVous() {
+
+        mapRDV = new HashMap<JLabel, RDV>();
+
         setTitle("Rendez-vous");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,7 +21,7 @@ public class RendezVous extends JFrame {
         setContentPane(buildPanel());
     }
 
-    private JPanel createScrollList(String title, String[][] data) {
+    private JPanel createScrollList(String title, ArrayList<RDV> listeRDV) {
         JPanel sectionPanel = new JPanel();
         sectionPanel.setLayout(new BoxLayout(sectionPanel, BoxLayout.Y_AXIS));
 
@@ -31,8 +34,9 @@ public class RendezVous extends JFrame {
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
 
-        for (String[] rdv : data) {
-            listPanel.add(createRdvPanel(rdv[0], rdv[1], rdv[2], rdv[3]));
+        for (RDV rdv : listeRDV) {
+
+            listPanel.add(createRdvPanel(rdv));
             listPanel.add(Box.createVerticalStrut(10));
         }
 
@@ -46,7 +50,7 @@ public class RendezVous extends JFrame {
         return sectionPanel;
     }
 
-    private JPanel createRdvPanel(String nom, String specialite, String date, String heure) {
+    private JPanel createRdvPanel(RDV rdv) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(new Color(221, 235, 247));
@@ -65,13 +69,13 @@ public class RendezVous extends JFrame {
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
         textPanel.setOpaque(false);
 
-        JLabel nomLabel = new JLabel(nom);
+        JLabel nomLabel = new JLabel(rdv.getSpecialiste().getUtilisateurNom());
         nomLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 
         JLabel speLabel = new JLabel(specialite);
         speLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
 
-        JLabel dateLabel = new JLabel(date + "  " + heure);
+        JLabel dateLabel = new JLabel(new java.text.SimpleDateFormat("dd/MM/yyyy à HH:mm").format(new java.util.Date (rdv.getDate())));
         dateLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
 
         textPanel.add(nomLabel);
@@ -79,6 +83,7 @@ public class RendezVous extends JFrame {
         textPanel.add(dateLabel);
 
         panel.add(textPanel, BorderLayout.CENTER);
+
 
         return panel;
     }
@@ -112,6 +117,8 @@ public class RendezVous extends JFrame {
         // Panel principal
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+
 
         // Titre
         JLabel titleLabel = new JLabel("Rendez-vous");
@@ -182,10 +189,10 @@ public class RendezVous extends JFrame {
         contentPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // RDV passés
-        contentPanel.add(createScrollList("RDV passés", rdvPasses));
+        contentPanel.add(createScrollList("RDV passés", listeRDVPasses));
 
         // RDV à venir
-        contentPanel.add(createScrollList("RDV à venir", rdvAvenir));
+        contentPanel.add(createScrollList("RDV à venir", listeRDVFuturs));
 
         mainPanel.add(contentPanel);
         mainPanel.add(Box.createVerticalStrut(30));

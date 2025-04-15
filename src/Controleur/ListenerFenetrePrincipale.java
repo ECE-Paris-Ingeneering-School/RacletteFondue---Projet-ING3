@@ -1,9 +1,6 @@
 package Controleur;
 
-import Modele.Adresse;
-import Modele.Patient;
-import Modele.Specialiste;
-import Modele.Utilisateur;
+import Modele.*;
 import Vue.FenetrePrincipale;
 import DAO.*;
 import Vue.RechercheDocteur;
@@ -15,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -24,12 +20,14 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
     FenetrePrincipale fenetre;
     DaoFactory dao;
     UtilisateurDAOImpl utilisateurDAO;
+    RdvDAOImpl rdvDAO;
 
     public ListenerFenetrePrincipale(FenetrePrincipale fenetre) {
 
         this.fenetre = fenetre;
         this.dao = DaoFactory.getInstance("projetjava", "root", "");
         this.utilisateurDAO = new UtilisateurDAOImpl(dao);
+        this.rdvDAO = new RdvDAOImpl(dao);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -69,13 +67,12 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             String ville = fenetre.inscription.villeField.getText();
 
 
-
             JRadioButton homme = fenetre.inscription.hommeRadio;
             JRadioButton femme = fenetre.inscription.femmeRadio;
 
             try {
 
-                Utilisateur.verifUtilisateur(mail, password, confirmPassword, nom, prenom, age, telephone, homme, femme);
+                Utilisateur.verifUtilisateur(mail, password, confirmPassword, nom, prenom, age, telephone, homme, femme, numero, rue, codePostal, ville);
 
                 char sexe;
 
@@ -112,6 +109,10 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 || source == fenetre.compte.btnRendezVous
                 || source == fenetre.recherche.btnRendezVous
                 || source == fenetre.info.btnRendezVous) {
+
+            ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.utilisateurActuel.getUtilisateurId());
+
+            fenetre.updateRendezvous(listeRDV);
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RENDEZVOUS);
 
@@ -150,17 +151,45 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RECHERCHE);
 
+        } else if (source == fenetre.info.prendreRDVButton) {
+
+            ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.info.specialiste.getUtilisateurId());
+
+            fenetre.updateDispoRDV(fenetre.info.specialiste, listeRDV);
+
+            fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+            fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            fenetre.dispordv.setVisible(true);
+
+        } else if (source == fenetre.confrdv.confirmerButton) {
+
+            // On crée le rdv dans la BDD
+            RDV rdv = new RDV(fenetre.confrdv.specialiste, (Patient) fenetre.confrdv.utilisateur, fenetre.confrdv.date);
+            rdvDAO.ajouterRDV(rdv);
+
+            ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.utilisateurActuel.getUtilisateurId());
+
+            fenetre.updateRendezvous(listeRDV);
+
+            // On affiche la page de rdv
+            fenetre.confrdv.dispose();
+            fenetre.dispordv.dispose();
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RENDEZVOUS);
+
+        } else if (source == fenetre.confrdv.annulerButton) {
+
+            fenetre.confrdv.dispose();
         }
 
         for (JButton buttonCreneau : fenetre.dispordv.mapCreneaux.keySet()) {
 
             if (source == buttonCreneau) {
 
-                String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date (fenetre.dispordv.mapCreneaux.get(buttonCreneau)));
+                fenetre.updateConfirmationRDV(fenetre.dispordv.specialiste, fenetre.utilisateurActuel, fenetre.dispordv.mapCreneaux.get(buttonCreneau));
 
-                System.out.println("Specialiste : " + fenetre.dispordv.specialiste.getUtilisateurNom());
-                System.out.println("Date : " + date);
-
+                fenetre.confrdv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+                fenetre.confrdv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                fenetre.confrdv.setVisible(true);
 
             }
         }
@@ -204,12 +233,30 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             if (source == availabilityLabel) {
 
-                fenetre.updateDispoRDV(fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel));
+                ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel).getUtilisateurId());
+
+                fenetre.updateDispoRDV(fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
 
                 fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
                 fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                 fenetre.dispordv.setVisible(true);
 
+            }
+        }
+
+        for (JLabel labelAnnulation : fenetre.rendezvous.mapRDV.keySet()) {
+
+            if (source == labelAnnulation) {
+
+                rdvDAO.supprimerRDV(fenetre.rendezvous.mapRDV.get(labelAnnulation));
+
+                ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.utilisateurActuel.getUtilisateurId());
+
+                fenetre.updateRendezvous(listeRDV);
+
+                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RENDEZVOUS);
+
+                break;
             }
         }
     }

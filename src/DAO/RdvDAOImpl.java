@@ -66,20 +66,17 @@ public class RdvDAOImpl implements RdvDAO {
 
             ResultSet resultRecherche = null;
 
-            switch (typeUtilisateur) {
+            if (typeUtilisateur == 0) {
 
-                // L'utilisateur est un patient
-                case 0:
+                resultRecherche = statements[2].executeQuery("SELECT * FROM rdv WHERE rdvPatient = \'"+ utilisateurId + "\' ORDER BY rdvDate ASC");
 
-                    resultRecherche = statements[2].executeQuery("SELECT * FROM rdv WHERE rdvPatient = \'"+ utilisateurId+ "\'");
+            } else if (typeUtilisateur == 1) {
 
-
-                    // L'utilisateur est un spécialiste
-                case 1:
-
-                    resultRecherche = statements[3].executeQuery("SELECT * FROM rdv WHERE rdvSpecialiste = \'"+ utilisateurId+ "\'");
+                resultRecherche = statements[3].executeQuery("SELECT * FROM rdv WHERE rdvSpecialiste = \'"+ utilisateurId + "\'");
 
             }
+
+
             while (resultRecherche.next()) {
 
                 rechercheSpecialisteId = resultRecherche.getInt("rdvSpecialiste");
@@ -145,9 +142,15 @@ public class RdvDAOImpl implements RdvDAO {
         }
     }
 
-   /* public static void main(String[] args) {
+    public static void main(String[] args) {
 
-        DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
+        /*DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
+
+        RdvDAOImpl rdvDao = new RdvDAOImpl(dao);
+
+        ArrayList<RDV> listeRDV = rdvDao.chercherRDV(16);
+
+        System.out.println(listeRDV);
 
         Adresse adresse = new Adresse(92260, "FAR", "11 rue des Ormeaux", "2");
 
@@ -180,9 +183,9 @@ public class RdvDAOImpl implements RdvDAO {
 
         for(RDV rdvi : listRDV){
             System.out.println(rdvi.getDate());
-        }
+        }*/
 
 
-    }*/
+    }
 
 }

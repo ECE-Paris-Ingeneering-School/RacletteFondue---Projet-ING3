@@ -7,13 +7,13 @@ public class RDV {
 
     private Specialiste specialiste;
     private Patient patient;
-    private int date;
+    private long date;
 
 
     /**
      * Constructeur des RDV avec tous les paramètres
      */
-    public RDV(Specialiste pspecialiste, Patient ppatient, int pdate) {
+    public RDV(Specialiste pspecialiste, Patient ppatient, long pdate) {
         this.specialiste = pspecialiste;
         this.patient = ppatient;
         this.date = pdate;
@@ -29,7 +29,7 @@ public class RDV {
         return patient;
     }
 
-    public int getDate() {
+    public long getDate() {
         return date;
     }
 

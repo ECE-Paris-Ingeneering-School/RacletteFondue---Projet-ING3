@@ -1,10 +1,12 @@
 package Vue;
 
+import Modele.RDV;
 import Modele.Specialiste;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +17,7 @@ public class DisponibiliteRDV extends JDialog {
     public long datePage;
     public Specialiste specialiste;
 
+    public ArrayList<RDV> listeRDV = null;
     public Map<JButton, Long> mapCreneaux = null;
 
     public DisponibiliteRDV() {
@@ -46,13 +49,20 @@ public class DisponibiliteRDV extends JDialog {
         JPanel tablePanel = new JPanel(new GridLayout(7, 7));
         tablePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        if (specialiste == null) {
+        if (specialiste == null || listeRDV == null) {
 
             return tablePanel;
         }
 
-        setTitle("Disponibilités de Dr. " + specialiste.getUtilisateurNom() + " - " + specialiste.getSpecialisteSpecialite());
+        ArrayList<Long> listeDates = new ArrayList<>();
 
+        for (RDV rdv : listeRDV) {
+
+            listeDates.add(rdv.getDate());
+        }
+
+
+        setTitle("Disponibilités de Dr. " + specialiste.getUtilisateurNom() + " - " + specialiste.getSpecialisteSpecialite());
 
         // Initialisation de la première page
         String temp = new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date (dateActuelle));
@@ -102,11 +112,11 @@ public class DisponibiliteRDV extends JDialog {
 
                 mapCreneaux.put(buttonCreneau, timeStamp+(i*86400000));
 
-                if (dateActuelle < timeStamp+(i*86400000)) {
+                if (dateActuelle > timeStamp+(i*86400000) || listeDates.contains(timeStamp+(i*86400000))) {
 
-                    buttonCreneau.setBackground(new Color(45, 104, 196)); // Bleu
-                    buttonCreneau.setForeground(Color.WHITE);
-                    buttonCreneau.setEnabled(true);
+                    buttonCreneau.setBackground(Color.LIGHT_GRAY); // Gris clair
+                    buttonCreneau.setForeground(Color.DARK_GRAY);
+                    buttonCreneau.setEnabled(false);
 
                 } else {
 

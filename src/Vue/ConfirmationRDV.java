@@ -1,27 +1,45 @@
 package Vue;
 
+import Modele.Specialiste;
+import Modele.Utilisateur;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class ConfirmationRDV extends JFrame {
+public class ConfirmationRDV extends JDialog {
 
-    JButton confirmerButton;
-
-    JLabel confirmationText;
+    public JButton confirmerButton;
+    public JButton annulerButton;
+    public JLabel confirmationText;
+    public Specialiste specialiste;
+    public Utilisateur utilisateur;
+    public long date;
 
     public ConfirmationRDV() {
         setTitle("Confirmation");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1920, 900);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(600, 300);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+
+        setContentPane(buildPanel());
+    }
+
+    public JPanel buildPanel() {
+
+        JPanel panelGeneral = new JPanel();
+        panelGeneral.setLayout(new BorderLayout());
+
+        if (specialiste == null || utilisateur == null || date == 0) {
+
+            return panelGeneral;
+        }
 
         // Titre "Confirmation"
         JLabel titleLabel = new JLabel("Confirmation");
-        titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
+        titleLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(titleLabel, BorderLayout.NORTH);
+        panelGeneral.add(titleLabel, BorderLayout.NORTH);
 
         // Panel principal avec GridBagLayout
         JPanel formPanel = new JPanel(new GridBagLayout());
@@ -30,8 +48,9 @@ public class ConfirmationRDV extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Texte de confirmation
-        confirmationText = new JLabel("Voulez-vous confirmer votre RDV avec Dr. ... le ../../.. à ..:.. ?");
-        confirmationText.setFont(new Font("Verdana", Font.PLAIN, 24));
+        String message = "Confirmer le RDV avec le Dr. " + specialiste.getUtilisateurNom() + " le " + new java.text.SimpleDateFormat("dd/MM/yyyy à HH:mm").format(new java.util.Date (date));
+        confirmationText = new JLabel(message);
+        confirmationText.setFont(new Font("Verdana", Font.PLAIN, 16));
         confirmationText.setHorizontalAlignment(SwingConstants.CENTER);
 
         gbc.gridx = 0;
@@ -39,22 +58,36 @@ public class ConfirmationRDV extends JFrame {
         gbc.gridwidth = 2;
         formPanel.add(confirmationText, gbc);
 
-        add(formPanel, BorderLayout.CENTER);
+        panelGeneral.add(formPanel, BorderLayout.CENTER);
 
         // Bouton Confirmer
         confirmerButton = new JButton("Confirmer");
         confirmerButton.setPreferredSize(new Dimension(200, 50)); // Augmenter la taille du bouton
-        confirmerButton.setFont(new Font("Verdana", Font.BOLD, 20)); // Augmenter la taille de la police
+        confirmerButton.setFont(new Font("Verdana", Font.BOLD, 18)); // Augmenter la taille de la police
         confirmerButton.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
         confirmerButton.setForeground(Color.WHITE); // Changer la couleur du texte
         confirmerButton.setFocusPainted(false);
+
+        // Bouton annuler
+        annulerButton = new JButton("Annuler");
+        annulerButton.setPreferredSize(new Dimension(200, 50)); // Augmenter la taille du bouton
+        annulerButton.setFont(new Font("Verdana", Font.BOLD, 18)); // Augmenter la taille de la police
+        annulerButton.setBackground(new Color(255, 0, 0)); // Changer la couleur de fond
+        annulerButton.setForeground(Color.WHITE); // Changer la couleur du texte
+        annulerButton.setFocusPainted(false);
 
         JPanel buttonPanel = new JPanel(new GridBagLayout());
         gbc.gridx = 0;
         gbc.gridy = 0;
         buttonPanel.add(confirmerButton, gbc);
 
-        add(buttonPanel, BorderLayout.SOUTH);
+        gbc.gridx = 10;
+        gbc.gridy = 0;
+        buttonPanel.add(annulerButton, gbc);
+
+        panelGeneral.add(buttonPanel, BorderLayout.SOUTH);
+
+        return panelGeneral;
     }
 
     public static void main(String[] args) {

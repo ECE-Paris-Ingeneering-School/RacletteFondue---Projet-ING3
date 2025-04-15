@@ -1,9 +1,6 @@
 package Modele;
 
-import Modele.Exceptions.AgeException;
-import Modele.Exceptions.ChampsVidesException;
-import Modele.Exceptions.ConfirmationPasswordException;
-import Modele.Exceptions.TelephoneException;
+import Modele.Exceptions.*;
 
 import javax.swing.*;
 
@@ -47,9 +44,9 @@ public abstract class Utilisateur {
         this.utilisateurImage = putilisateurImage;
     }
 
-    public static void verifUtilisateur(String mailField, String passwordField, String confirmPasswordField, String nomField, String prenomField, String ageField, String telephoneField, JRadioButton hommeRadio, JRadioButton femmeRadio) throws AgeException, ChampsVidesException, ConfirmationPasswordException, TelephoneException {
+    public static void verifUtilisateur(String mailField, String passwordField, String confirmPasswordField, String nomField, String prenomField, String ageField, String telephoneField, JRadioButton hommeRadio, JRadioButton femmeRadio, String numeroField, String rueField, String codePostalField, String villeField) throws AgeException, ChampsVidesException, ConfirmationPasswordException, TelephoneException, AdresseException {
 
-        if (mailField.isEmpty() || passwordField.isEmpty() || confirmPasswordField.isEmpty() || nomField.isEmpty() || prenomField.isEmpty() || ageField.isEmpty() || telephoneField.isEmpty() || (!hommeRadio.isSelected() & !femmeRadio.isSelected())) {
+        if (mailField.isEmpty() || passwordField.isEmpty() || confirmPasswordField.isEmpty() || nomField.isEmpty() || prenomField.isEmpty() || ageField.isEmpty() || telephoneField.isEmpty() || (!hommeRadio.isSelected() & !femmeRadio.isSelected()) || numeroField.isEmpty() || rueField.isEmpty() || codePostalField.isEmpty() || villeField.isEmpty() || villeField.equals("Ville")) {
 
             throw new ChampsVidesException();
         }
@@ -85,6 +82,35 @@ public abstract class Utilisateur {
         } catch (Exception e) {
 
             throw new TelephoneException();
+        }
+
+        try {
+
+            int numero = Integer.parseInt(numeroField);
+
+            if (numero < 1) {
+
+                throw new AdresseException();
+            }
+
+        } catch (Exception e) {
+
+            throw new AdresseException();
+        }
+
+        try {
+
+            int codePostal = Integer.parseInt(codePostalField);
+
+            if (codePostal < 1) {
+
+                throw new AdresseException();
+
+            }
+
+        } catch (Exception e) {
+
+            throw new AdresseException();
         }
     }
 

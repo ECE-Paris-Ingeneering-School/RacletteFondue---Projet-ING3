@@ -1,6 +1,7 @@
 package Vue;
 
 import Controleur.ListenerFenetrePrincipale;
+import Modele.RDV;
 import Modele.Specialiste;
 import Modele.Utilisateur;
 
@@ -28,6 +29,7 @@ public class FenetrePrincipale {
     public final String RECHERCHE = "Recherche";
     public final String INFODOCTEUR = "Information spécialiste";
     public final String DISPORDV = "Disponibilité rdv";
+    public final String CONFIRMATIONRDV = "Confirmation rdv";
 
     // Initialisation des objets de chaque page
     public Connexion connexion;
@@ -38,6 +40,7 @@ public class FenetrePrincipale {
     public RechercheDocteur recherche;
     public InfoDocteur info;
     public DisponibiliteRDV dispordv;
+    public ConfirmationRDV confrdv;
 
     // Initialisation des panels de chaque page
     public CardLayout cl;
@@ -49,7 +52,6 @@ public class FenetrePrincipale {
     public JPanel comptePanel;
     public JPanel recherchePanel;
     public JPanel infoPanel;
-    public JPanel dispordvPanel;
 
     /**
      * Constructeur de la fenêtre principale
@@ -68,6 +70,7 @@ public class FenetrePrincipale {
         recherche = new RechercheDocteur();
         info = new InfoDocteur();
         dispordv = new DisponibiliteRDV();
+        confrdv = new ConfirmationRDV();
 
         // Instanciation des panels
         this.connexionPanel = connexion.buildPanel();
@@ -157,6 +160,28 @@ public class FenetrePrincipale {
         recherche.repaint();
     }
 
+    public void updateRendezvous(ArrayList<RDV> listeRDV) {
+
+        rendezvous.listeRDV = listeRDV;
+
+        conteneurPrincipal.remove(rendezvousPanel);
+        rendezvous.mapRDV.clear();
+
+        rendezvousPanel = rendezvous.buildPanel();
+        rendezvous.btnAccueil.addActionListener(listener);
+        rendezvous.btnCompte.addActionListener(listener);
+
+        for (JLabel labelAnnulation : rendezvous.mapRDV.keySet()) {
+
+            if (labelAnnulation != null) labelAnnulation.addMouseListener(listener);
+        }
+
+        conteneurPrincipal.add(rendezvousPanel, RENDEZVOUS);
+
+        rendezvous.revalidate();
+        rendezvous.repaint();
+    }
+
     public void updateInfoDocteur(Specialiste specialiste) {
 
         info.specialiste = specialiste;
@@ -167,6 +192,7 @@ public class FenetrePrincipale {
         info.btnAccueil.addActionListener(listener);
         info.btnRendezVous.addActionListener(listener);
         info.btnCompte.addActionListener(listener);
+        info.prendreRDVButton.addActionListener(listener);
 
         conteneurPrincipal.add(infoPanel, INFODOCTEUR);
 
@@ -191,9 +217,10 @@ public class FenetrePrincipale {
         compte.repaint();
     }
 
-    public void updateDispoRDV(Specialiste specialiste) {
+    public void updateDispoRDV(Specialiste specialiste, ArrayList<RDV> listeRDV) {
 
         dispordv.specialiste = specialiste;
+        dispordv.listeRDV = listeRDV;
 
         dispordv.mapCreneaux.clear();
 
@@ -208,6 +235,20 @@ public class FenetrePrincipale {
         dispordv.repaint();
     }
 
+    public void updateConfirmationRDV(Specialiste specialiste, Utilisateur utilisateur, long date) {
+
+        confrdv.specialiste = specialiste;
+        confrdv.utilisateur = utilisateur;
+        confrdv.date = date;
+
+        confrdv.setContentPane(confrdv.buildPanel());
+
+        confrdv.confirmerButton.addActionListener(listener);
+        confrdv.annulerButton.addActionListener(listener);
+
+        confrdv.revalidate();
+        confrdv.repaint();
+    }
 
     public static void main(String[] args) {
 
