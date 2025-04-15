@@ -179,6 +179,40 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
         } else if (source == fenetre.confrdv.annulerButton) {
 
             fenetre.confrdv.dispose();
+
+        } else if (source == fenetre.compte.modifierButton) {
+
+            String mail = fenetre.compte.mailField.getText();
+            String password = fenetre.compte.passwordField.getText();
+            String nom = fenetre.compte.nomField.getText();
+            String prenom = fenetre.compte.prenomField.getText();
+            String age = fenetre.compte.ageField.getText();
+            String telephone = fenetre.compte.telephoneField.getText();
+            String numero = fenetre.compte.numeroField.getText();
+            String rue = fenetre.compte.rueField.getText();
+            String codePostal = fenetre.compte.codePostalField.getText();
+            String ville = fenetre.compte.villeField.getText();
+
+            try {
+
+                Utilisateur.verifUtilisateur(mail, password, nom, prenom, age, telephone, numero, rue, codePostal, ville);
+
+                Adresse adressePatient = new Adresse(Integer.parseInt(codePostal), ville, rue, numero);
+
+                Patient patient = new Patient(fenetre.utilisateurActuel.getUtilisateurId(), nom, prenom, Integer.parseInt(age), adressePatient, fenetre.utilisateurActuel.getUtilisateurSexe(), mail, password, telephone, "");
+
+                utilisateurDAO.modifierUtilisateur(patient);
+
+                fenetre.utilisateurActuel = utilisateurDAO.chercherUtilisateur(fenetre.utilisateurActuel.getUtilisateurId());
+
+                fenetre.updateCompte();
+
+                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.COMPTE);
+
+            } catch (Exception ex) {
+
+                fenetre.compte.confirmationLabel.setText(ex.getMessage());
+            }
         }
 
         for (JButton buttonCreneau : fenetre.dispordv.mapCreneaux.keySet()) {

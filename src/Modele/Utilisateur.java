@@ -114,6 +114,71 @@ public abstract class Utilisateur {
         }
     }
 
+    public static void verifUtilisateur(String mailField, String passwordField, String nomField, String prenomField, String ageField, String telephoneField, String numeroField, String rueField, String codePostalField, String villeField) throws AgeException, ChampsVidesException, TelephoneException, AdresseException {
+
+        if (mailField.isEmpty() || passwordField.isEmpty() || nomField.isEmpty() || prenomField.isEmpty() || ageField.isEmpty() || telephoneField.isEmpty() || numeroField.isEmpty() || rueField.isEmpty() || codePostalField.isEmpty() || villeField.isEmpty() || villeField.equals("Ville")) {
+
+            throw new ChampsVidesException();
+        }
+
+        try {
+
+            int age = Integer.parseInt(ageField);
+
+            if (age < 1) {
+
+                throw new AgeException();
+            }
+
+        } catch (Exception e) {
+
+            throw new AgeException();
+        }
+
+        try {
+
+            int telephone = Integer.parseInt(telephoneField);
+
+            if (telephone < 0) {
+
+                throw new TelephoneException();
+            }
+
+        } catch (Exception e) {
+
+            throw new TelephoneException();
+        }
+
+        try {
+
+            int numero = Integer.parseInt(numeroField);
+
+            if (numero < 1) {
+
+                throw new AdresseException();
+            }
+
+        } catch (Exception e) {
+
+            throw new AdresseException();
+        }
+
+        try {
+
+            int codePostal = Integer.parseInt(codePostalField);
+
+            if (codePostal < 1) {
+
+                throw new AdresseException();
+
+            }
+
+        } catch (Exception e) {
+
+            throw new AdresseException();
+        }
+    }
+
     /**
      * Getteur retournant l'identifiant de l'utilisateur
      */

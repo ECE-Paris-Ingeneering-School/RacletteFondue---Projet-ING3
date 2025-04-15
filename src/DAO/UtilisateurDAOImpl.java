@@ -459,6 +459,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             PreparedStatement preparedStatement = connexion.prepareStatement(requete);
             preparedStatement.executeUpdate();
 
+
             // Modification de l'adresse
             requete = String.format("UPDATE adresse SET adresseCodePostal = \"%s\", adresseVille = \"%s\", adresseRue = \"%s\", adresseNumero=\"%s\" WHERE adresseId=\"%s\"",
                     utilisateur.getUtilisateurAdresse().getAdresseCodePostal(),
@@ -471,6 +472,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             preparedStatement = connexion.prepareStatement(requete);
             preparedStatement.executeUpdate();
 
+
             // Modification des informations de spécialiste
             if (utilisateur instanceof Specialiste) {
 
@@ -480,7 +482,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                         ((Specialiste) utilisateur).getSpecialisteTarif(),
                         utilisateur.getUtilisateurId()
                 );
-
 
 
                 preparedStatement = connexion.prepareStatement(requete);
