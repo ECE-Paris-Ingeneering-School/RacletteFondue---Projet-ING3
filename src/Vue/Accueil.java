@@ -21,6 +21,29 @@ public class Accueil extends JFrame {
 
     }
 
+    private void addPlaceholder(JTextField textField, String placeholder) {
+        textField.setForeground(Color.GRAY);
+        textField.setText(placeholder);
+
+        textField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(Color.GRAY);
+                    textField.setText(placeholder);
+                }
+            }
+        });
+    }
+
     public JPanel buildPanel() {
 
         // Panel principal
@@ -60,9 +83,10 @@ public class Accueil extends JFrame {
         // Barre de recherche
         JPanel searchPanel = new JPanel();
 
-        searchField = new JTextField("Nom, spécialité, lieu...", 30); // Agrandit la largeur du champ de recherche
-        searchField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        searchField = new JTextField("");
+        searchField.setFont(new Font("Tahoma", Font.PLAIN, 18));
         searchField.setPreferredSize(new Dimension(400, 40));
+        addPlaceholder(searchField, "Nom, spécialité, lieu..."); // Agrandit la largeur du champ de recherche
 
 
         searchButton = new JButton("🔍");
@@ -83,7 +107,7 @@ public class Accueil extends JFrame {
 
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
-        button.setFont(new Font("Verdana", Font.BOLD, 20));
+        button.setFont(new Font("Tahoma", Font.BOLD, 20));
         button.setBackground(new Color(221, 235, 247));
         button.setFocusPainted(false);
     }

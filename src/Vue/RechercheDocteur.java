@@ -73,7 +73,7 @@ public class RechercheDocteur extends JFrame {
         JPanel searchPanel = new JPanel();
 
         searchField = new JTextField("Nom, spécialité, lieu...", 30); // Champ de recherche avec texte
-        searchField.setFont(new Font("Verdana", Font.PLAIN, 18));
+        searchField.setFont(new Font("Tahoma", Font.PLAIN, 18));
         searchField.setPreferredSize(new Dimension(400, 40));
         searchField.setBackground(new Color(255, 255, 255));
         searchField.setEditable(true);
@@ -113,7 +113,7 @@ public class RechercheDocteur extends JFrame {
             resultCountLabel = new JLabel("Aucun résultat");
         }
 
-        resultCountLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        resultCountLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         resultCountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(resultCountLabel);
         mainPanel.add(Box.createVerticalStrut(10));
@@ -134,16 +134,16 @@ public class RechercheDocteur extends JFrame {
                 doctorPanel.setBackground(new Color(221, 235, 247));
 
                 nameLabel = new JLabel("Dr. " + specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / ");
-                nameLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+                nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
                 nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 doctorPanel.add(nameLabel, BorderLayout.WEST);
 
                 locationLabel = new JLabel(specialiste.getUtilisateurAdresse().getAdresseVille());
-                locationLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+                locationLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
                 doctorPanel.add(locationLabel, BorderLayout.CENTER);
 
                 availabilityLabel = new JLabel("Voir les dispo");
-                availabilityLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+                availabilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
                 availabilityLabel.setForeground(new Color(45, 104, 196));
                 availabilityLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 doctorPanel.add(availabilityLabel, BorderLayout.EAST);
@@ -174,7 +174,7 @@ public class RechercheDocteur extends JFrame {
 
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
-        button.setFont(new Font("Verdana", Font.BOLD, 20));
+        button.setFont(new Font("Tahoma", Font.BOLD, 20));
         button.setBackground(new Color(221, 235, 247));
         button.setFocusPainted(false);
     }

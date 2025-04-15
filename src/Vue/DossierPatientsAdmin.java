@@ -7,6 +7,7 @@ public class DossierPatientsAdmin extends JFrame{
 
     public JButton btnSpecialiste;
     public JButton btnDossierPatients;
+    public JButton btnStatistiques;
     public JTextField searchField;
     public JButton searchButton;
     public JLabel nameLabel;
@@ -41,17 +42,19 @@ public class DossierPatientsAdmin extends JFrame{
         btnSpecialiste = new JButton("Spécialistes");
         styleMenuButton(btnSpecialiste);
 
-
-
         btnDossierPatients = new JButton("Dossier Patients");
         styleMenuButton(btnDossierPatients);
         btnDossierPatients.setForeground(Color.WHITE);
         btnDossierPatients.setBackground(new Color(45, 104, 196));
 
+        btnStatistiques = new JButton("Statistiques");
+        styleMenuButton(btnStatistiques);
 
 
         menuPanel.add(btnSpecialiste);
         menuPanel.add(btnDossierPatients);
+        menuPanel.add(btnStatistiques);
+
         mainPanel.add(menuPanel);
         mainPanel.add(Box.createVerticalStrut(10)); // Réduire l'espace vertical ici
 
@@ -59,11 +62,10 @@ public class DossierPatientsAdmin extends JFrame{
         // Barre de recherche
         JPanel searchPanel = new JPanel();
 
-        searchField = new JTextField("Rechercher dans les patients enregistrés... ", 30); // Champ de recherche avec texte
+        searchField = new JTextField("", 30); // Champ de recherche avec texte
         searchField.setFont(new Font("Tahoma", Font.PLAIN, 18));
         searchField.setPreferredSize(new Dimension(400, 40));
-        searchField.setBackground(new Color(255, 255, 255));
-        searchField.setEditable(false);
+        addPlaceholder(searchField,"Rechercher dans les patients enregistrés... ");
 
         searchButton = new JButton("🔍");
         searchButton.setPreferredSize(new Dimension(80, 40));
@@ -92,7 +94,7 @@ public class DossierPatientsAdmin extends JFrame{
 
         // Nombre de résultats
         JLabel listeSpecialisteLabel = new JLabel("Liste des patients enregistrés : " + doctors.length);
-        listeSpecialisteLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        listeSpecialisteLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         listeSpecialisteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(listeSpecialisteLabel);
         mainPanel.add(Box.createVerticalStrut(10));
@@ -144,9 +146,32 @@ public class DossierPatientsAdmin extends JFrame{
 
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
-        button.setFont(new Font("Verdana", Font.BOLD, 20));
+        button.setFont(new Font("Tahoma", Font.BOLD, 20));
         button.setBackground(new Color(221, 235, 247));
         button.setFocusPainted(false);
+    }
+
+    private void addPlaceholder(JTextField textField, String placeholder) {
+        textField.setForeground(Color.GRAY);
+        textField.setText(placeholder);
+
+        textField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(Color.GRAY);
+                    textField.setText(placeholder);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {

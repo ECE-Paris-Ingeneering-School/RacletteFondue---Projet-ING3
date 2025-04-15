@@ -50,7 +50,7 @@ public class ConfirmationRDV extends JDialog {
         // Texte de confirmation
         String message = "Confirmer le RDV avec le Dr. " + specialiste.getUtilisateurNom() + " le " + new java.text.SimpleDateFormat("dd/MM/yyyy à HH:mm").format(new java.util.Date (date));
         confirmationText = new JLabel(message);
-        confirmationText.setFont(new Font("Verdana", Font.PLAIN, 16));
+        confirmationText.setFont(new Font("Tahoma", Font.PLAIN, 16));
         confirmationText.setHorizontalAlignment(SwingConstants.CENTER);
 
         gbc.gridx = 0;
@@ -63,7 +63,7 @@ public class ConfirmationRDV extends JDialog {
         // Bouton Confirmer
         confirmerButton = new JButton("Confirmer");
         confirmerButton.setPreferredSize(new Dimension(200, 50)); // Augmenter la taille du bouton
-        confirmerButton.setFont(new Font("Verdana", Font.BOLD, 18)); // Augmenter la taille de la police
+        confirmerButton.setFont(new Font("Tahoma", Font.BOLD, 18)); // Augmenter la taille de la police
         confirmerButton.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
         confirmerButton.setForeground(Color.WHITE); // Changer la couleur du texte
         confirmerButton.setFocusPainted(false);

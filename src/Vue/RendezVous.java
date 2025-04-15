@@ -40,7 +40,7 @@ public class RendezVous extends JFrame {
         sectionPanel.setLayout(new BoxLayout(sectionPanel, BoxLayout.Y_AXIS));
 
         JLabel sectionTitle = new JLabel(title);
-        sectionTitle.setFont(new Font("Verdana", Font.BOLD, 22));
+        sectionTitle.setFont(new Font("Tahoma", Font.BOLD, 22));
         sectionTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         sectionPanel.add(sectionTitle);
         sectionPanel.add(Box.createVerticalStrut(20));
@@ -85,13 +85,13 @@ public class RendezVous extends JFrame {
         textPanel.setOpaque(false);
 
         JLabel nomLabel = new JLabel(rdv.getSpecialiste().getUtilisateurNom());
-        nomLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+        nomLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 
         JLabel speLabel = new JLabel(rdv.getSpecialiste().getSpecialisteSpecialite());
-        speLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
+        speLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
         JLabel dateLabel = new JLabel(new java.text.SimpleDateFormat("dd/MM/yyyy à HH:mm").format(new java.util.Date (rdv.getDate())));
-        dateLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
+        dateLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
         if (rdv.getDate() > Instant.now().toEpochMilli()) {
 
@@ -134,7 +134,7 @@ public class RendezVous extends JFrame {
 
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
-        button.setFont(new Font("Verdana", Font.BOLD, 20));
+        button.setFont(new Font("Tahoma", Font.BOLD, 20));
         button.setBackground(new Color(221, 235, 247));
         button.setFocusPainted(false);
     }
