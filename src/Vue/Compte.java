@@ -156,6 +156,7 @@ public class Compte extends JFrame {
         gbc.gridy++;
         formPanel.add(btnChangerImage, gbc);
 
+
         // Champs
         JLabel nomLabel = new JLabel("Nom :");
         nomLabel.setFont(labelFont);
@@ -238,12 +239,12 @@ public class Compte extends JFrame {
         addPlaceholder(numeroField, "N°");
 
         //rueField = new JTextField("15", 5);
-        rueField = new JTextField(utilisateur.getUtilisateurAdresse().getAdresseRue(), 5);
+        rueField = new JTextField(utilisateur.getUtilisateurAdresse().getAdresseRue(), 10);
         rueField.setFont(labelFont);
         addPlaceholder(rueField, "Rue");
 
         //codePostalField = new JTextField(String.valueOf(13), 10);
-        codePostalField = new JTextField(String.valueOf(utilisateur.getUtilisateurAdresse().getAdresseCodePostal()), 10);
+        codePostalField = new JTextField(String.valueOf(utilisateur.getUtilisateurAdresse().getAdresseCodePostal()), 5);
         codePostalField.setFont(labelFont);
         addPlaceholder(codePostalField, "Code postal");
 
