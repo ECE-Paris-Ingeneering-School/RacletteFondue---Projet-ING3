@@ -484,8 +484,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                 );
 
 
-                preparedStatement = connexion.prepareStatement(requete);
+                preparedStatement  = connexion.prepareStatement(requete);
                 preparedStatement.executeUpdate();
+
+
             }
 
 
