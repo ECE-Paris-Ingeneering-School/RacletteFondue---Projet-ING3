@@ -210,20 +210,6 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                 fenetre.dispordv.setVisible(true);
 
-                System.out.println(fenetre.dispordv.mapCreneaux);
-
-                for (JButton buttonCreneau : fenetre.dispordv.mapCreneaux.keySet()) {
-
-                    String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date (fenetre.dispordv.mapCreneaux.get(buttonCreneau)));
-
-                    System.out.println("Bouton : " + buttonCreneau.getText());
-                    System.out.println("Date : " + date);
-                    System.out.println();
-
-                }
-
-
-
             }
         }
     }
