@@ -27,6 +27,7 @@ public class FenetrePrincipale {
     public final String COMPTE = "Compte";
     public final String RECHERCHE = "Recherche";
     public final String INFODOCTEUR = "Information spécialiste";
+    public final String DISPORDV = "Disponibilité rdv";
 
     // Initialisation des objets de chaque page
     public Connexion connexion;
@@ -36,6 +37,7 @@ public class FenetrePrincipale {
     public Compte compte;
     public RechercheDocteur recherche;
     public InfoDocteur info;
+    public DisponibiliteRDV dispordv;
 
     // Initialisation des panels de chaque page
     public CardLayout cl;
@@ -47,6 +49,7 @@ public class FenetrePrincipale {
     public JPanel comptePanel;
     public JPanel recherchePanel;
     public JPanel infoPanel;
+    public JPanel dispordvPanel;
 
     /**
      * Constructeur de la fenêtre principale
@@ -64,6 +67,7 @@ public class FenetrePrincipale {
         compte = new Compte();
         recherche = new RechercheDocteur();
         info = new InfoDocteur();
+        dispordv = new DisponibiliteRDV();
 
         // Instanciation des panels
         this.connexionPanel = connexion.buildPanel();
@@ -96,6 +100,7 @@ public class FenetrePrincipale {
         compte.btnAccueil.addActionListener(listener);
         compte.btnRendezVous.addActionListener(listener);
 
+
         // Création de la fenêtre principale
         JFrame fenetrePrincipale = new JFrame();
 
@@ -126,7 +131,8 @@ public class FenetrePrincipale {
         recherche.resultatRecherche = listeSpecialistes;
 
         conteneurPrincipal.remove(recherchePanel);
-        recherche.mapSpecialistes.clear();
+        recherche.mapSpecialistesInfo.clear();
+        recherche.mapSpecialistesDispo.clear();
 
         recherchePanel = recherche.buildPanel();
         recherche.btnAccueil.addActionListener(listener);
@@ -135,9 +141,14 @@ public class FenetrePrincipale {
         recherche.searchButton.addActionListener(listener);
         recherche.searchField.addMouseListener(listener);
 
-        for (JLabel nameLabel : recherche.mapSpecialistes.keySet()) {
+        for (JLabel nameLabel : recherche.mapSpecialistesInfo.keySet()) {
 
             if (nameLabel != null) nameLabel.addMouseListener(listener);
+        }
+
+        for (JLabel availabilityLabel : recherche.mapSpecialistesDispo.keySet()) {
+
+            if (availabilityLabel != null) availabilityLabel.addMouseListener(listener);
         }
 
         conteneurPrincipal.add(recherchePanel, RECHERCHE);
@@ -180,10 +191,23 @@ public class FenetrePrincipale {
         compte.repaint();
     }
 
-    public void updateRendezvous() {
+    public void updateDispoRDV(Specialiste specialiste) {
 
+        dispordv.specialiste = specialiste;
 
+        dispordv.mapCreneaux.clear();
+
+        dispordv.setContentPane(dispordv.buildPanel());
+
+        for (JButton buttonCreneau : dispordv.mapCreneaux.keySet()) {
+
+            if (buttonCreneau != null) buttonCreneau.addActionListener(listener);
+        }
+
+        dispordv.revalidate();
+        dispordv.repaint();
     }
+
 
     public static void main(String[] args) {
 

@@ -20,11 +20,13 @@ public class RechercheDocteur extends JFrame {
     public JLabel availabilityLabel;
 
     public ArrayList<Specialiste> resultatRecherche = null;
-    public Map<JLabel, Specialiste> mapSpecialistes = null;
+    public Map<JLabel, Specialiste> mapSpecialistesInfo = null;
+    public Map<JLabel, Specialiste> mapSpecialistesDispo = null;
 
     public RechercheDocteur() {
 
-        mapSpecialistes = new HashMap<JLabel, Specialiste>();
+        mapSpecialistesInfo = new HashMap<JLabel, Specialiste>();
+        mapSpecialistesDispo = new HashMap<JLabel, Specialiste>();
 
         setTitle("Recherche");
         setSize(1920, 1080);
@@ -136,9 +138,6 @@ public class RechercheDocteur extends JFrame {
                 nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 doctorPanel.add(nameLabel, BorderLayout.WEST);
 
-                // On associe l'objet à son label pour le référencer plus tard
-                mapSpecialistes.put(nameLabel, specialiste);
-
                 locationLabel = new JLabel(specialiste.getUtilisateurAdresse().getAdresseVille());
                 locationLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
                 doctorPanel.add(locationLabel, BorderLayout.CENTER);
@@ -151,6 +150,10 @@ public class RechercheDocteur extends JFrame {
 
                 searchResultPanel.add(doctorPanel);
                 searchResultPanel.add(Box.createVerticalStrut(10));
+
+                // On associe l'objet à son label pour le référencer plus tard
+                mapSpecialistesInfo.put(nameLabel, specialiste);
+                mapSpecialistesDispo.put(availabilityLabel, specialiste);
             }
         }
 
@@ -177,7 +180,6 @@ public class RechercheDocteur extends JFrame {
     }
 
     public static void main(String[] args) {
-
 
         SwingUtilities.invokeLater(() -> {
             new RechercheDocteur().setVisible(true);

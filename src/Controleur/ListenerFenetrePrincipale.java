@@ -10,6 +10,7 @@ import Vue.RechercheDocteur;
 
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -106,8 +107,6 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 || source == fenetre.recherche.btnRendezVous
                 || source == fenetre.info.btnRendezVous) {
 
-
-
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RENDEZVOUS);
 
         } else if (source == fenetre.accueil.btnCompte
@@ -146,6 +145,20 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RECHERCHE);
 
         }
+
+        for (JButton buttonCreneau : fenetre.dispordv.mapCreneaux.keySet()) {
+
+            if (source == buttonCreneau) {
+
+                String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date (fenetre.dispordv.mapCreneaux.get(buttonCreneau)));
+
+                System.out.println("Specialiste : " + fenetre.dispordv.specialiste.getUtilisateurNom());
+                System.out.println("Date : " + date);
+
+
+            }
+        }
+
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -170,13 +183,40 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
         }
 
-        for (JLabel nameLabel : fenetre.recherche.mapSpecialistes.keySet()) {
+        for (JLabel nameLabel : fenetre.recherche.mapSpecialistesInfo.keySet()) {
 
             if (source == nameLabel) {
 
-                fenetre.updateInfoDocteur(fenetre.recherche.mapSpecialistes.get(nameLabel));
+                fenetre.updateInfoDocteur(fenetre.recherche.mapSpecialistesInfo.get(nameLabel));
 
                 fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INFODOCTEUR);
+
+            }
+        }
+
+        for (JLabel availabilityLabel : fenetre.recherche.mapSpecialistesDispo.keySet()) {
+
+            if (source == availabilityLabel) {
+
+                fenetre.updateDispoRDV(fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel));
+
+                fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+                fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                fenetre.dispordv.setVisible(true);
+
+                System.out.println(fenetre.dispordv.mapCreneaux);
+
+                for (JButton buttonCreneau : fenetre.dispordv.mapCreneaux.keySet()) {
+
+                    String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date (fenetre.dispordv.mapCreneaux.get(buttonCreneau)));
+
+                    System.out.println("Bouton : " + buttonCreneau.getText());
+                    System.out.println("Date : " + date);
+                    System.out.println();
+
+                }
+
+
 
             }
         }
