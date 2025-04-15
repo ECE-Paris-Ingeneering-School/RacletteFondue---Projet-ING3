@@ -235,22 +235,22 @@ public class Compte extends JFrame {
         //numeroField = new JTextField(String.valueOf(36), 5);
         numeroField = new JTextField(utilisateur.getUtilisateurAdresse().getAdresseNumero(), 5);
         numeroField.setFont(labelFont);
-        addPlaceholder(numeroField, "N°");
+       
 
         //rueField = new JTextField("15", 5);
         rueField = new JTextField(utilisateur.getUtilisateurAdresse().getAdresseRue(), 5);
         rueField.setFont(labelFont);
-        addPlaceholder(rueField, "Rue");
+
 
         //codePostalField = new JTextField(String.valueOf(13), 10);
         codePostalField = new JTextField(String.valueOf(utilisateur.getUtilisateurAdresse().getAdresseCodePostal()), 10);
         codePostalField.setFont(labelFont);
-        addPlaceholder(codePostalField, "Code postal");
+
 
         //villeField = new JTextField("14", 10);
         villeField = new JTextField(utilisateur.getUtilisateurAdresse().getAdresseVille(), 10);
         villeField.setFont(labelFont);
-        addPlaceholder(villeField, "Ville");
+
 
         JPanel adressePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         adressePanel.add(numeroField);

@@ -26,7 +26,7 @@ public class RdvDAOImpl implements RdvDAO {
 
         int recherchePatientId = 0;
         int rechercheSpecialisteId = 0;
-        int rechercheRdvDate = 0;
+        long rechercheRdvDate = 0;
 
         ArrayList<RDV> rdvliste = new ArrayList<>();
 
@@ -81,7 +81,7 @@ public class RdvDAOImpl implements RdvDAO {
 
                 rechercheSpecialisteId = resultRecherche.getInt("rdvSpecialiste");
                 recherchePatientId = resultRecherche.getInt("rdvPatient");
-                rechercheRdvDate = resultRecherche.getInt("rdvDate");
+                rechercheRdvDate = resultRecherche.getLong("rdvDate");
 
                 RDV rdvAAjouter = new RDV((Specialiste) daoFactory.getUtilisateurDAO().chercherUtilisateur(rechercheSpecialisteId), (Patient) daoFactory.getUtilisateurDAO().chercherUtilisateur(recherchePatientId), rechercheRdvDate);
                 rdvliste.add(rdvAAjouter);

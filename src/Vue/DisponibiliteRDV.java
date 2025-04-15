@@ -112,6 +112,8 @@ public class DisponibiliteRDV extends JDialog {
 
                 mapCreneaux.put(buttonCreneau, timeStamp+(i*86400000));
 
+
+
                 if (dateActuelle > timeStamp+(i*86400000) || listeDates.contains(timeStamp+(i*86400000))) {
 
                     buttonCreneau.setBackground(Color.LIGHT_GRAY); // Gris clair
@@ -120,9 +122,9 @@ public class DisponibiliteRDV extends JDialog {
 
                 } else {
 
-                    buttonCreneau.setBackground(Color.LIGHT_GRAY); // Gris clair
-                    buttonCreneau.setForeground(Color.DARK_GRAY);
-                    buttonCreneau.setEnabled(false);
+                    buttonCreneau.setBackground(new Color(45, 104, 196)); // Bleu
+                    buttonCreneau.setForeground(Color.WHITE);
+                    buttonCreneau.setEnabled(true);
                 }
 
                 tablePanel.add(buttonCreneau);

@@ -1,13 +1,27 @@
 package Vue;
 
+import Modele.RDV;
+
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class RendezVous extends JFrame {
 
     public JButton btnAccueil;
     public JButton btnRendezVous;
     public JButton btnCompte;
+    public JLabel labelAnnulation;
+
+    public HashMap<JLabel, RDV> mapRDV = null;
+    public ArrayList<RDV> listeRDV = null;
+
+
 
     public RendezVous() {
 
@@ -64,6 +78,7 @@ public class RendezVous extends JFrame {
         imageLabel.setPreferredSize(new Dimension(64, 64));
         panel.add(imageLabel, BorderLayout.WEST);
 
+
         // Partie droite : infos RDV
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
@@ -72,11 +87,23 @@ public class RendezVous extends JFrame {
         JLabel nomLabel = new JLabel(rdv.getSpecialiste().getUtilisateurNom());
         nomLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 
-        JLabel speLabel = new JLabel(specialite);
+        JLabel speLabel = new JLabel(rdv.getSpecialiste().getSpecialisteSpecialite());
         speLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
 
         JLabel dateLabel = new JLabel(new java.text.SimpleDateFormat("dd/MM/yyyy à HH:mm").format(new java.util.Date (rdv.getDate())));
         dateLabel.setFont(new Font("Verdana", Font.PLAIN, 15));
+
+        if (rdv.getDate() > Instant.now().toEpochMilli()) {
+
+            labelAnnulation = new JLabel("Annuler");
+            labelAnnulation.setFont(new Font("Verdana", Font.BOLD, 15));
+            labelAnnulation.setForeground(new Color(255, 0, 0));
+            labelAnnulation.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            mapRDV.put(labelAnnulation, rdv);
+
+            panel.add(labelAnnulation, BorderLayout.EAST);
+        }
 
         textPanel.add(nomLabel);
         textPanel.add(speLabel);
@@ -149,39 +176,27 @@ public class RendezVous extends JFrame {
         mainPanel.add(menuPanel);
         mainPanel.add(Box.createVerticalStrut(20));
 
-        // RDV passés et à venir
-        String[][] rdvPasses = {
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-        };
+        if (listeRDV == null) {
 
-        String[][] rdvAvenir = {
-                {"Dr. Juif", "Psychologue", "10/08/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "05/11/25", "09h30"},
-                {"Dr. Leclair", "Généraliste", "12/12/25", "11h00"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-        };
+            return mainPanel;
+        }
+
+        // Création des deux listes
+        ArrayList<RDV> listeRDVPasses = new ArrayList<>();
+        ArrayList<RDV> listeRDVFuturs = new ArrayList<>();
+
+        for (RDV rdv : listeRDV) {
+
+            if (rdv.getDate() > Instant.now().toEpochMilli()) {
+
+                listeRDVFuturs.add(rdv);
+
+            } else {
+
+                listeRDVPasses.add(rdv);
+            }
+        }
+        Collections.reverse(listeRDVPasses);
 
         // Contenu : deux colonnes avec listes déroulantes
         JPanel contentPanel = new JPanel(new GridLayout(1, 2, 30, 0));
