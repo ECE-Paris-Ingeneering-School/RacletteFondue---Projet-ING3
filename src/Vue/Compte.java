@@ -1,9 +1,11 @@
 package Vue;
 
-import Modele.Patient;
 import Modele.Utilisateur;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.nio.file.*;
+
 
 public class Compte extends JFrame {
 
@@ -24,6 +26,7 @@ public class Compte extends JFrame {
     public JTextField villeField;
     public JButton modifierButton;
     public JLabel confirmationLabel;
+    public ImageIcon cheminImage;
 
     public Utilisateur utilisateur;
 
@@ -117,10 +120,17 @@ public class Compte extends JFrame {
         Font labelFont = new Font("Tahoma", Font.PLAIN, 18);
 
         // Affichage image
-        ImageIcon imageIcon = new ImageIcon("C:\\Users\\lucie\\OneDrive - Groupe INSEEC (POCE)\\Bureau\\ECE\\ECE3\\Paris\\Java\\RacletteFondue---Projet-ING3\\src\\Vue\\timothe.jpg");
-        //ImageIcon imageIcon = new ImageIcon(utilisateur.getUtilisateurImage());
-        Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+
+
+        if (utilisateur.getUtilisateurImage().isEmpty()){
+            cheminImage=new ImageIcon("src/Images/pdp_defaut.png");
+        }
+        else {
+            cheminImage = new ImageIcon(utilisateur.getUtilisateurImage());
+        }
+        Image image = cheminImage.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         imageField = new JLabel(new ImageIcon(image));
+
 
         btnChangerImage = new JButton("Changer votre photo");
         //btnChangerImage.setPreferredSize(new Dimension(200, 25)); // Augmenter la taille du bouton
@@ -129,19 +139,6 @@ public class Compte extends JFrame {
         btnChangerImage.setForeground(Color.WHITE);
         btnChangerImage.setFocusPainted(false);
 
-
-        btnChangerImage.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            int result = fileChooser.showOpenDialog(this);
-
-            if (result == JFileChooser.APPROVE_OPTION) {
-                java.io.File selectedFile = fileChooser.getSelectedFile();
-                ImageIcon newIcon = new ImageIcon(selectedFile.getAbsolutePath());
-                Image newImage = newIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                imageField.setIcon(new ImageIcon(newImage));
-            }
-        });
 
 
         JLabel imageLabel = new JLabel("Photo de profil :");

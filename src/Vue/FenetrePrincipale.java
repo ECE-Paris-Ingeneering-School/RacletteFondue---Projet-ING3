@@ -210,6 +210,7 @@ public class FenetrePrincipale {
         compte.btnAccueil.addActionListener(listener);
         compte.btnRendezVous.addActionListener(listener);
         compte.modifierButton.addActionListener(listener);
+        compte.btnChangerImage.addActionListener(listener);
 
         conteneurPrincipal.add(comptePanel, COMPTE);
 

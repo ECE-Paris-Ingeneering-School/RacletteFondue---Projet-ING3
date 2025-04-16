@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -28,6 +31,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
         this.dao = DaoFactory.getInstance("projetjava", "root", "");
         this.utilisateurDAO = new UtilisateurDAOImpl(dao);
         this.rdvDAO = new RdvDAOImpl(dao);
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -180,6 +184,46 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.confrdv.dispose();
 
+        }else if(source == fenetre.compte.btnChangerImage){
+
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            int result = fileChooser.showOpenDialog(fenetre.compte);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+
+
+                File fichierchoisi = fileChooser.getSelectedFile();
+                String extention = fichierchoisi.getName().substring(fichierchoisi.getName().lastIndexOf("."));
+                File dossier = new File("src/images");
+                if (!dossier.exists()) {
+                    dossier.mkdirs();
+                }
+
+                File imageaSauvegarder = new File(dossier, fenetre.utilisateurActuel.getUtilisateurId() + "_profile_image" + extention);
+
+                try {
+                    Files.copy(fichierchoisi.toPath(), imageaSauvegarder.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    fenetre.compte.cheminImage = new ImageIcon(fichierchoisi.getAbsolutePath());
+                    String acces = imageaSauvegarder.getPath();
+                    fenetre.compte.cheminImage.setDescription("src/Images/" + fenetre.utilisateurActuel.getUtilisateurId() + "_profile_image" + extention);
+                    Image newImage = fenetre.compte.cheminImage.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+                    fenetre.compte.imageField.setIcon(new ImageIcon(newImage));
+
+                }
+                catch (Exception exeption) {
+                    exeption.printStackTrace();
+                    JOptionPane.showMessageDialog(fenetre.compte, "Erreur lors de la sauvegarde de l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+
+                java.io.File selectedFile = fileChooser.getSelectedFile();
+                ImageIcon newIcon = new ImageIcon(selectedFile.getAbsolutePath());
+                Image newImage = newIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                fenetre.compte.imageField.setIcon(new ImageIcon(newImage));
+
+            }
+
         } else if (source == fenetre.compte.modifierButton) {
 
             String mail = fenetre.compte.mailField.getText();
@@ -193,13 +237,19 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             String codePostal = fenetre.compte.codePostalField.getText();
             String ville = fenetre.compte.villeField.getText();
 
+
+            String image = fenetre.compte.cheminImage.getDescription();
+
+
+            System.out.println(image);
+
             try {
 
                 Utilisateur.verifUtilisateur(mail, password, nom, prenom, age, telephone, numero, rue, codePostal, ville);
 
                 Adresse adressePatient = new Adresse(Integer.parseInt(codePostal), ville, rue, numero);
 
-                Patient patient = new Patient(fenetre.utilisateurActuel.getUtilisateurId(), nom, prenom, Integer.parseInt(age), adressePatient, fenetre.utilisateurActuel.getUtilisateurSexe(), mail, password, telephone, "");
+                Patient patient = new Patient(fenetre.utilisateurActuel.getUtilisateurId(), nom, prenom, Integer.parseInt(age), adressePatient, fenetre.utilisateurActuel.getUtilisateurSexe(), mail, password, telephone, image);
 
                 utilisateurDAO.modifierUtilisateur(patient);
 
