@@ -168,7 +168,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
         } else if (source == fenetre.confrdv.confirmerButton) {
 
             // On crée le rdv dans la BDD
-            RDV rdv = new RDV(fenetre.confrdv.specialiste, (Patient) fenetre.confrdv.utilisateur, fenetre.confrdv.date);
+            RDV rdv = new RDV(fenetre.confrdv.specialiste, fenetre.confrdv.utilisateur, fenetre.confrdv.date);
             rdvDAO.ajouterRDV(rdv);
 
             ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.utilisateurActuel.getUtilisateurId());
@@ -300,6 +300,13 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 fenetre.recherche.searchField.setText("");
             }
 
+        } else if (source == fenetre.accueil.deconnexionLabel) {
+
+            fenetre.connexion.passwordField.setText("");
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.CONNEXION);
+
+
         }
 
         for (JLabel nameLabel : fenetre.recherche.mapSpecialistesInfo.keySet()) {
@@ -328,6 +335,8 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             }
         }
 
+
+
         for (JLabel labelAnnulation : fenetre.rendezvous.mapRDV.keySet()) {
 
             if (source == labelAnnulation) {
@@ -343,6 +352,8 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 break;
             }
         }
+
+
     }
 
     @Override

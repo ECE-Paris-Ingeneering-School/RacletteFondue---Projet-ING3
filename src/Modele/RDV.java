@@ -6,16 +6,16 @@ package Modele;
 public class RDV {
 
     private Specialiste specialiste;
-    private Patient patient;
+    private Utilisateur utilisateur;
     private long date;
 
 
     /**
      * Constructeur des RDV avec tous les paramètres
      */
-    public RDV(Specialiste pspecialiste, Patient ppatient, long pdate) {
+    public RDV(Specialiste pspecialiste, Utilisateur putilisteur, long pdate) {
         this.specialiste = pspecialiste;
-        this.patient = ppatient;
+        this.utilisateur= putilisteur;
         this.date = pdate;
 
     }
@@ -25,8 +25,8 @@ public class RDV {
         return specialiste;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
     public long getDate() {

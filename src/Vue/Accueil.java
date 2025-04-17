@@ -82,6 +82,8 @@ public class Accueil extends JFrame {
         mainPanel.add(menuPanel);
         mainPanel.add(Box.createVerticalStrut(20));
 
+        //Accueil du site
+
         // Barre de recherche
         JPanel searchPanel = new JPanel();
 
@@ -98,20 +100,18 @@ public class Accueil extends JFrame {
 
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
+        mainPanel.add(searchPanel);
 
-
+        JPanel deconnexionPanel = new JPanel();
 
         deconnexionLabel = new JLabel("Déconnexion");
         deconnexionLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
         deconnexionLabel.setForeground(new Color(255, 0, 0));
         deconnexionLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-
-        //add(mainPanel);
-
-        mainPanel.add(searchPanel);
-        mainPanel.add(deconnexionLabel, BorderLayout.EAST);
-        mainPanel.add(Box.createVerticalStrut(30));
+        deconnexionPanel.add(deconnexionLabel);
+        mainPanel.add(deconnexionPanel, BorderLayout.SOUTH);
+        //mainPanel.add(Box.createVerticalStrut(30));
 
         return mainPanel;
 

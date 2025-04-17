@@ -94,6 +94,7 @@ public class FenetrePrincipale {
         accueil.btnCompte.addActionListener(listener);
         accueil.searchButton.addActionListener(listener);
         accueil.searchField.addMouseListener(listener);
+        accueil.deconnexionLabel.addMouseListener(listener);
 
         // RendezVous
         rendezvous.btnAccueil.addActionListener(listener);

@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 /**
  * implémentation MySQL du stockage dans la base de données des méthodes définies dans l'interface RDVDao.
@@ -24,7 +23,7 @@ public class RdvDAOImpl implements RdvDAO {
 
     public ArrayList<RDV> chercherRDV(int utilisateurId ) {
 
-        int recherchePatientId = 0;
+        int rechercheUtilisateurId = 0;
         int rechercheSpecialisteId = 0;
         long rechercheRdvDate = 0;
 
@@ -80,10 +79,10 @@ public class RdvDAOImpl implements RdvDAO {
             while (resultRecherche.next()) {
 
                 rechercheSpecialisteId = resultRecherche.getInt("rdvSpecialiste");
-                recherchePatientId = resultRecherche.getInt("rdvPatient");
+                rechercheUtilisateurId = resultRecherche.getInt("rdvPatient");
                 rechercheRdvDate = resultRecherche.getLong("rdvDate");
 
-                RDV rdvAAjouter = new RDV((Specialiste) daoFactory.getUtilisateurDAO().chercherUtilisateur(rechercheSpecialisteId), (Patient) daoFactory.getUtilisateurDAO().chercherUtilisateur(recherchePatientId), rechercheRdvDate);
+                RDV rdvAAjouter = new RDV((Specialiste) daoFactory.getUtilisateurDAO().chercherUtilisateur(rechercheSpecialisteId), daoFactory.getUtilisateurDAO().chercherUtilisateur(rechercheUtilisateurId), rechercheRdvDate);
                 rdvliste.add(rdvAAjouter);
             }
 
@@ -109,7 +108,7 @@ public class RdvDAOImpl implements RdvDAO {
             // Requete SQL
             String requete = String.format("INSERT INTO rdv(rdvSpecialiste, rdvPatient, rdvDate) VALUES (\"%s\", \"%s\", \"%s\")",
                     rdv.getSpecialiste().getUtilisateurId(),
-                    rdv.getPatient().getUtilisateurId(),
+                    rdv.getUtilisateur().getUtilisateurId(),
                     rdv.getDate()
             );
 
@@ -133,7 +132,7 @@ public class RdvDAOImpl implements RdvDAO {
             Statement statement = connexion.createStatement();
 
             // Suppression du rdv
-            statement.executeUpdate("DELETE FROM rdv WHERE rdv.rdvSpecialiste  = \""+rdv.getSpecialiste().getUtilisateurId() +"\" AND rdv.rdvPatient = \""+rdv.getPatient().getUtilisateurId()+"\"AND rdv.rdvDate = " + rdv.getDate());
+            statement.executeUpdate("DELETE FROM rdv WHERE rdv.rdvSpecialiste  = \""+rdv.getSpecialiste().getUtilisateurId() +"\" AND rdv.rdvPatient = \""+rdv.getUtilisateur().getUtilisateurId()+"\"AND rdv.rdvDate = " + rdv.getDate());
 
         } catch (SQLException e) {
 
