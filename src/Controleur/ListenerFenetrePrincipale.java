@@ -16,7 +16,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.TreeMap;
 
 public class ListenerFenetrePrincipale implements ActionListener, MouseListener {
 
@@ -48,7 +50,28 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 fenetre.utilisateurActuel = utilisateurDAO.chercherUtilisateur(utilisateurDAO.connexionUtilisateur(mail,mdp));
 
-                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.ACCUEIL);
+                if (fenetre.utilisateurActuel instanceof Patient) {
+
+                    fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.ACCUEIL);
+
+                } else if (fenetre.utilisateurActuel instanceof Admin) {
+
+                    ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
+                    ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
+
+                    for (Utilisateur utilisateur : listeUtilisateurs) {
+
+                        if (utilisateur instanceof Specialiste) {
+
+                            listeSpecialistes.add((Specialiste) utilisateur);
+                        }
+                    }
+
+                    fenetre.updateSpecialistesAdmin(listeSpecialistes);
+
+                    fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
+                }
+
 
             } catch (Exception ex) {
 
@@ -184,7 +207,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.confrdv.dispose();
 
-        }else if(source == fenetre.compte.btnChangerImage){
+        } else if (source == fenetre.compte.btnChangerImage) {
 
 
             JFileChooser fileChooser = new JFileChooser();
@@ -263,6 +286,87 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 fenetre.compte.confirmationLabel.setText(ex.getMessage());
             }
+
+        } else if (source == fenetre.statsadmin.btnSpecialiste) {
+
+            ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
+            ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
+
+            for (Utilisateur utilisateur : listeUtilisateurs) {
+
+                if (utilisateur instanceof Specialiste) {
+
+                    listeSpecialistes.add((Specialiste) utilisateur);
+                }
+            }
+
+            fenetre.updateSpecialistesAdmin(listeSpecialistes);
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
+        }
+
+        else if (source == fenetre.speadmin.btnStatistiques) {
+
+            ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
+            ArrayList<RDV> listeRDV = new ArrayList<>();
+            TreeMap<Long, Integer> mapRDV = new TreeMap<>();
+            int nombrePatients = 0;
+            int nombreSpecialistes = 0;
+            int compteurRDV = 0;
+
+            for (Utilisateur utilisateur : listeUtilisateurs) {
+
+                if (utilisateur instanceof Patient) {
+
+                    nombrePatients++;
+
+                } else if (utilisateur instanceof Specialiste) {
+
+                    nombreSpecialistes++;
+
+                    listeRDV.addAll(rdvDAO.chercherRDV(utilisateur.getUtilisateurId()));
+                }
+            }
+
+            // On convertir la date actuelle en date lisible
+            String temp = new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date (fenetre.dateActuelle));
+
+            long nouveauTimestamp = 0;
+
+            try {
+
+                nouveauTimestamp = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(temp + " 00:00:00").getTime();
+
+            } catch (Exception ex) {
+
+                // On ne fait rien
+            }
+
+            for (int i=0; i<7; i++) { // +86400000 au timestamp pour ajouter un jour
+
+                // On parcourt la liste de rdv
+                for (RDV rdv : listeRDV) {
+
+                    // Si le rdv est dans la journée actuelle
+                    if (rdv.getDate() > nouveauTimestamp && rdv.getDate() < (nouveauTimestamp+86400000)) {
+
+                        compteurRDV++;
+                    }
+                }
+
+                // On ajoute le nombre de rdv comptés pour ce jour la
+                mapRDV.put(nouveauTimestamp, compteurRDV);
+
+                // On passe au jour suivant
+                nouveauTimestamp = nouveauTimestamp + 86400000;
+
+                // On réinitialise le compteur de rdv
+                compteurRDV = 0;
+            }
+
+            fenetre.updateStatsAdmin(nombrePatients, nombreSpecialistes, mapRDV);
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.STATSADMIN);
         }
 
         for (JButton buttonCreneau : fenetre.dispordv.mapCreneaux.keySet()) {
@@ -343,6 +447,33 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 break;
             }
         }
+
+        for (JLabel nameLabel : fenetre.speadmin.mapSpecialistesInfo.keySet()) {
+
+            if (source == nameLabel) {
+
+                fenetre.updateInfoDocteurAdmin(fenetre.speadmin.mapSpecialistesInfo.get(nameLabel));
+
+                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INFODOCTEURADMIN);
+
+            }
+        }
+
+        for (JLabel availabilityLabel : fenetre.speadmin.mapSpecialistesDispo.keySet()) {
+
+            if (source == availabilityLabel) {
+
+                ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.speadmin.mapSpecialistesDispo.get(availabilityLabel).getUtilisateurId());
+
+                fenetre.updateDispoRDV(fenetre.speadmin.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
+
+                fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+                fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                fenetre.dispordv.setVisible(true);
+
+            }
+        }
+
     }
 
     @Override

@@ -7,7 +7,10 @@ import Modele.Utilisateur;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Classe permettant de gérer la fenêtre principale du programme
@@ -20,6 +23,9 @@ public class FenetrePrincipale {
     // Utilisateur actuel
     public Utilisateur utilisateurActuel;
 
+    // Date actuelle
+    public long dateActuelle;
+
     // Nom des pages
     public final String CONNEXION = "Connexion";
     public final String INSCRIPTION = "Inscription";
@@ -30,6 +36,9 @@ public class FenetrePrincipale {
     public final String INFODOCTEUR = "Information spécialiste";
     public final String DISPORDV = "Disponibilité rdv";
     public final String CONFIRMATIONRDV = "Confirmation rdv";
+    public final String SPECIALISTEADMIN = "Spécialistes admin";
+    public final String INFODOCTEURADMIN = "Modifier infos docteur admin";
+    public final String STATSADMIN = "Statistiques admin";
 
     // Initialisation des objets de chaque page
     public Connexion connexion;
@@ -41,6 +50,9 @@ public class FenetrePrincipale {
     public InfoDocteur info;
     public DisponibiliteRDV dispordv;
     public ConfirmationRDV confrdv;
+    public SpecialisteAdmin speadmin;
+    public ModifierInfoDocteurAdmin infodocteuradmin;
+    public StatistiqueAdmin statsadmin;
 
     // Initialisation des panels de chaque page
     public CardLayout cl;
@@ -52,11 +64,17 @@ public class FenetrePrincipale {
     public JPanel comptePanel;
     public JPanel recherchePanel;
     public JPanel infoPanel;
+    public JPanel speadminPanel;
+    public JPanel infodocteuradminPanel;
+    public JPanel statsadminPanel;
 
     /**
      * Constructeur de la fenêtre principale
      * **/
     public FenetrePrincipale() {
+
+        // Récupération de la date du jour
+        dateActuelle = Instant.now().toEpochMilli();
 
         // Instanciation du listener principal
         listener = new ListenerFenetrePrincipale(this);
@@ -71,6 +89,9 @@ public class FenetrePrincipale {
         info = new InfoDocteur();
         dispordv = new DisponibiliteRDV();
         confrdv = new ConfirmationRDV();
+        speadmin = new SpecialisteAdmin();
+        infodocteuradmin = new ModifierInfoDocteurAdmin();
+        statsadmin = new StatistiqueAdmin();
 
         // Instanciation des panels
         this.connexionPanel = connexion.buildPanel();
@@ -80,6 +101,9 @@ public class FenetrePrincipale {
         this.comptePanel = compte.buildPanel();
         this.recherchePanel = recherche.buildPanel();
         this.infoPanel = info.buildPanel();
+        this.speadminPanel = speadmin.buildPanel();
+        this.infodocteuradminPanel = infodocteuradmin.buildPanel();
+        this.statsadminPanel = statsadmin.buildPanel();
 
         // Ajout des listeners sur les pages
         // Connexion
@@ -95,15 +119,6 @@ public class FenetrePrincipale {
         accueil.searchButton.addActionListener(listener);
         accueil.searchField.addMouseListener(listener);
 
-        // RendezVous
-        rendezvous.btnAccueil.addActionListener(listener);
-        rendezvous.btnCompte.addActionListener(listener);
-
-        // Compte
-        compte.btnAccueil.addActionListener(listener);
-        compte.btnRendezVous.addActionListener(listener);
-
-
         // Création de la fenêtre principale
         JFrame fenetrePrincipale = new JFrame();
 
@@ -118,6 +133,9 @@ public class FenetrePrincipale {
         conteneurPrincipal.add(comptePanel, COMPTE);
         conteneurPrincipal.add(recherchePanel, RECHERCHE);
         conteneurPrincipal.add(infoPanel, INFODOCTEUR);
+        conteneurPrincipal.add(speadminPanel, SPECIALISTEADMIN);
+        conteneurPrincipal.add(infodocteuradminPanel, INFODOCTEURADMIN);
+        conteneurPrincipal.add(statsadminPanel, STATSADMIN);
 
         // Paramétrage de la fenetre principale
         fenetrePrincipale.add(conteneurPrincipal);
@@ -249,6 +267,68 @@ public class FenetrePrincipale {
 
         confrdv.revalidate();
         confrdv.repaint();
+    }
+
+    public void updateSpecialistesAdmin(ArrayList<Specialiste> listeSpecialistes) {
+
+        speadmin.listeSpecialistes = listeSpecialistes;
+
+        conteneurPrincipal.remove(speadminPanel);
+
+        speadminPanel = speadmin.buildPanel();
+        speadmin.btnDossierPatients.addActionListener(listener);
+        speadmin.btnStatistiques.addActionListener(listener);
+
+        for (JLabel nameLabel : speadmin.mapSpecialistesInfo.keySet()) {
+
+            if (nameLabel != null) nameLabel.addMouseListener(listener);
+        }
+
+        for (JLabel availabilityLabel : speadmin.mapSpecialistesDispo.keySet()) {
+
+            if (availabilityLabel != null) availabilityLabel.addMouseListener(listener);
+        }
+
+        conteneurPrincipal.add(speadminPanel, SPECIALISTEADMIN);
+
+        speadmin.revalidate();
+        speadmin.repaint();
+    }
+
+    public void updateInfoDocteurAdmin(Specialiste specialiste) {
+
+        infodocteuradmin.specialiste = specialiste;
+
+        conteneurPrincipal.remove(infodocteuradminPanel);
+
+        infodocteuradminPanel = infodocteuradmin.buildPanel();
+        infodocteuradmin.btnSpecialiste.addActionListener(listener);
+        infodocteuradmin.btnDossierPatients.addActionListener(listener);
+        infodocteuradmin.btnStatistiques.addActionListener(listener);
+        infodocteuradmin.modifierButton.addActionListener(listener);
+
+        conteneurPrincipal.add(infodocteuradminPanel, INFODOCTEURADMIN);
+
+        infodocteuradmin.revalidate();
+        infodocteuradmin.repaint();
+    }
+
+    public void updateStatsAdmin(int nombrePatients, int nombreSpecialistes, TreeMap<Long, Integer> mapRDV) {
+
+        statsadmin.nombrePatients = nombrePatients;
+        statsadmin.nombreSpecialistes = nombreSpecialistes;
+        statsadmin.mapRDV = mapRDV;
+
+        conteneurPrincipal.remove(statsadminPanel);
+
+        statsadminPanel = statsadmin.buildPanel();
+        statsadmin.btnSpecialiste.addActionListener(listener);
+        statsadmin.btnDossierPatients.addActionListener(listener);
+
+        conteneurPrincipal.add(statsadminPanel, STATSADMIN);
+
+        statsadmin.revalidate();
+        statsadmin.repaint();
     }
 
     public static void main(String[] args) {

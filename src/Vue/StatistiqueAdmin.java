@@ -1,5 +1,6 @@
 package Vue;
 
+import Modele.RDV;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -9,8 +10,13 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import javax.print.attribute.HashPrintJobAttributeSet;
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 public class StatistiqueAdmin extends JFrame {
 
@@ -18,15 +24,30 @@ public class StatistiqueAdmin extends JFrame {
     public JButton btnDossierPatients;
     public JButton btnStatistiques;
 
+    //donnée à changer
+    public int nombrePatients;
+    public int nombreSpecialistes;
+    public TreeMap<Long, Integer> mapRDV;
+
     public StatistiqueAdmin() {
         setTitle("Graphiques du spécialiste");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        setContentPane(buildPanel());
+    }
+
+    public JPanel buildPanel() {
+
         // Panel principal
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+        if (mapRDV == null) {
+
+            return mainPanel;
+        }
 
         // Titre
         JLabel titleLabel = new JLabel("Statistique - ADMIN");
@@ -70,18 +91,13 @@ public class StatistiqueAdmin extends JFrame {
         // Add margins
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        add(mainPanel);
+        return mainPanel;
     }
-
-    //donnée à changer
-    String[] patients = {"a", "b", "c", "d", "e", "f", "g"};
-    String[] specialistes = {"Dupont", "Petit", "Grand", "Moche"};
-    int[] rdv = {1, 4, 10, 54, 24, 36, 18};
 
     private JPanel createPieChartPanel() {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        dataset.setValue("Spécialistes", specialistes.length);
-        dataset.setValue("Patients", patients.length);
+        dataset.setValue("Spécialistes", nombreSpecialistes);
+        dataset.setValue("Patients", nombrePatients);
 
         JFreeChart chart = ChartFactory.createPieChart(
                 "Répartition du nombre de patients et du nombre de spécialistes",
@@ -93,12 +109,18 @@ public class StatistiqueAdmin extends JFrame {
     }
 
     private JPanel createBarChartPanel() {
+
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        int maxAbundance = 6 * specialistes.length;
+        int maxAbundance = 6 * nombreSpecialistes;
 
-        for (int i = 0; i < rdv.length; i++) {
-            dataset.addValue(rdv[i], "RDV", getDayOfWeek(i));
+        ArrayList<Integer> nombreRDV = new ArrayList<>();
+
+        for (Long dateRDV : mapRDV.keySet()) {
+
+            dataset.addValue(mapRDV.get(dateRDV), "RDV", new java.text.SimpleDateFormat("dd/MM").format(new java.util.Date (dateRDV)));
+
+            nombreRDV.add(mapRDV.get(dateRDV));
         }
 
         JFreeChart chart = ChartFactory.createBarChart(
@@ -111,24 +133,12 @@ public class StatistiqueAdmin extends JFrame {
         );
 
         CategoryPlot plot = chart.getCategoryPlot();
-        BarRenderer renderer = new CustomBarRenderer(maxAbundance, rdv);
+
+        BarRenderer renderer = new CustomBarRenderer(maxAbundance, nombreRDV);
 
         plot.setRenderer(renderer);
 
         return new ChartPanel(chart);
-    }
-
-    private String getDayOfWeek(int index) {
-        return switch (index) {
-            case 0 -> "Lun";
-            case 1 -> "Mar";
-            case 2 -> "Mer";
-            case 3 -> "Jeu";
-            case 4 -> "Ven";
-            case 5 -> "Sam";
-            case 6 -> "Dim";
-            default -> "";
-        };
     }
 
     private void styleMenuButton(JButton button) {
@@ -145,21 +155,26 @@ public class StatistiqueAdmin extends JFrame {
     }
 
     private static class CustomBarRenderer extends BarRenderer {
-        private final int maxAbundance;
-        private final int[] rdv;
 
-        public CustomBarRenderer(int maxAbundance, int[] rdv) {
+        private final int maxAbundance;
+        private final ArrayList<Integer> rdv;
+
+        public CustomBarRenderer(int maxAbundance, ArrayList<Integer> rdv) {
             this.maxAbundance = maxAbundance;
             this.rdv = rdv;
         }
 
         @Override
         public Paint getItemPaint(int row, int column) {
-            int value = rdv[column];
+
+            int value = rdv.get(column);
+
             if (value < maxAbundance / 3) {
                 return Color.GREEN;
+
             } else if (value < 2 * maxAbundance / 3) {
                 return Color.ORANGE;
+
             } else {
                 return Color.RED;
             }
