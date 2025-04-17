@@ -136,8 +136,8 @@ public class DossierPatientsAdmin extends JFrame{
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(238, 238, 238), 1));
-        scrollPane.setPreferredSize(new Dimension(650, 450));
-        scrollPane.setMaximumSize(new Dimension(650, 450));
+        scrollPane.setPreferredSize(new Dimension(650, 500));
+        scrollPane.setMaximumSize(new Dimension(650, 500));
 
         mainPanel.add(scrollPane);
         add(mainPanel);

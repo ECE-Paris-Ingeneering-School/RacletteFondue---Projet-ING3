@@ -1,9 +1,17 @@
 package Vue;
 
+import Modele.Utilisateur;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class InfoPatientAdmin extends JFrame {
+
+    public JButton btnSpecialiste;
+    public JButton btnDossierPatients;
+    public JButton btnStatistiques;
+
+    public Utilisateur utilisateur;
 
     public InfoPatientAdmin() {
         setTitle("Informations Patient");
@@ -26,6 +34,32 @@ public class InfoPatientAdmin extends JFrame {
         mainPanel.add(titleLabel);
         mainPanel.add(Box.createVerticalStrut(20));
 
+        JPanel menuPanel = new JPanel();
+
+        btnSpecialiste = new JButton("Spécialistes");
+        styleMenuButton(btnSpecialiste);
+
+        btnDossierPatients = new JButton("Dossier Patients");
+        styleMenuButton(btnDossierPatients);
+        btnDossierPatients.setForeground(Color.WHITE);
+        btnDossierPatients.setBackground(new Color(45, 104, 196));
+
+
+        btnStatistiques = new JButton("Statistiques");
+        styleMenuButton(btnStatistiques);
+
+        menuPanel.add(btnSpecialiste);
+        menuPanel.add(btnDossierPatients);
+        menuPanel.add(btnStatistiques);
+
+        mainPanel.add(menuPanel);
+
+
+        if (utilisateur == null) {
+
+            return mainPanel;
+        }
+
 
         // Infos perso
         JPanel infoPanel = new JPanel();
@@ -36,22 +70,22 @@ public class InfoPatientAdmin extends JFrame {
         Font labelFont = new Font("Tahoma", Font.PLAIN, 20);
 
         infoPanel.add(createInfoLabel("Nom :", labelFont));
-        infoPanel.add(createInfoLabel("__________", labelFont));
+        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurNom(), labelFont));
 
         infoPanel.add(createInfoLabel("Prénom :", labelFont));
-        infoPanel.add(createInfoLabel("__________", labelFont));
+        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurPrenom(), labelFont));
 
-        infoPanel.add(createInfoLabel("Date de naissance :", labelFont));
-        infoPanel.add(createInfoLabel("__________", labelFont));
+        infoPanel.add(createInfoLabel("Age :", labelFont));
+        infoPanel.add(createInfoLabel(String.valueOf(utilisateur.getUtilisateurAge()), labelFont));
 
         infoPanel.add(createInfoLabel("Téléphone :", labelFont));
-        infoPanel.add(createInfoLabel("__________", labelFont));
+        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurTel(), labelFont));
 
         infoPanel.add(createInfoLabel("Email :", labelFont));
-        infoPanel.add(createInfoLabel("__________", labelFont));
+        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurMail(), labelFont));
 
         infoPanel.add(createInfoLabel("Mot de passe :", labelFont));
-        infoPanel.add(createInfoLabel("********", labelFont));
+        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurPassword(), labelFont));
 
         mainPanel.add(infoPanel);
         mainPanel.add(Box.createVerticalStrut(30));
@@ -80,7 +114,7 @@ public class InfoPatientAdmin extends JFrame {
         };
 
         JPanel contentPanel = new JPanel(new GridLayout(1, 2, 30, 0));
-        contentPanel.setMaximumSize(new Dimension(1300, 500));
+        contentPanel.setMaximumSize(new Dimension(1300, 400));
         contentPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         contentPanel.add(createScrollList("RDV passés", rdvPasses));
@@ -170,6 +204,14 @@ public class InfoPatientAdmin extends JFrame {
             Image img = new ImageIcon("Images/pdp_defaut.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
             return new ImageIcon(img);
         }
+    }
+
+
+    private void styleMenuButton(JButton button) {
+        button.setPreferredSize(new Dimension(250, 70));
+        button.setFont(new Font("Tahoma", Font.BOLD, 20));
+        button.setBackground(new Color(221, 235, 247));
+        button.setFocusPainted(false);
     }
 
     public static void main(String[] args) {
