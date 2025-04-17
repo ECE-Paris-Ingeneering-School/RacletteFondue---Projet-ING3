@@ -20,7 +20,8 @@ public class InfoDocteur extends JFrame {
     public JLabel expertiseValueLabel;
     public JLabel accessValueLabel;
     public JButton prendreRDVButton;
-
+    public ImageIcon cheminImage;
+    public JLabel imageField;
     public Specialiste specialiste;
 
     public InfoDocteur() {
@@ -37,7 +38,7 @@ public class InfoDocteur extends JFrame {
         // Panel principal
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(0, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Titre
@@ -75,7 +76,19 @@ public class InfoDocteur extends JFrame {
             return mainPanel;
         }
 
-        // Nom du docteur
+        // Image du spécialiste
+        if (specialiste.getUtilisateurImage().isEmpty()){
+
+            cheminImage = new ImageIcon("src/Images/pdp_defaut.png");
+        }
+        else {
+            cheminImage = new ImageIcon(specialiste.getUtilisateurImage());
+        }
+        Image image = cheminImage.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+        imageField = new JLabel(new ImageIcon(image));
+        mainPanel.add(imageField,gbc);
+
+        // Nom du spécialiste
         doctorNameLabel = new JLabel("Dr. " + specialiste.getUtilisateurNom());
         doctorNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
         doctorNameLabel.setHorizontalAlignment(SwingConstants.CENTER);

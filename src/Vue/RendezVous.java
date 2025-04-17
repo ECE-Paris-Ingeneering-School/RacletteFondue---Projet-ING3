@@ -1,6 +1,7 @@
 package Vue;
 
 import Modele.RDV;
+import Modele.Specialiste;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,9 +74,9 @@ public class RendezVous extends JFrame {
 
         // Partie gauche : image
         JLabel imageLabel = new JLabel();
-        ImageIcon imageIcon = loadProfileImage(); // méthode pour charger l'image
+        ImageIcon imageIcon = loadProfileImage(rdv.getSpecialiste()); // méthode pour charger l'image
         imageLabel.setIcon(imageIcon);
-        imageLabel.setPreferredSize(new Dimension(64, 64));
+        imageLabel.setPreferredSize(new Dimension(64, 84));
         panel.add(imageLabel, BorderLayout.WEST);
 
 
@@ -84,7 +85,7 @@ public class RendezVous extends JFrame {
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
         textPanel.setOpaque(false);
 
-        JLabel nomLabel = new JLabel(rdv.getSpecialiste().getUtilisateurNom());
+        JLabel nomLabel = new JLabel("Dr." + rdv.getSpecialiste().getUtilisateurNom());
         nomLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 
         JLabel speLabel = new JLabel(rdv.getSpecialiste().getSpecialisteSpecialite());
@@ -115,9 +116,15 @@ public class RendezVous extends JFrame {
         return panel;
     }
 
-    private ImageIcon loadProfileImage() {
+    private ImageIcon loadProfileImage(Specialiste specialiste) {
 
-        String path = "Images/pdp_defaut.png";
+        String path;
+
+        if (specialiste.getUtilisateurImage().isEmpty()){
+            path = "src/Images/pdp_defaut.png";
+        }else {
+            path = specialiste.getUtilisateurImage();
+        }
 
         ImageIcon icon;
         try {
@@ -125,7 +132,7 @@ public class RendezVous extends JFrame {
             icon = new ImageIcon(img);
         } catch (Exception e) {
             // Image par défaut si erreur
-            Image img = new ImageIcon("Images/pdp_defaut.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+            Image img = new ImageIcon("Images/pdp_defaut.png").getImage().getScaledInstance(64, 84, Image.SCALE_SMOOTH);
             icon = new ImageIcon(img);
         }
 

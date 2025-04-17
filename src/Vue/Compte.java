@@ -128,8 +128,9 @@ public class Compte extends JFrame {
         else {
             cheminImage = new ImageIcon(utilisateur.getUtilisateurImage());
         }
-        Image image = cheminImage.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        Image image = cheminImage.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         imageField = new JLabel(new ImageIcon(image));
+
 
 
         btnChangerImage = new JButton("Changer votre photo");
