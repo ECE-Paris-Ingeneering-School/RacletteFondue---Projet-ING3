@@ -1,7 +1,12 @@
 package Vue;
 
+import Modele.Patient;
+import Modele.Utilisateur;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DossierPatientsAdmin extends JFrame{
 
@@ -14,17 +19,31 @@ public class DossierPatientsAdmin extends JFrame{
     public JLabel locationLabel;
     public JLabel availabilityLabel;
 
-
+    public ArrayList<Patient> listePatients;
+    public HashMap<JLabel, Patient> mapPatients;
 
     public DossierPatientsAdmin() {
+
+        mapPatients = new HashMap<>();
+
         setTitle("Spécialiste");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        setContentPane(buildPanel());
+    }
+
+    public JPanel buildPanel() {
+
         // Panel principal
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+        if (listePatients == null) {
+
+            return mainPanel;
+        }
 
         // Titre
         JLabel titleLabel = new JLabel("Dossier Patients - ADMIN");
@@ -140,8 +159,8 @@ public class DossierPatientsAdmin extends JFrame{
         scrollPane.setMaximumSize(new Dimension(650, 450));
 
         mainPanel.add(scrollPane);
-        add(mainPanel);
-        setVisible(true);
+
+        return mainPanel;
     }
 
     private void styleMenuButton(JButton button) {

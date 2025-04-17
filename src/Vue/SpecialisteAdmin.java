@@ -49,7 +49,7 @@ public class SpecialisteAdmin extends JFrame {
         }
 
         // Titre
-        JLabel titleLabel = new JLabel("Spécialistes - Admin");
+        JLabel titleLabel = new JLabel("Spécialistes - ADMIN");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

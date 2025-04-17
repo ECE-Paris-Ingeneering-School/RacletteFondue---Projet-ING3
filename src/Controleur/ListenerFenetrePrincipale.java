@@ -303,9 +303,8 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             fenetre.updateSpecialistesAdmin(listeSpecialistes);
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
-        }
 
-        else if (source == fenetre.speadmin.btnStatistiques) {
+        } else if (source == fenetre.speadmin.btnStatistiques) {
 
             ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
             ArrayList<RDV> listeRDV = new ArrayList<>();
