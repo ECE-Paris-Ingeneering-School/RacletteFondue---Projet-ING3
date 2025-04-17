@@ -40,29 +40,6 @@ public class Compte extends JFrame {
         setContentPane(buildPanel());
     }
 
-    private void addPlaceholder(JTextField textField, String placeholder) {
-        textField.setForeground(Color.GRAY);
-        textField.setText(placeholder);
-
-        textField.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent e) {
-                if (textField.getText().equals(placeholder)) {
-                    textField.setText("");
-                    textField.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(java.awt.event.FocusEvent e) {
-                if (textField.getText().isEmpty()) {
-                    textField.setForeground(Color.GRAY);
-                    textField.setText(placeholder);
-                }
-            }
-        });
-    }
-
 
     public JPanel buildPanel() {
 
@@ -128,6 +105,7 @@ public class Compte extends JFrame {
         else {
             cheminImage = new ImageIcon(utilisateur.getUtilisateurImage());
         }
+
         Image image = cheminImage.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         imageField = new JLabel(new ImageIcon(image));
 

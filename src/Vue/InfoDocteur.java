@@ -36,20 +36,20 @@ public class InfoDocteur extends JFrame {
     public JPanel buildPanel() {
 
         // Panel principal
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(0, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
 
         // Titre
         titleLabel = new JLabel("Information spécialiste");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        mainPanel.add(titleLabel, gbc);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(titleLabel);
+        mainPanel.add(Box.createVerticalStrut(20));
+
 
         // Menu boutons
         JPanel menuPanel = new JPanel();
@@ -66,15 +66,20 @@ public class InfoDocteur extends JFrame {
         menuPanel.add(btnAccueil);
         menuPanel.add(btnRendezVous);
         menuPanel.add(btnCompte);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        mainPanel.add(menuPanel, gbc);
+        mainPanel.add(menuPanel);
+        mainPanel.add(Box.createVerticalStrut(20));
+
 
         if (specialiste == null) {
 
             return mainPanel;
         }
+
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
 
         // Image du spécialiste
         if (specialiste.getUtilisateurImage().isEmpty()){
@@ -84,18 +89,22 @@ public class InfoDocteur extends JFrame {
         else {
             cheminImage = new ImageIcon(specialiste.getUtilisateurImage());
         }
-        Image image = cheminImage.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+
+        Image image = cheminImage.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         imageField = new JLabel(new ImageIcon(image));
-        mainPanel.add(imageField,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        formPanel.add(imageField, gbc);
+
 
         // Nom du spécialiste
         doctorNameLabel = new JLabel("Dr. " + specialiste.getUtilisateurNom());
         doctorNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
         doctorNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        mainPanel.add(doctorNameLabel, gbc);
+        gbc.gridx = 1;
+        gbc.gridy ++ ;
+        formPanel.add(doctorNameLabel, gbc);
+
 
         // Présentation
         presentationValueLabel = new JTextArea(specialiste.getSpecialisteDescription());
@@ -107,9 +116,9 @@ public class InfoDocteur extends JFrame {
         presentationValueLabel.setWrapStyleWord(true);
         presentationValueLabel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 2;
         gbc.gridwidth = 2;
-        mainPanel.add(presentationValueLabel, gbc);
+        formPanel.add(presentationValueLabel, gbc);
 
         // Panel pour les catégories
         JPanel categoriesPanel = new JPanel(new GridBagLayout());
@@ -180,7 +189,7 @@ public class InfoDocteur extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2;
-        mainPanel.add(categoriesPanel, gbc);
+        formPanel.add(categoriesPanel, gbc);
 
         // Bouton Prendre un rendez-vous
         prendreRDVButton = new JButton("Prendre un rendez-vous");
@@ -191,7 +200,9 @@ public class InfoDocteur extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2;
-        mainPanel.add(prendreRDVButton, gbc);
+        formPanel.add(prendreRDVButton, gbc);
+
+        mainPanel.add(formPanel);
 
         return mainPanel;
     }

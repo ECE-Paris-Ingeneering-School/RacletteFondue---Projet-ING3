@@ -85,13 +85,13 @@ public class RendezVous extends JFrame {
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
         textPanel.setOpaque(false);
 
-        JLabel nomLabel = new JLabel("Dr." + rdv.getSpecialiste().getUtilisateurNom());
+        JLabel nomLabel = new JLabel(" Dr." + rdv.getSpecialiste().getUtilisateurNom());
         nomLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 
-        JLabel speLabel = new JLabel(rdv.getSpecialiste().getSpecialisteSpecialite());
+        JLabel speLabel = new JLabel(" " + rdv.getSpecialiste().getSpecialisteSpecialite());
         speLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-        JLabel dateLabel = new JLabel(new java.text.SimpleDateFormat("dd/MM/yyyy à HH:mm").format(new java.util.Date (rdv.getDate())));
+        JLabel dateLabel = new JLabel(new java.text.SimpleDateFormat(" dd/MM/yyyy à HH:mm").format(new java.util.Date (rdv.getDate())));
         dateLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
         if (rdv.getDate() > Instant.now().toEpochMilli()) {

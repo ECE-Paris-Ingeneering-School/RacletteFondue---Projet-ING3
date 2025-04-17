@@ -72,11 +72,11 @@ public class RechercheDocteur extends JFrame {
         // Barre de recherche
         JPanel searchPanel = new JPanel();
 
-        searchField = new JTextField("Nom, spécialité, lieu...", 30); // Champ de recherche avec texte
+        searchField = new JTextField("", 30); // Champ de recherche avec texte
         searchField.setFont(new Font("Tahoma", Font.PLAIN, 18));
         searchField.setPreferredSize(new Dimension(400, 40));
-        searchField.setBackground(new Color(255, 255, 255));
-        searchField.setEditable(true);
+        addPlaceholder(searchField,"Nom, spécialité, lieu..." );
+
 
         searchButton = new JButton("🔍");
         searchButton.setPreferredSize(new Dimension(80, 40));
@@ -174,6 +174,29 @@ public class RechercheDocteur extends JFrame {
         mainPanel.add(scrollPane);
 
         return mainPanel;
+    }
+
+    private void addPlaceholder(JTextField textField, String placeholder) {
+        textField.setForeground(Color.GRAY);
+        textField.setText(placeholder);
+
+        textField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(Color.GRAY);
+                    textField.setText(placeholder);
+                }
+            }
+        });
     }
 
     private void styleMenuButton(JButton button) {

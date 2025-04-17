@@ -10,6 +10,8 @@ public class Accueil extends JFrame {
     public JButton btnCompte;
     public JTextField searchField;
     public JButton searchButton;
+    public JLabel deconnexionLabel;
+
 
     public Accueil() {
         setTitle("Accueil");
@@ -96,13 +98,24 @@ public class Accueil extends JFrame {
 
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
-        mainPanel.add(searchPanel);
-        mainPanel.add(Box.createVerticalStrut(30));
+
+
+
+        deconnexionLabel = new JLabel("Déconnexion");
+        deconnexionLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+        deconnexionLabel.setForeground(new Color(255, 0, 0));
+        deconnexionLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
         //add(mainPanel);
 
+        mainPanel.add(searchPanel);
+        mainPanel.add(deconnexionLabel, BorderLayout.EAST);
+        mainPanel.add(Box.createVerticalStrut(30));
+
         return mainPanel;
+
+
     }
 
     private void styleMenuButton(JButton button) {
