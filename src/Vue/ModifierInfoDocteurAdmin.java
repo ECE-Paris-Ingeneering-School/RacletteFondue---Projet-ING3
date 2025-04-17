@@ -1,56 +1,63 @@
 package Vue;
 
+import Modele.Adresse;
 import Modele.Specialiste;
+import Modele.Utilisateur;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ModifierInfoDocteurAdmin extends JFrame {
 
-    public JLabel titleLabel;
-
     public JButton btnSpecialiste;
     public JButton btnDossierPatients;
     public JButton btnStatistiques;
-
-    public JLabel doctorNameLabel;
-    public JTextArea presentationValueLabel;
-    public JLabel tarifValueLabel;
-    public JLabel paiementValueLabel;
-    public JLabel expertiseValueLabel;
-    public JTextArea accessValueLabel;
+    public JLabel imageField;
+    public JButton btnChargerImage;
+    public JTextField nomField;
+    public JTextField specialiteField;
+    public JTextField descriptionField;
+    public JTextField tarifField;
+    public JTextField numeroField;
+    public JTextField rueField;
+    public JTextField codePostalField;
+    public JTextField villeField;
     public JButton modifierButton;
+    public JButton annulerButton;
+    public JLabel erreurLabel;
 
     public Specialiste specialiste;
 
+
     public ModifierInfoDocteurAdmin() {
-        setTitle("Information spécialiste");
-        setSize(1920, 1080);
+        setTitle("Modifier Specialiste");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1920, 1080);
         setLocationRelativeTo(null);
+
+        Adresse adresse1 = new Adresse(75015, "Paris", "Rue de Javel",  "23");
+        specialiste = new Specialiste(1, "Moche","Carbel", 54, adresse1, 'H', "lucie.daix@caca.com", "ZZZZ", "098765432", "", "Psy", "J'aide les gens", 40);
+
 
         setContentPane(buildPanel());
     }
 
     public JPanel buildPanel() {
 
-        // Panel principal
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         // Titre
-        titleLabel = new JLabel("Information spécialiste - ADMIN");
+        JLabel titleLabel = new JLabel("Modifier un spécialiste");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        mainPanel.add(titleLabel, gbc);
 
-        // Menu boutons
+
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(titleLabel);
+        mainPanel.add(Box.createVerticalStrut(20));
+
         JPanel menuPanel = new JPanel();
 
         btnSpecialiste = new JButton("Spécialistes");
@@ -62,126 +69,190 @@ public class ModifierInfoDocteurAdmin extends JFrame {
         btnStatistiques = new JButton("Statistiques");
         styleMenuButton(btnStatistiques);
 
+
+
         menuPanel.add(btnSpecialiste);
         menuPanel.add(btnDossierPatients);
         menuPanel.add(btnStatistiques);
 
+        mainPanel.add(menuPanel);
+        mainPanel.add(Box.createVerticalStrut(20));
+
+
+
+
+        // Panel principal avec GridBagLayout
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Augmenter les marges pour une meilleure lisibilité
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+
+        Font labelFont = new Font("Tahoma", Font.PLAIN, 18); // Définir une police plus grande
+
+
+        // Affichage image
+        //ImageIcon imageIcon = new ImageIcon("C:\\Users\\lucie\\OneDrive - Groupe INSEEC (POCE)\\Bureau\\ECE\\ECE3\\Paris\\Java\\RacletteFondue---Projet-ING3\\src\\Vue\\timothe.jpg");
+        ImageIcon imageIcon = new ImageIcon("");
+        Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        imageField = new JLabel(new ImageIcon(image));
+
+        btnChargerImage = new JButton("Modifier votre photo");
+        //btnChangerImage.setPreferredSize(new Dimension(200, 25)); // Augmenter la taille du bouton
+        btnChargerImage.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnChargerImage.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
+        btnChargerImage.setForeground(Color.WHITE);
+        btnChargerImage.setFocusPainted(false);
+
+        btnChargerImage.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            int result = fileChooser.showOpenDialog(this);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+                java.io.File selectedFile = fileChooser.getSelectedFile();
+                ImageIcon newIcon = new ImageIcon(selectedFile.getAbsolutePath());
+                Image newImage = newIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                imageField.setIcon(new ImageIcon(newImage));
+            }
+        });
+
+        JLabel imageLabel = new JLabel("Photo de profil :");
+        imageLabel.setFont(labelFont);
         gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        mainPanel.add(menuPanel, gbc);
+        gbc.gridy = 0;
+        formPanel.add(imageLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(imageField, gbc);
 
-        if (specialiste == null) {
+        gbc.gridx = 1;
+        gbc.gridy++;
+        formPanel.add(btnChargerImage, gbc);
 
-            return mainPanel;
-        }
 
-        // Nom du docteur
-        doctorNameLabel = new JLabel("Dr. " + specialiste.getUtilisateurNom());
-        doctorNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
-        doctorNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        mainPanel.add(doctorNameLabel, gbc);
-
-        // Présentation
-        presentationValueLabel = new JTextArea(specialiste.getSpecialisteDescription());
-        presentationValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        presentationValueLabel.setEditable(false);
-        presentationValueLabel.setBackground(null);
-        presentationValueLabel.setBorder(null);
-        presentationValueLabel.setLineWrap(true);
-        presentationValueLabel.setWrapStyleWord(true);
-        presentationValueLabel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        mainPanel.add(presentationValueLabel, gbc);
-
-        // Panel pour les catégories
-        JPanel categoriesPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbcCategories = new GridBagConstraints();
-        gbcCategories.insets = new Insets(10, 10, 10, 10);
-        gbcCategories.fill = GridBagConstraints.HORIZONTAL;
-
-        // Colonne de gauche
-        JPanel leftColumn = new JPanel();
-        leftColumn.setLayout(new BoxLayout(leftColumn, BoxLayout.Y_AXIS));
-
-        JLabel tarifLabel = new JLabel("Tarif & remboursement");
-        tarifLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-        leftColumn.add(tarifLabel);
-        leftColumn.add(Box.createVerticalStrut(10));
-
-        tarifValueLabel = new JLabel(String.valueOf(specialiste.getSpecialisteTarif()) + " €");
-        tarifValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        leftColumn.add(tarifValueLabel);
-        leftColumn.add(Box.createVerticalStrut(20));
-
-        JLabel paiementLabel = new JLabel("Moyen de paiement");
-        paiementLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-        leftColumn.add(paiementLabel);
-        leftColumn.add(Box.createVerticalStrut(20));
-
-        paiementValueLabel = new JLabel("Carte");
-        paiementValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        leftColumn.add(paiementValueLabel);
-        leftColumn.add(Box.createVerticalStrut(20));
-
-        gbcCategories.gridx = 0;
-        gbcCategories.gridy = 0;
-        categoriesPanel.add(leftColumn, gbcCategories);
-
-        // Colonne de droite
-        JPanel rightColumn = new JPanel();
-        rightColumn.setLayout(new BoxLayout(rightColumn, BoxLayout.Y_AXIS));
-
-        JLabel expertiseLabel = new JLabel("Expertise");
-        expertiseLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-        rightColumn.add(expertiseLabel);
-        rightColumn.add(Box.createVerticalStrut(20));
-
-        expertiseValueLabel = new JLabel(specialiste.getSpecialisteSpecialite());
-        expertiseValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        rightColumn.add(expertiseValueLabel);
-        rightColumn.add(Box.createVerticalStrut(20));
-
-        JLabel accessLabel = new JLabel("Information d'accès");
-        accessLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-        rightColumn.add(accessLabel);
-        rightColumn.add(Box.createVerticalStrut(20));
-
-        accessValueLabel = new JTextArea(specialiste.getUtilisateurAdresse().getAdresseNumero() + " " + specialiste.getUtilisateurAdresse().getAdresseRue());
-        accessValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        accessValueLabel.setBackground(null);
-        accessValueLabel.setBorder(null);
-        rightColumn.add(accessValueLabel);
-        rightColumn.add(Box.createVerticalStrut(20));
-
-        gbcCategories.gridx = 1;
-        gbcCategories.gridy = 0;
-        categoriesPanel.add(rightColumn, gbcCategories);
+        // Champs
+        JLabel nomLabel = new JLabel("Nom :");
+        nomLabel.setFont(labelFont);
+        nomField = new JTextField(specialiste.getUtilisateurNom(), 20);
+        nomField.setFont(labelFont);
 
         gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        mainPanel.add(categoriesPanel, gbc);
+        gbc.gridy++;
+        formPanel.add(nomLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(nomField, gbc);
 
-        // Bouton Prendre un rendez-vous
+
+        JLabel specialiteLabel = new JLabel("Spécialité :");
+        specialiteLabel.setFont(labelFont);
+        specialiteField = new JTextField(specialiste.getSpecialisteSpecialite(), 20);
+        specialiteField.setFont(labelFont);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(specialiteLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(specialiteField, gbc);
+
+
+        JLabel descriptionLabel = new JLabel("Description :");
+        descriptionLabel.setFont(labelFont);
+        descriptionField = new JTextField(specialiste.getSpecialisteDescription(), 20);
+        descriptionField.setFont(labelFont);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(descriptionLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(descriptionField, gbc);
+
+
+        JLabel tarifLabel = new JLabel("Tarif (€) :");
+        tarifLabel.setFont(labelFont);
+        tarifField = new JTextField(String.valueOf(specialiste.getSpecialisteTarif()), 20);
+        tarifField.setFont(labelFont);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(tarifLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(tarifField, gbc);
+
+
+        JLabel adresseLabel = new JLabel("Adresse :");
+        adresseLabel.setFont(labelFont);
+
+
+        numeroField = new JTextField(specialiste.getUtilisateurAdresse().getAdresseNumero(), 5);
+        numeroField.setFont(labelFont);
+
+        rueField = new JTextField(specialiste.getUtilisateurAdresse().getAdresseRue(), 10);
+        rueField.setFont(labelFont);
+
+        codePostalField = new JTextField(String.valueOf(specialiste.getUtilisateurAdresse().getAdresseCodePostal()), 5);
+        codePostalField.setFont(labelFont);
+
+        villeField = new JTextField(specialiste.getUtilisateurAdresse().getAdresseVille(), 10);
+        villeField.setFont(labelFont);
+
+        JPanel adressePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        adressePanel.add(numeroField);
+        adressePanel.add(rueField);
+        adressePanel.add(codePostalField);
+        adressePanel.add(villeField);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 1;
+        formPanel.add(adresseLabel, gbc);
+
+        gbc.gridx = 1;
+        formPanel.add(adressePanel, gbc);
+
+
+        erreurLabel = new JLabel("");
+        erreurLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        erreurLabel.setForeground(Color.RED);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        formPanel.add(erreurLabel, gbc);
+
+
+        // Bouton Ajouter
         modifierButton = new JButton("Modifier");
-        modifierButton.setFont(new Font("Tahoma", Font.BOLD, 20));
-        modifierButton.setPreferredSize(new Dimension(250, 70));
-        modifierButton.setForeground(Color.WHITE);
-        modifierButton.setBackground(new Color(45, 104, 196));
+        modifierButton.setPreferredSize(new Dimension(150, 50)); // Augmenter la taille du bouton
+        modifierButton.setFont(new Font("Tahoma", Font.BOLD, 20)); // Augmenter la taille de la police
+        modifierButton.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
+        modifierButton.setForeground(Color.WHITE); // Changer la couleur du texte
         modifierButton.setFocusPainted(false);
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.gridwidth = 2;
-        mainPanel.add(modifierButton, gbc);
 
-        return mainPanel;
+
+        // Bouton Annuler
+        annulerButton = new JButton("Annuler");
+        annulerButton.setPreferredSize(new Dimension(150, 50));
+        annulerButton.setFont(new Font("Tahoma", Font.BOLD, 20));
+        annulerButton.setBackground(new Color(255, 88, 88));
+        annulerButton.setForeground(Color.WHITE);
+        annulerButton.setFocusPainted(false);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(modifierButton);
+        buttonPanel.add(annulerButton);
+
+        JPanel panelGeneral = new JPanel();
+
+        panelGeneral.setLayout(new BorderLayout());
+
+        panelGeneral.add(mainPanel, BorderLayout.NORTH);
+        panelGeneral.add(formPanel, BorderLayout.CENTER);
+        panelGeneral.add(buttonPanel, BorderLayout.SOUTH);
+
+        return panelGeneral;
     }
+
+
 
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
@@ -192,7 +263,10 @@ public class ModifierInfoDocteurAdmin extends JFrame {
 
     public static void main(String[] args) {
 
+
+
         SwingUtilities.invokeLater(() -> {
+
             new ModifierInfoDocteurAdmin().setVisible(true);
         });
     }

@@ -63,13 +63,13 @@ public class AjouterSpecialisteAdmin extends JFrame {
         btnSpecialiste = new JButton("Spécialistes");
         styleMenuButton(btnSpecialiste);
 
+
         btnDossierPatients = new JButton("Dossier Patients");
         styleMenuButton(btnDossierPatients);
 
         btnStatistiques = new JButton("Statistiques");
         styleMenuButton(btnStatistiques);
-        btnStatistiques.setForeground(Color.WHITE);
-        btnStatistiques.setBackground(new Color(45, 104, 196));
+
 
 
 
@@ -169,7 +169,7 @@ public class AjouterSpecialisteAdmin extends JFrame {
         formPanel.add(descriptionField, gbc);
 
 
-        JLabel tarifLabel = new JLabel("Tarif :");
+        JLabel tarifLabel = new JLabel("Tarif (€) :");
         tarifLabel.setFont(labelFont);
         tarifField = new JTextField(String.valueOf(""), 20);
         tarifField.setFont(labelFont);
@@ -195,7 +195,7 @@ public class AjouterSpecialisteAdmin extends JFrame {
 
         codePostalField = new JTextField(String.valueOf(""), 5);
         codePostalField.setFont(labelFont);
-        addPlaceholder(codePostalField, "Code postal");
+        addPlaceholder(codePostalField, "CdP");
 
         villeField = new JTextField("", 10);
         villeField.setFont(labelFont);

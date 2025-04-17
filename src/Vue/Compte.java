@@ -12,6 +12,8 @@ public class Compte extends JFrame {
     public JButton btnAccueil;
     public JButton btnRendezVous;
     public JButton btnCompte;
+
+
     public JLabel imageField;
     public JButton btnChangerImage;
     public JTextField nomField;
