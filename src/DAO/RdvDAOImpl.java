@@ -83,7 +83,7 @@ public class RdvDAOImpl implements RdvDAO {
                 recherchePatientId = resultRecherche.getInt("rdvPatient");
                 rechercheRdvDate = resultRecherche.getLong("rdvDate");
 
-                RDV rdvAAjouter = new RDV((Specialiste) daoFactory.getUtilisateurDAO().chercherUtilisateur(rechercheSpecialisteId), (Patient) daoFactory.getUtilisateurDAO().chercherUtilisateur(recherchePatientId), rechercheRdvDate);
+                RDV rdvAAjouter = new RDV((Specialiste) daoFactory.getUtilisateurDAO().chercherUtilisateur(rechercheSpecialisteId), daoFactory.getUtilisateurDAO().chercherUtilisateur(recherchePatientId), rechercheRdvDate);
                 rdvliste.add(rdvAAjouter);
             }
 
@@ -109,7 +109,7 @@ public class RdvDAOImpl implements RdvDAO {
             // Requete SQL
             String requete = String.format("INSERT INTO rdv(rdvSpecialiste, rdvPatient, rdvDate) VALUES (\"%s\", \"%s\", \"%s\")",
                     rdv.getSpecialiste().getUtilisateurId(),
-                    rdv.getPatient().getUtilisateurId(),
+                    rdv.getUtilisateur().getUtilisateurId(),
                     rdv.getDate()
             );
 
@@ -133,7 +133,7 @@ public class RdvDAOImpl implements RdvDAO {
             Statement statement = connexion.createStatement();
 
             // Suppression du rdv
-            statement.executeUpdate("DELETE FROM rdv WHERE rdv.rdvSpecialiste  = \""+rdv.getSpecialiste().getUtilisateurId() +"\" AND rdv.rdvPatient = \""+rdv.getPatient().getUtilisateurId()+"\"AND rdv.rdvDate = " + rdv.getDate());
+            statement.executeUpdate("DELETE FROM rdv WHERE rdv.rdvSpecialiste  = \""+rdv.getSpecialiste().getUtilisateurId() +"\" AND rdv.rdvPatient = \""+rdv.getUtilisateur().getUtilisateurId()+"\"AND rdv.rdvDate = " + rdv.getDate());
 
         } catch (SQLException e) {
 

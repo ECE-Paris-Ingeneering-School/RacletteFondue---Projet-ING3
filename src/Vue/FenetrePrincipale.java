@@ -34,11 +34,10 @@ public class FenetrePrincipale {
     public final String COMPTE = "Compte";
     public final String RECHERCHE = "Recherche";
     public final String INFODOCTEUR = "Information spécialiste";
-    public final String DISPORDV = "Disponibilité rdv";
-    public final String CONFIRMATIONRDV = "Confirmation rdv";
     public final String SPECIALISTEADMIN = "Spécialistes admin";
     public final String INFODOCTEURADMIN = "Modifier infos docteur admin";
     public final String STATSADMIN = "Statistiques admin";
+    public final String INSERERDOCTEURADMIN = "Ajouter un Spécialiste admin";
 
     // Initialisation des objets de chaque page
     public Connexion connexion;
@@ -53,6 +52,7 @@ public class FenetrePrincipale {
     public SpecialisteAdmin speadmin;
     public ModifierInfoDocteurAdmin infodocteuradmin;
     public StatistiqueAdmin statsadmin;
+    public AjouterSpecialisteAdmin ajoutSpeAdmin;
 
     // Initialisation des panels de chaque page
     public CardLayout cl;
@@ -67,6 +67,7 @@ public class FenetrePrincipale {
     public JPanel speadminPanel;
     public JPanel infodocteuradminPanel;
     public JPanel statsadminPanel;
+    public JPanel ajoutSpeAdminPanel;
 
     /**
      * Constructeur de la fenêtre principale
@@ -92,6 +93,7 @@ public class FenetrePrincipale {
         speadmin = new SpecialisteAdmin();
         infodocteuradmin = new ModifierInfoDocteurAdmin();
         statsadmin = new StatistiqueAdmin();
+        ajoutSpeAdmin = new AjouterSpecialisteAdmin();
 
         // Instanciation des panels
         this.connexionPanel = connexion.buildPanel();
@@ -104,6 +106,7 @@ public class FenetrePrincipale {
         this.speadminPanel = speadmin.buildPanel();
         this.infodocteuradminPanel = infodocteuradmin.buildPanel();
         this.statsadminPanel = statsadmin.buildPanel();
+        this.ajoutSpeAdminPanel = ajoutSpeAdmin.buildPanel();
 
         // Ajout des listeners sur les pages
         // Connexion
@@ -136,6 +139,7 @@ public class FenetrePrincipale {
         conteneurPrincipal.add(speadminPanel, SPECIALISTEADMIN);
         conteneurPrincipal.add(infodocteuradminPanel, INFODOCTEURADMIN);
         conteneurPrincipal.add(statsadminPanel, STATSADMIN);
+        conteneurPrincipal.add(ajoutSpeAdminPanel,SPECIALISTEADMIN);
 
         // Paramétrage de la fenetre principale
         fenetrePrincipale.add(conteneurPrincipal);
@@ -236,10 +240,11 @@ public class FenetrePrincipale {
         compte.repaint();
     }
 
-    public void updateDispoRDV(Specialiste specialiste, ArrayList<RDV> listeRDV) {
+    public void updateDispoRDV(Utilisateur utilisateurActuel,Specialiste specialiste, ArrayList<RDV> listeRDV) {
 
         dispordv.specialiste = specialiste;
         dispordv.listeRDV = listeRDV;
+        dispordv.utilisateur = utilisateurActuel;
 
         dispordv.mapCreneaux.clear();
 
@@ -278,6 +283,8 @@ public class FenetrePrincipale {
         speadminPanel = speadmin.buildPanel();
         speadmin.btnDossierPatients.addActionListener(listener);
         speadmin.btnStatistiques.addActionListener(listener);
+        speadmin.searchButton.addActionListener(listener);
+        speadmin.searchField.addMouseListener(listener);
 
         for (JLabel nameLabel : speadmin.mapSpecialistesInfo.keySet()) {
 

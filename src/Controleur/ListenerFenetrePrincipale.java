@@ -178,11 +178,26 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RECHERCHE);
 
-        } else if (source == fenetre.info.prendreRDVButton) {
+    } else if (source == fenetre.speadmin.searchButton) {
+
+            String recherche;
+
+            recherche = fenetre.speadmin.searchField.getText();
+
+            // ICI Requete du DAO pour rechercher dans la base de données
+            ArrayList<Specialiste> listeSpecialistes = utilisateurDAO.rechercheSpecialiste(recherche);
+
+            fenetre.updateSpecialistesAdmin(listeSpecialistes);
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
+
+
+
+    } else if (source == fenetre.info.prendreRDVButton) {
 
             ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.info.specialiste.getUtilisateurId());
 
-            fenetre.updateDispoRDV(fenetre.info.specialiste, listeRDV);
+            fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.info.specialiste, listeRDV);
 
             fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
             fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -191,7 +206,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
         } else if (source == fenetre.confrdv.confirmerButton) {
 
             // On crée le rdv dans la BDD
-            RDV rdv = new RDV(fenetre.confrdv.specialiste, (Patient) fenetre.confrdv.utilisateur, fenetre.confrdv.date);
+            RDV rdv = new RDV(fenetre.confrdv.specialiste, fenetre.confrdv.utilisateur, fenetre.confrdv.date);
             rdvDAO.ajouterRDV(rdv);
 
             ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.utilisateurActuel.getUtilisateurId());
@@ -287,7 +302,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 fenetre.compte.confirmationLabel.setText(ex.getMessage());
             }
 
-        } else if (source == fenetre.statsadmin.btnSpecialiste) {
+        } else if (source == fenetre.statsadmin.btnSpecialiste || source == fenetre.infodocteuradmin.btnSpecialiste) {
 
             ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
             ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
@@ -304,7 +319,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
 
-        } else if (source == fenetre.speadmin.btnStatistiques) {
+        } else if (source == fenetre.speadmin.btnStatistiques || source == fenetre.infodocteuradmin.btnStatistiques) {
 
             ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
             ArrayList<RDV> listeRDV = new ArrayList<>();
@@ -372,11 +387,44 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             if (source == buttonCreneau) {
 
-                fenetre.updateConfirmationRDV(fenetre.dispordv.specialiste, fenetre.utilisateurActuel, fenetre.dispordv.mapCreneaux.get(buttonCreneau));
+                if (fenetre.utilisateurActuel instanceof Patient){
 
-                fenetre.confrdv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-                fenetre.confrdv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                fenetre.confrdv.setVisible(true);
+                    fenetre.updateConfirmationRDV(fenetre.dispordv.specialiste, fenetre.utilisateurActuel, fenetre.dispordv.mapCreneaux.get(buttonCreneau));
+
+                    fenetre.confrdv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+                    fenetre.confrdv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                    fenetre.confrdv.setVisible(true);
+
+                }  else if (fenetre.utilisateurActuel instanceof Admin){
+
+                    RDV rdv = new RDV(fenetre.dispordv.specialiste, fenetre.utilisateurActuel, fenetre.dispordv.mapCreneaux.get(buttonCreneau));
+
+                    ArrayList<RDV> listRDV;
+                    listRDV = rdvDAO.chercherRDV(fenetre.dispordv.specialiste.getUtilisateurId());
+
+                    int temp = 1;
+
+                    for (RDV rdv_i : listRDV) {
+
+                        if (rdv_i.getDate() == rdv.getDate()){
+                            rdvDAO.supprimerRDV(rdv_i);
+                            temp = 0;
+                            break;
+                        }
+
+                    }
+
+                    if (temp == 1){
+
+                        rdvDAO.ajouterRDV(rdv);
+                    }
+
+                    ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.dispordv.specialiste.getUtilisateurId());
+                    fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.dispordv.specialiste, listeRDV);
+
+                    break;
+
+                }
 
             }
         }
@@ -422,7 +470,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel).getUtilisateurId());
 
-                fenetre.updateDispoRDV(fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
+                fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
 
                 fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
                 fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -464,7 +512,8 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.speadmin.mapSpecialistesDispo.get(availabilityLabel).getUtilisateurId());
 
-                fenetre.updateDispoRDV(fenetre.speadmin.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
+
+                fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.speadmin.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
 
                 fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
                 fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

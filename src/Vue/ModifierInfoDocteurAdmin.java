@@ -42,7 +42,7 @@ public class ModifierInfoDocteurAdmin extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Titre
-        titleLabel = new JLabel("Information spécialiste");
+        titleLabel = new JLabel("Information spécialiste - ADMIN");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -54,13 +54,13 @@ public class ModifierInfoDocteurAdmin extends JFrame {
         // Menu boutons
         JPanel menuPanel = new JPanel();
 
-        btnSpecialiste = new JButton("Accueil");
+        btnSpecialiste = new JButton("Spécialistes");
         styleMenuButton(btnSpecialiste);
 
-        btnDossierPatients = new JButton("Rendez-vous");
+        btnDossierPatients = new JButton("Dossier Passients");
         styleMenuButton(btnDossierPatients);
 
-        btnStatistiques = new JButton("Compte");
+        btnStatistiques = new JButton("Statistiques");
         styleMenuButton(btnStatistiques);
 
         menuPanel.add(btnSpecialiste);

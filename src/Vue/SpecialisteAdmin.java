@@ -108,20 +108,6 @@ public class SpecialisteAdmin extends JFrame {
         mainPanel.add(searchPanel);
         mainPanel.add(Box.createVerticalStrut(20)); // Réduire l'espace vertical ici
 
-        // Liste des docteurs
-        /*String[][] doctors = {
-                {"Dr. Juiph", "Lyon", "voir les dispo"},
-                {"Dr. Leroy", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-        };*/
 
         // Nombre de résultats
         JLabel listeSpecialisteLabel = new JLabel("Liste des spécialistes enregistrés : " + listeSpecialistes.size());
