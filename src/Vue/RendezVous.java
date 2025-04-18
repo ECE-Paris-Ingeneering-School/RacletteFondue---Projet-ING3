@@ -23,7 +23,6 @@ public class RendezVous extends JFrame {
     public ArrayList<RDV> listeRDV = null;
 
 
-
     public RendezVous() {
 
         mapRDV = new HashMap<JLabel, RDV>();

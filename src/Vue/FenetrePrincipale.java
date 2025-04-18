@@ -1,6 +1,7 @@
 package Vue;
 
 import Controleur.ListenerFenetrePrincipale;
+import Modele.Patient;
 import Modele.RDV;
 import Modele.Specialiste;
 import Modele.Utilisateur;
@@ -9,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
@@ -37,7 +37,9 @@ public class FenetrePrincipale {
     public final String SPECIALISTEADMIN = "Spécialistes admin";
     public final String INFODOCTEURADMIN = "Modifier infos docteur admin";
     public final String STATSADMIN = "Statistiques admin";
-    public final String INSERERDOCTEURADMIN = "Ajouter un Spécialiste admin";
+    public final String AJOUTERDOCTEURADMIN = "Ajouter un spécialiste admin";
+    public final String DOSSIERSPATIENTSADMIN = "Dossiers patients admin";
+    public final String INFOPATIENTADMIN = "Info patients admin";
 
     // Initialisation des objets de chaque page
     public Connexion connexion;
@@ -49,10 +51,12 @@ public class FenetrePrincipale {
     public InfoDocteur info;
     public DisponibiliteRDV dispordv;
     public ConfirmationRDV confrdv;
-    public SpecialisteAdmin speadmin;
-    public ModifierInfoDocteurAdmin infodocteuradmin;
-    public StatistiqueAdmin statsadmin;
+    public SpecialisteAdmin speAdmin;
+    public ModifierInfoDocteurAdmin infoDocteurAdmin;
+    public StatistiqueAdmin statsAdmin;
     public AjouterSpecialisteAdmin ajoutSpeAdmin;
+    public DossierPatientsAdmin dossiersPatientsAdmin;
+    public InfoPatientAdmin infoPatientAdmin;
 
     // Initialisation des panels de chaque page
     public CardLayout cl;
@@ -68,6 +72,8 @@ public class FenetrePrincipale {
     public JPanel infodocteuradminPanel;
     public JPanel statsadminPanel;
     public JPanel ajoutSpeAdminPanel;
+    public JPanel dossiersPatientAdminPanel;
+    public JPanel infoPatientAdminPanel;
 
     /**
      * Constructeur de la fenêtre principale
@@ -90,10 +96,12 @@ public class FenetrePrincipale {
         info = new InfoDocteur();
         dispordv = new DisponibiliteRDV();
         confrdv = new ConfirmationRDV();
-        speadmin = new SpecialisteAdmin();
-        infodocteuradmin = new ModifierInfoDocteurAdmin();
-        statsadmin = new StatistiqueAdmin();
+        speAdmin = new SpecialisteAdmin();
+        infoDocteurAdmin = new ModifierInfoDocteurAdmin();
+        statsAdmin = new StatistiqueAdmin();
         ajoutSpeAdmin = new AjouterSpecialisteAdmin();
+        dossiersPatientsAdmin = new DossierPatientsAdmin();
+        infoPatientAdmin = new InfoPatientAdmin();
 
         // Instanciation des panels
         this.connexionPanel = connexion.buildPanel();
@@ -103,10 +111,12 @@ public class FenetrePrincipale {
         this.comptePanel = compte.buildPanel();
         this.recherchePanel = recherche.buildPanel();
         this.infoPanel = info.buildPanel();
-        this.speadminPanel = speadmin.buildPanel();
-        this.infodocteuradminPanel = infodocteuradmin.buildPanel();
-        this.statsadminPanel = statsadmin.buildPanel();
+        this.speadminPanel = speAdmin.buildPanel();
+        this.infodocteuradminPanel = infoDocteurAdmin.buildPanel();
+        this.statsadminPanel = statsAdmin.buildPanel();
         this.ajoutSpeAdminPanel = ajoutSpeAdmin.buildPanel();
+        this.dossiersPatientAdminPanel = dossiersPatientsAdmin.buildPanel();
+        this.infoPatientAdminPanel = infoPatientAdmin.buildPanel();
 
         // Ajout des listeners sur les pages
         // Connexion
@@ -140,7 +150,9 @@ public class FenetrePrincipale {
         conteneurPrincipal.add(speadminPanel, SPECIALISTEADMIN);
         conteneurPrincipal.add(infodocteuradminPanel, INFODOCTEURADMIN);
         conteneurPrincipal.add(statsadminPanel, STATSADMIN);
-        conteneurPrincipal.add(ajoutSpeAdminPanel,SPECIALISTEADMIN);
+        conteneurPrincipal.add(ajoutSpeAdminPanel, AJOUTERDOCTEURADMIN);
+        conteneurPrincipal.add(dossiersPatientAdminPanel, DOSSIERSPATIENTSADMIN);
+        conteneurPrincipal.add(infoPatientAdminPanel, INFOPATIENTADMIN);
 
         // Paramétrage de la fenetre principale
         fenetrePrincipale.add(conteneurPrincipal);
@@ -277,66 +289,108 @@ public class FenetrePrincipale {
 
     public void updateSpecialistesAdmin(ArrayList<Specialiste> listeSpecialistes) {
 
-        speadmin.listeSpecialistes = listeSpecialistes;
+        speAdmin.listeSpecialistes = listeSpecialistes;
 
         conteneurPrincipal.remove(speadminPanel);
 
-        speadminPanel = speadmin.buildPanel();
-        speadmin.btnDossierPatients.addActionListener(listener);
-        speadmin.btnStatistiques.addActionListener(listener);
-        speadmin.searchButton.addActionListener(listener);
-        speadmin.searchField.addMouseListener(listener);
+        speadminPanel = speAdmin.buildPanel();
+        speAdmin.btnDossierPatients.addActionListener(listener);
+        speAdmin.btnStatistiques.addActionListener(listener);
+        speAdmin.searchButton.addActionListener(listener);
+        speAdmin.searchField.addMouseListener(listener);
 
-        for (JLabel nameLabel : speadmin.mapSpecialistesInfo.keySet()) {
+
+        for (JLabel nameLabel : speAdmin.mapSpecialistesInfo.keySet()) {
 
             if (nameLabel != null) nameLabel.addMouseListener(listener);
         }
 
-        for (JLabel availabilityLabel : speadmin.mapSpecialistesDispo.keySet()) {
+        for (JLabel availabilityLabel : speAdmin.mapSpecialistesDispo.keySet()) {
 
             if (availabilityLabel != null) availabilityLabel.addMouseListener(listener);
         }
 
         conteneurPrincipal.add(speadminPanel, SPECIALISTEADMIN);
 
-        speadmin.revalidate();
-        speadmin.repaint();
+        speAdmin.revalidate();
+        speAdmin.repaint();
     }
 
     public void updateInfoDocteurAdmin(Specialiste specialiste) {
 
-        infodocteuradmin.specialiste = specialiste;
+        infoDocteurAdmin.specialiste = specialiste;
 
         conteneurPrincipal.remove(infodocteuradminPanel);
 
-        infodocteuradminPanel = infodocteuradmin.buildPanel();
-        infodocteuradmin.btnSpecialiste.addActionListener(listener);
-        infodocteuradmin.btnDossierPatients.addActionListener(listener);
-        infodocteuradmin.btnStatistiques.addActionListener(listener);
-        infodocteuradmin.modifierButton.addActionListener(listener);
+        infodocteuradminPanel = infoDocteurAdmin.buildPanel();
+        infoDocteurAdmin.btnSpecialiste.addActionListener(listener);
+        infoDocteurAdmin.btnDossierPatients.addActionListener(listener);
+        infoDocteurAdmin.btnStatistiques.addActionListener(listener);
+        infoDocteurAdmin.modifierButton.addActionListener(listener);
 
         conteneurPrincipal.add(infodocteuradminPanel, INFODOCTEURADMIN);
 
-        infodocteuradmin.revalidate();
-        infodocteuradmin.repaint();
+        infoDocteurAdmin.revalidate();
+        infoDocteurAdmin.repaint();
     }
 
     public void updateStatsAdmin(int nombrePatients, int nombreSpecialistes, TreeMap<Long, Integer> mapRDV) {
 
-        statsadmin.nombrePatients = nombrePatients;
-        statsadmin.nombreSpecialistes = nombreSpecialistes;
-        statsadmin.mapRDV = mapRDV;
+        statsAdmin.nombrePatients = nombrePatients;
+        statsAdmin.nombreSpecialistes = nombreSpecialistes;
+        statsAdmin.mapRDV = mapRDV;
 
         conteneurPrincipal.remove(statsadminPanel);
 
-        statsadminPanel = statsadmin.buildPanel();
-        statsadmin.btnSpecialiste.addActionListener(listener);
-        statsadmin.btnDossierPatients.addActionListener(listener);
+        statsadminPanel = statsAdmin.buildPanel();
+        statsAdmin.btnSpecialiste.addActionListener(listener);
+        statsAdmin.btnDossierPatients.addActionListener(listener);
 
         conteneurPrincipal.add(statsadminPanel, STATSADMIN);
 
-        statsadmin.revalidate();
-        statsadmin.repaint();
+        statsAdmin.revalidate();
+        statsAdmin.repaint();
+    }
+
+    public void updateDossierPatientsAdmin(ArrayList<Patient> listePatients) {
+
+        dossiersPatientsAdmin.listePatients = listePatients;
+        dossiersPatientsAdmin.mapPatients.clear();
+
+        conteneurPrincipal.remove(dossiersPatientAdminPanel);
+
+        dossiersPatientAdminPanel = dossiersPatientsAdmin.buildPanel();
+        dossiersPatientsAdmin.btnSpecialiste.addActionListener(listener);
+        dossiersPatientsAdmin.btnStatistiques.addActionListener(listener);
+        dossiersPatientsAdmin.searchButton.addActionListener(listener);
+
+        for (JLabel dossierLabel : dossiersPatientsAdmin.mapPatients.keySet()) {
+
+            if (dossierLabel != null) dossierLabel.addMouseListener(listener);
+        }
+
+        conteneurPrincipal.add(dossiersPatientAdminPanel, DOSSIERSPATIENTSADMIN);
+
+        dossiersPatientsAdmin.revalidate();
+        dossiersPatientsAdmin.repaint();
+    }
+
+    public void updateInfoPatientAdmin(Patient patient, ArrayList<RDV> listeRDV) {
+
+        infoPatientAdmin.patient = patient;
+        infoPatientAdmin.listeRDV = listeRDV;
+
+        conteneurPrincipal.remove(infoPatientAdminPanel);
+
+        infoPatientAdminPanel = infoPatientAdmin.buildPanel();
+        infoPatientAdmin.btnSpecialiste.addActionListener(listener);
+        infoPatientAdmin.btnDossierPatients.addActionListener(listener);
+        infoPatientAdmin.btnStatistiques.addActionListener(listener);
+
+        conteneurPrincipal.add(infoPatientAdminPanel, INFOPATIENTADMIN);
+
+        infoPatientAdmin.revalidate();
+        infoPatientAdmin.repaint();
     }
 
     public static void main(String[] args) {

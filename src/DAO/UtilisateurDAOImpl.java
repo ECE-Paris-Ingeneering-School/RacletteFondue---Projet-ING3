@@ -332,6 +332,112 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         return listeSpecialisteRecherches;
     }
 
+    public ArrayList<Patient> recherchePatient(String motRecherche) {
+
+        ArrayList<Patient> listePatientRecherches = new ArrayList<>();
+        int[] pertinence = new int[3];
+        int maxIteration = 0;
+        int indexMaxIteration = 0;
+
+        Patient patientTrouve = null;
+        int utilisateurId = 0;
+        String utilisateurNom = null;
+        String utilisateurPrenom = null;
+        int utilisateurAge = 0;
+        String temp = null;
+        char utilisateurSexe = 'a';
+        String utilisateurMail = null;
+        String utilisateurPassword = null;
+        String utilisateurTelephone = null;
+        String utilisateurImage = null;
+
+        Adresse specialisteAdresse = null;
+        int adresseCodePostal = 0;
+        String adresseVille = null;
+        String adresseRue = null;
+        String adresseNumero = "0";
+
+
+        try {
+
+            // Connexion
+            Connection connexion = daoFactory.getConnection();
+            Statement[] statements = new Statement[3];
+
+            for (int i=0; i<statements.length; i++) {
+
+                statements[i] = connexion.createStatement();
+            }
+
+            // On cherche dans les différentes catégories d'interet le nombre d'occurence du mot recherché
+            ResultSet resultat;
+            resultat = statements[0].executeQuery("SELECT COUNT(*) FROM utilisateur,patient WHERE utilisateur.utilisateurId = patient.patientId AND utilisateur.utilisateurNom LIKE \""+ motRecherche + "\"" );
+            resultat.next();
+            pertinence[0] = resultat.getInt(1);
+
+            resultat = statements[1].executeQuery("SELECT COUNT(*) FROM utilisateur,patient,adresse WHERE utilisateur.utilisateurId = patient.patientId AND utilisateur.utilisateurId = adresse.adresseId AND adresse.adresseVille LIKE \""+ motRecherche + "\"");
+            resultat.next();
+            pertinence[1] = resultat.getInt(1);
+
+
+            //On sélectionne l'element le plus pertinent
+            for (int i = 0; i < pertinence.length; i++) {
+                if (pertinence[i] > maxIteration) {
+                    maxIteration = pertinence[i];
+                    indexMaxIteration = i;
+                }
+            }
+
+            //On trie les spécialistes en fonction de l'element le plus pertinent
+           if (indexMaxIteration == 0) {
+
+                resultat = statements[2].executeQuery("SELECT * FROM adresse, utilisateur, patient WHERE utilisateur.utilisateurId = patient.patientId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (utilisateur.utilisateurNom = \""+ motRecherche +"\") DESC, utilisateur.utilisateurNom ASC;");
+
+            } else  {
+
+                resultat = statements[2].executeQuery("SELECT * FROM adresse, utilisateur, patient WHERE utilisateur.utilisateurId = patient.patientId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (adresse.adresseVille = \""+ motRecherche +"\") DESC, adresse.adresseVille ASC;");
+
+            }
+
+
+            while (resultat.next()) {
+
+                utilisateurId = resultat.getInt("utilisateurId");
+                utilisateurNom = resultat.getString("utilisateurNom");
+                utilisateurPrenom = resultat.getString("utilisateurPrenom");
+                utilisateurAge = resultat.getInt("utilisateurAge");
+                temp = resultat.getString("utilisateurSexe");
+                utilisateurSexe = temp.charAt(0);
+                utilisateurMail = resultat.getString("utilisateurMail");
+                utilisateurPassword = resultat.getString("utilisateurPassword");
+                utilisateurTelephone = resultat.getString("utilisateurTel");
+                utilisateurImage = resultat.getString("utilisateurImage");;
+
+                adresseCodePostal = resultat.getInt("adresseCodePostal");
+                adresseVille = resultat.getString("adresseVille");
+                adresseRue = resultat.getString("adresseRue");
+                adresseNumero = resultat.getString("adresseNumero");
+
+                specialisteAdresse = new Adresse(adresseCodePostal, adresseVille, adresseRue, adresseNumero);
+
+                patientTrouve = new Patient(utilisateurId,utilisateurNom,utilisateurPrenom,utilisateurAge,specialisteAdresse,utilisateurSexe,utilisateurMail,utilisateurPassword,utilisateurTelephone,utilisateurImage);
+
+                listePatientRecherches.add(patientTrouve);
+            }
+
+
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            System.out.println("Recherche des spécialistes impossible");
+        }
+
+
+
+        return listePatientRecherches;
+    }
+
     public void ajouterUtilisateur(Utilisateur utilisateur) throws EmailExistantException {
 
         try {
