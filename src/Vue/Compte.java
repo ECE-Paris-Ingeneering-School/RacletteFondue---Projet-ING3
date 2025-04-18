@@ -3,8 +3,6 @@ package Vue;
 import Modele.Utilisateur;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.nio.file.*;
 
 
 public class Compte extends JFrame {
@@ -12,6 +10,8 @@ public class Compte extends JFrame {
     public JButton btnAccueil;
     public JButton btnRendezVous;
     public JButton btnCompte;
+
+
     public JLabel imageField;
     public JButton btnChangerImage;
     public JTextField nomField;
@@ -58,23 +58,15 @@ public class Compte extends JFrame {
         JPanel menuPanel = new JPanel();
 
         btnAccueil = new JButton("Accueil");
-        btnAccueil.setPreferredSize(new Dimension(250, 70));
-        btnAccueil.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnAccueil.setBackground(new Color(221, 235, 247));
-        btnAccueil.setFocusPainted(false);
+        styleMenuButton(btnAccueil);
 
         btnRendezVous = new JButton("Rendez-vous");
-        btnRendezVous.setPreferredSize(new Dimension(250, 70));
-        btnRendezVous.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnRendezVous.setBackground(new Color(221, 235, 247));
-        btnRendezVous.setFocusPainted(false);
+        styleMenuButton(btnRendezVous);
 
         btnCompte = new JButton("Compte");
-        btnCompte.setPreferredSize(new Dimension(250, 70));
-        btnCompte.setFont(new Font("Tahoma", Font.BOLD, 20));
+        styleMenuButton(btnCompte);
         btnCompte.setForeground(Color.WHITE);
         btnCompte.setBackground(new Color(45, 104, 196));
-        btnCompte.setFocusPainted(false);
 
         menuPanel.add(btnAccueil);
         menuPanel.add(btnRendezVous);
@@ -270,6 +262,13 @@ public class Compte extends JFrame {
         panelGeneral.add(buttonPanel, BorderLayout.SOUTH);
 
         return panelGeneral;
+    }
+
+    private void styleMenuButton(JButton button) {
+        button.setPreferredSize(new Dimension(250, 70));
+        button.setFont(new Font("Tahoma", Font.BOLD, 20));
+        button.setBackground(new Color(221, 235, 247));
+        button.setFocusPainted(false);
     }
 
     public static void main(String[] args) {

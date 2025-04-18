@@ -80,18 +80,46 @@ public class Accueil extends JFrame {
         menuPanel.add(btnRendezVous);
         menuPanel.add(btnCompte);
         mainPanel.add(menuPanel);
-        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(Box.createVerticalStrut(10)); // Réduction de l'espace ici
+
+        // Panel pour les descriptions
+        JPanel descriptionPanel = new JPanel();
+        descriptionPanel.setLayout(new BoxLayout(descriptionPanel, BoxLayout.Y_AXIS));
+
+        JLabel descriptionLabel1 = new JLabel("Bienvenue sur Feurissimo.");
+        descriptionLabel1.setFont(new Font("Tahoma", Font.PLAIN, 40));
+        descriptionLabel1.setForeground(new Color(45, 104, 196));
+        descriptionLabel1.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel descriptionLabel2 = new JLabel("Notre rôle ? Mieux vous accompagner.");
+        descriptionLabel2.setFont(new Font("Tahoma", Font.PLAIN, 32));
+        descriptionLabel2.setForeground(new Color(45, 104, 196));
+        descriptionLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel descriptionLabel3 = new JLabel("Prenez RDV en ligne chez un soignant.");
+        descriptionLabel3.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        descriptionLabel3.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        descriptionPanel.add(descriptionLabel1);
+        descriptionPanel.add(Box.createRigidArea(new Dimension(0, 25))); // Réduction de l'espace entre les labels
+        descriptionPanel.add(descriptionLabel2);
+        descriptionPanel.add(Box.createRigidArea(new Dimension(0, 80))); // Réduction de l'espace entre les labels
+        descriptionPanel.add(descriptionLabel3);
+
+        // Encapsulation pour éviter les problèmes de mise en page
+        JPanel wrapperPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0)); // Centrage horizontal, sans espaces
+        wrapperPanel.add(descriptionPanel);
+
+        mainPanel.add(wrapperPanel);
 
         //Accueil du site
 
         // Barre de recherche
-        JPanel searchPanel = new JPanel();
-
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0)); // Centrage sans espace
         searchField = new JTextField("");
         searchField.setFont(new Font("Tahoma", Font.PLAIN, 18));
         searchField.setPreferredSize(new Dimension(400, 40));
-        addPlaceholder(searchField, "Nom, spécialité, lieu..."); // Agrandit la largeur du champ de recherche
-
+        addPlaceholder(searchField, "Nom, spécialité, lieu...");
 
         searchButton = new JButton("🔍");
         searchButton.setPreferredSize(new Dimension(80, 40));
@@ -101,6 +129,7 @@ public class Accueil extends JFrame {
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
         mainPanel.add(searchPanel);
+        mainPanel.add(Box.createVerticalStrut(30));
 
         JPanel deconnexionPanel = new JPanel();
 
@@ -111,11 +140,9 @@ public class Accueil extends JFrame {
 
         deconnexionPanel.add(deconnexionLabel);
         mainPanel.add(deconnexionPanel, BorderLayout.SOUTH);
-        //mainPanel.add(Box.createVerticalStrut(30));
+        mainPanel.add(Box.createVerticalStrut(10));
 
         return mainPanel;
-
-
     }
 
     private void styleMenuButton(JButton button) {
