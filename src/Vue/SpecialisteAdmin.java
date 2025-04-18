@@ -19,6 +19,7 @@ public class SpecialisteAdmin extends JFrame {
     public JLabel nameLabel;
     public JLabel locationLabel;
     public JLabel availabilityLabel;
+    public JLabel imageLabel;
 
     public ArrayList<Specialiste> listeSpecialistes;
     public Map<JLabel, Specialiste> mapSpecialistesInfo = null;
@@ -129,14 +130,30 @@ public class SpecialisteAdmin extends JFrame {
             doctorPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
             doctorPanel.setBackground(new Color(221, 235, 247));
 
-            nameLabel = new JLabel(specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / ");
+            String path;
+
+            if (specialiste.getUtilisateurImage().isEmpty()){
+                path = "src/Images/pdp_defaut.png";
+            }else {
+                path = specialiste.getUtilisateurImage();
+            }
+
+            //Image du spécialiste
+            imageLabel = new JLabel();
+            ImageIcon icon;
+            Image img = new ImageIcon(path).getImage().getScaledInstance(42, 40, Image.SCALE_SMOOTH);
+            icon = new ImageIcon(img);
+
+            imageLabel.setIcon(icon);
+            imageLabel.setPreferredSize(new Dimension(42, 40));
+            doctorPanel.add(imageLabel,BorderLayout.WEST);
+
+            //Description du spécialiste
+            nameLabel = new JLabel(" Dr. " + specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / "+specialiste.getUtilisateurAdresse().getAdresseVille());
             nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
             nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            doctorPanel.add(nameLabel, BorderLayout.WEST);
+            doctorPanel.add(nameLabel,BorderLayout.CENTER);
 
-            locationLabel = new JLabel(specialiste.getUtilisateurAdresse().getAdresseVille());
-            locationLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-            doctorPanel.add(locationLabel, BorderLayout.CENTER);
 
             availabilityLabel = new JLabel("Voir les dispos");
             availabilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
