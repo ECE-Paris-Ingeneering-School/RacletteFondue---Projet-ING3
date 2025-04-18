@@ -152,8 +152,6 @@ public class RendezVous extends JFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-
-
         // Titre
         JLabel titleLabel = new JLabel("Rendez-vous");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
@@ -203,6 +201,7 @@ public class RendezVous extends JFrame {
                 listeRDVPasses.add(rdv);
             }
         }
+
         Collections.reverse(listeRDVPasses);
 
         // Contenu : deux colonnes avec listes déroulantes

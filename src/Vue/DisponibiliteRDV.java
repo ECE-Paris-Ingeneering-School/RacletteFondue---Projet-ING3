@@ -1,7 +1,6 @@
 package Vue;
 
-import Modele.RDV;
-import Modele.Specialiste;
+import Modele.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +15,7 @@ public class DisponibiliteRDV extends JDialog {
     public long dateActuelle;
     public long datePage;
     public Specialiste specialiste;
+    public Utilisateur utilisateur;
 
     public ArrayList<RDV> listeRDV = null;
     public Map<JButton, Long> mapCreneaux = null;
@@ -57,7 +57,6 @@ public class DisponibiliteRDV extends JDialog {
         ArrayList<Long> listeDates = new ArrayList<>();
 
         for (RDV rdv : listeRDV) {
-
             listeDates.add(rdv.getDate());
         }
 
@@ -112,20 +111,58 @@ public class DisponibiliteRDV extends JDialog {
 
                 mapCreneaux.put(buttonCreneau, timeStamp+(i*86400000));
 
+                if (utilisateur instanceof Patient){
+
+                    if (dateActuelle > timeStamp+(i*86400000) || listeDates.contains(timeStamp+(i*86400000))) {
+
+                        buttonCreneau.setBackground(Color.LIGHT_GRAY); // Gris clair
+                        buttonCreneau.setForeground(Color.DARK_GRAY);
+                        buttonCreneau.setEnabled(false);
+
+                    } else {
+
+                        buttonCreneau.setBackground(new Color(45, 104, 196)); // Bleu
+                        buttonCreneau.setForeground(Color.WHITE);
+                        buttonCreneau.setEnabled(true);
+                    }
+                }else if (utilisateur instanceof Admin){
+
+                    if (dateActuelle > timeStamp+(i*86400000)) {
+
+                        buttonCreneau.setBackground(Color.LIGHT_GRAY); // Gris clair
+                        buttonCreneau.setForeground(Color.DARK_GRAY);
+                        buttonCreneau.setEnabled(false);
+
+                    } else if (listeDates.contains(timeStamp+(i*86400000))) {
+
+                        for (RDV RDV_i : listeRDV){
+                            if (RDV_i.getDate()==timeStamp+(i*86400000)){
+                                if (RDV_i.getUtilisateur().getUtilisateurId()==utilisateur.getUtilisateurId()){
+                                    buttonCreneau.setBackground(new Color(207, 9, 31));
+                                    buttonCreneau.setForeground(Color.WHITE);
+                                    buttonCreneau.setEnabled(true);
+                                }
+                                else {
+                                    buttonCreneau.setBackground(new Color(64, 67, 73));
+                                    buttonCreneau.setForeground(Color.WHITE);
+                                    buttonCreneau.setEnabled(true);
+                                }
+
+                                break;
+                            }
+                        }
 
 
-                if (dateActuelle > timeStamp+(i*86400000) || listeDates.contains(timeStamp+(i*86400000))) {
 
-                    buttonCreneau.setBackground(Color.LIGHT_GRAY); // Gris clair
-                    buttonCreneau.setForeground(Color.DARK_GRAY);
-                    buttonCreneau.setEnabled(false);
+                    }else {
 
-                } else {
+                        buttonCreneau.setBackground(new Color(45, 104, 196)); // Bleu
+                        buttonCreneau.setForeground(Color.WHITE);
+                        buttonCreneau.setEnabled(true);
+                    }
 
-                    buttonCreneau.setBackground(new Color(45, 104, 196)); // Bleu
-                    buttonCreneau.setForeground(Color.WHITE);
-                    buttonCreneau.setEnabled(true);
                 }
+
 
                 tablePanel.add(buttonCreneau);
             }

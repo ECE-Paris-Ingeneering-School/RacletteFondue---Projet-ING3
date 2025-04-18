@@ -175,19 +175,23 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
             int indexMax = resultat.getInt(1);
 
-            // Parcour des utilisateurs dans la table Utilisateurs
+            // Parcours des utilisateurs dans la table Utilisateurs
             for (int i = 1; i < indexMax+1; i++) {
 
                 if (chercherUtilisateur(i).getUtilisateurId() != 0) {
 
-                    if (chercherUtilisateur(i) instanceof Admin){
+                    if (chercherUtilisateur(i) instanceof Admin) {
+
                         utilisateursListe.add(chercherUtilisateur(i));
+
                     }
-                    else if (chercherUtilisateur(i) instanceof Specialiste){
+                    else if (chercherUtilisateur(i) instanceof Specialiste) {
+
                         specialisteListe.add(chercherUtilisateur(i));
 
                     }
                     else {
+
                         patientListe.add(chercherUtilisateur(i));
                     }
                 }

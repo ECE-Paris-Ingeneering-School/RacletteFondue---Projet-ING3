@@ -16,7 +16,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.TreeMap;
 
 public class ListenerFenetrePrincipale implements ActionListener, MouseListener {
 
@@ -48,7 +50,28 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 fenetre.utilisateurActuel = utilisateurDAO.chercherUtilisateur(utilisateurDAO.connexionUtilisateur(mail,mdp));
 
-                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.ACCUEIL);
+                if (fenetre.utilisateurActuel instanceof Patient) {
+
+                    fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.ACCUEIL);
+
+                } else if (fenetre.utilisateurActuel instanceof Admin) {
+
+                    ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
+                    ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
+
+                    for (Utilisateur utilisateur : listeUtilisateurs) {
+
+                        if (utilisateur instanceof Specialiste) {
+
+                            listeSpecialistes.add((Specialiste) utilisateur);
+                        }
+                    }
+
+                    fenetre.updateSpecialistesAdmin(listeSpecialistes);
+
+                    fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
+                }
+
 
             } catch (Exception ex) {
 
@@ -155,11 +178,26 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RECHERCHE);
 
-        } else if (source == fenetre.info.prendreRDVButton) {
+    } else if (source == fenetre.speadmin.searchButton) {
+
+            String recherche;
+
+            recherche = fenetre.speadmin.searchField.getText();
+
+            // ICI Requete du DAO pour rechercher dans la base de données
+            ArrayList<Specialiste> listeSpecialistes = utilisateurDAO.rechercheSpecialiste(recherche);
+
+            fenetre.updateSpecialistesAdmin(listeSpecialistes);
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
+
+
+
+    } else if (source == fenetre.info.prendreRDVButton) {
 
             ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.info.specialiste.getUtilisateurId());
 
-            fenetre.updateDispoRDV(fenetre.info.specialiste, listeRDV);
+            fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.info.specialiste, listeRDV);
 
             fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
             fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -184,7 +222,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.confrdv.dispose();
 
-        }else if(source == fenetre.compte.btnChangerImage){
+        } else if (source == fenetre.compte.btnChangerImage) {
 
 
             JFileChooser fileChooser = new JFileChooser();
@@ -263,17 +301,130 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 fenetre.compte.confirmationLabel.setText(ex.getMessage());
             }
+
+        } else if (source == fenetre.statsadmin.btnSpecialiste || source == fenetre.infodocteuradmin.btnSpecialiste) {
+
+            ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
+            ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
+
+            for (Utilisateur utilisateur : listeUtilisateurs) {
+
+                if (utilisateur instanceof Specialiste) {
+
+                    listeSpecialistes.add((Specialiste) utilisateur);
+                }
+            }
+
+            fenetre.updateSpecialistesAdmin(listeSpecialistes);
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
+
+        } else if (source == fenetre.speadmin.btnStatistiques || source == fenetre.infodocteuradmin.btnStatistiques) {
+
+            ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
+            ArrayList<RDV> listeRDV = new ArrayList<>();
+            TreeMap<Long, Integer> mapRDV = new TreeMap<>();
+            int nombrePatients = 0;
+            int nombreSpecialistes = 0;
+            int compteurRDV = 0;
+
+            for (Utilisateur utilisateur : listeUtilisateurs) {
+
+                if (utilisateur instanceof Patient) {
+
+                    nombrePatients++;
+
+                } else if (utilisateur instanceof Specialiste) {
+
+                    nombreSpecialistes++;
+
+                    listeRDV.addAll(rdvDAO.chercherRDV(utilisateur.getUtilisateurId()));
+                }
+            }
+
+            // On convertir la date actuelle en date lisible
+            String temp = new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date (fenetre.dateActuelle));
+
+            long nouveauTimestamp = 0;
+
+            try {
+
+                nouveauTimestamp = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(temp + " 00:00:00").getTime();
+
+            } catch (Exception ex) {
+
+                // On ne fait rien
+            }
+
+            for (int i=0; i<7; i++) { // +86400000 au timestamp pour ajouter un jour
+
+                // On parcourt la liste de rdv
+                for (RDV rdv : listeRDV) {
+
+                    // Si le rdv est dans la journée actuelle
+                    if (rdv.getDate() > nouveauTimestamp && rdv.getDate() < (nouveauTimestamp+86400000)) {
+
+                        compteurRDV++;
+                    }
+                }
+
+                // On ajoute le nombre de rdv comptés pour ce jour la
+                mapRDV.put(nouveauTimestamp, compteurRDV);
+
+                // On passe au jour suivant
+                nouveauTimestamp = nouveauTimestamp + 86400000;
+
+                // On réinitialise le compteur de rdv
+                compteurRDV = 0;
+            }
+
+            fenetre.updateStatsAdmin(nombrePatients, nombreSpecialistes, mapRDV);
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.STATSADMIN);
         }
 
         for (JButton buttonCreneau : fenetre.dispordv.mapCreneaux.keySet()) {
 
             if (source == buttonCreneau) {
 
-                fenetre.updateConfirmationRDV(fenetre.dispordv.specialiste, fenetre.utilisateurActuel, fenetre.dispordv.mapCreneaux.get(buttonCreneau));
+                if (fenetre.utilisateurActuel instanceof Patient){
 
-                fenetre.confrdv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-                fenetre.confrdv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                fenetre.confrdv.setVisible(true);
+                    fenetre.updateConfirmationRDV(fenetre.dispordv.specialiste, fenetre.utilisateurActuel, fenetre.dispordv.mapCreneaux.get(buttonCreneau));
+
+                    fenetre.confrdv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+                    fenetre.confrdv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                    fenetre.confrdv.setVisible(true);
+
+                }  else if (fenetre.utilisateurActuel instanceof Admin){
+
+                    RDV rdv = new RDV(fenetre.dispordv.specialiste, fenetre.utilisateurActuel, fenetre.dispordv.mapCreneaux.get(buttonCreneau));
+
+                    ArrayList<RDV> listRDV;
+                    listRDV = rdvDAO.chercherRDV(fenetre.dispordv.specialiste.getUtilisateurId());
+
+                    int temp = 1;
+
+                    for (RDV rdv_i : listRDV) {
+
+                        if (rdv_i.getDate() == rdv.getDate()){
+                            rdvDAO.supprimerRDV(rdv_i);
+                            temp = 0;
+                            break;
+                        }
+
+                    }
+
+                    if (temp == 1){
+
+                        rdvDAO.ajouterRDV(rdv);
+                    }
+
+                    ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.dispordv.specialiste.getUtilisateurId());
+                    fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.dispordv.specialiste, listeRDV);
+
+                    break;
+
+                }
 
             }
         }
@@ -326,7 +477,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel).getUtilisateurId());
 
-                fenetre.updateDispoRDV(fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
+                fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.recherche.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
 
                 fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
                 fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -353,6 +504,32 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             }
         }
 
+        for (JLabel nameLabel : fenetre.speadmin.mapSpecialistesInfo.keySet()) {
+
+            if (source == nameLabel) {
+
+                fenetre.updateInfoDocteurAdmin(fenetre.speadmin.mapSpecialistesInfo.get(nameLabel));
+
+                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INFODOCTEURADMIN);
+
+            }
+        }
+
+        for (JLabel availabilityLabel : fenetre.speadmin.mapSpecialistesDispo.keySet()) {
+
+            if (source == availabilityLabel) {
+
+                ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.speadmin.mapSpecialistesDispo.get(availabilityLabel).getUtilisateurId());
+
+
+                fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.speadmin.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
+
+                fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+                fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                fenetre.dispordv.setVisible(true);
+
+            }
+        }
 
     }
 

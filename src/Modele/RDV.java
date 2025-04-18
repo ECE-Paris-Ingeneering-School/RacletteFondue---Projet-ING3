@@ -13,9 +13,9 @@ public class RDV {
     /**
      * Constructeur des RDV avec tous les paramètres
      */
-    public RDV(Specialiste pspecialiste, Utilisateur putilisteur, long pdate) {
+    public RDV(Specialiste pspecialiste, Utilisateur putilisateur, long pdate) {
         this.specialiste = pspecialiste;
-        this.utilisateur= putilisteur;
+        this.utilisateur = putilisateur;
         this.date = pdate;
 
     }

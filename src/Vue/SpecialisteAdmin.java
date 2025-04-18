@@ -1,7 +1,12 @@
 package Vue;
 
+import Modele.Specialiste;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SpecialisteAdmin extends JFrame {
@@ -15,20 +20,36 @@ public class SpecialisteAdmin extends JFrame {
     public JLabel locationLabel;
     public JLabel availabilityLabel;
 
-
+    public ArrayList<Specialiste> listeSpecialistes;
+    public Map<JLabel, Specialiste> mapSpecialistesInfo = null;
+    public Map<JLabel, Specialiste> mapSpecialistesDispo = null;
 
     public SpecialisteAdmin() {
+
+        mapSpecialistesInfo = new HashMap<JLabel, Specialiste>();
+        mapSpecialistesDispo = new HashMap<JLabel, Specialiste>();
+
         setTitle("Spécialiste");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        setContentPane(buildPanel());
+    }
+
+    public JPanel buildPanel() {
+
         // Panel principal
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
+        if (listeSpecialistes == null) {
+
+            return mainPanel;
+        }
+
         // Titre
-        JLabel titleLabel = new JLabel("Spécialistes - Admin");
+        JLabel titleLabel = new JLabel("Spécialistes - ADMIN");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -87,23 +108,9 @@ public class SpecialisteAdmin extends JFrame {
         mainPanel.add(searchPanel);
         mainPanel.add(Box.createVerticalStrut(20)); // Réduire l'espace vertical ici
 
-        // Liste des docteurs
-        String[][] doctors = {
-                {"Dr. Juiph", "Lyon", "voir les dispo"},
-                {"Dr. Leroy", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-                {"Dr. Charbel", "Paris", "voir les dispo"},
-        };
 
         // Nombre de résultats
-        JLabel listeSpecialisteLabel = new JLabel("Liste des spécialistes enregistrés : " + doctors.length);
+        JLabel listeSpecialisteLabel = new JLabel("Liste des spécialistes enregistrés : " + listeSpecialistes.size());
         listeSpecialisteLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         listeSpecialisteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(listeSpecialisteLabel);
@@ -114,22 +121,24 @@ public class SpecialisteAdmin extends JFrame {
         searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS));
         searchResultPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        for (String[] doctor : doctors) {
+        for (Specialiste specialiste : listeSpecialistes) {
+
             JPanel doctorPanel = new JPanel(new BorderLayout());
             doctorPanel.setPreferredSize(new Dimension(600, 50));
             doctorPanel.setMaximumSize(new Dimension(600, 50));
             doctorPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
             doctorPanel.setBackground(new Color(221, 235, 247));
 
-            nameLabel = new JLabel(doctor[0] + ", ");
+            nameLabel = new JLabel(specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / ");
             nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+            nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
             doctorPanel.add(nameLabel, BorderLayout.WEST);
 
-            locationLabel = new JLabel(doctor[1]);
+            locationLabel = new JLabel(specialiste.getUtilisateurAdresse().getAdresseVille());
             locationLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
             doctorPanel.add(locationLabel, BorderLayout.CENTER);
 
-            availabilityLabel = new JLabel(doctor[2]);
+            availabilityLabel = new JLabel("Voir les dispos");
             availabilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
             availabilityLabel.setForeground(new Color(45, 104, 196));
             availabilityLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -138,6 +147,10 @@ public class SpecialisteAdmin extends JFrame {
 
             searchResultPanel.add(doctorPanel);
             searchResultPanel.add(Box.createVerticalStrut(10));
+
+            // On associe l'objet à son label pour le référencer plus tard
+            mapSpecialistesInfo.put(nameLabel, specialiste);
+            mapSpecialistesDispo.put(availabilityLabel, specialiste);
         }
 
         // Ajouter le panneau de résultats dans un JScrollPane pour le rendre défilable
@@ -150,8 +163,8 @@ public class SpecialisteAdmin extends JFrame {
         scrollPane.setMaximumSize(new Dimension(650, 450));
 
         mainPanel.add(scrollPane);
-        add(mainPanel);
-        setVisible(true);
+
+        return mainPanel;
     }
 
 

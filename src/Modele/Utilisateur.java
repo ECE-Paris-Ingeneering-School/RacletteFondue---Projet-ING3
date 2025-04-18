@@ -23,7 +23,7 @@ public abstract class Utilisateur {
     /**
      * Constructeur de l'utilisateur avec sans paramètre
      */
-    public Utilisateur(){
+    public Utilisateur() {
 
     }
 

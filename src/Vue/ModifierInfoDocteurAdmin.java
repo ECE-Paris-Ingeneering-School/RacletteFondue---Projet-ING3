@@ -28,7 +28,6 @@ public class ModifierInfoDocteurAdmin extends JFrame {
 
     public Specialiste specialiste;
 
-
     public ModifierInfoDocteurAdmin() {
         setTitle("Modifier Specialiste");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,8 +67,6 @@ public class ModifierInfoDocteurAdmin extends JFrame {
 
         btnStatistiques = new JButton("Statistiques");
         styleMenuButton(btnStatistiques);
-
-
 
         menuPanel.add(btnSpecialiste);
         menuPanel.add(btnDossierPatients);

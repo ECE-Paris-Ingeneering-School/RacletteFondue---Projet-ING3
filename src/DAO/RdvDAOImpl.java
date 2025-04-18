@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * implémentation MySQL du stockage dans la base de données des méthodes définies dans l'interface RDVDao.
