@@ -19,6 +19,7 @@ public class SpecialisteAdmin extends JFrame {
     public JLabel nameLabel;
     public JLabel locationLabel;
     public JLabel availabilityLabel;
+    public JLabel deconnexionLabel;
 
     public ArrayList<Specialiste> listeSpecialistes;
     public Map<JLabel, Specialiste> mapSpecialistesInfo = null;
@@ -76,7 +77,7 @@ public class SpecialisteAdmin extends JFrame {
         menuPanel.add(btnDossierPatients);
         menuPanel.add(btnStatistiques);
         mainPanel.add(menuPanel);
-        mainPanel.add(Box.createVerticalStrut(10)); // Réduire l'espace vertical ici
+        mainPanel.add(Box.createVerticalStrut(10));
 
 
         // Lien pour ajouter un spécialiste
@@ -106,7 +107,7 @@ public class SpecialisteAdmin extends JFrame {
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
         mainPanel.add(searchPanel);
-        mainPanel.add(Box.createVerticalStrut(20)); // Réduire l'espace vertical ici
+        mainPanel.add(Box.createVerticalStrut(20));
 
 
         // Nombre de résultats
@@ -163,6 +164,17 @@ public class SpecialisteAdmin extends JFrame {
         scrollPane.setMaximumSize(new Dimension(650, 450));
 
         mainPanel.add(scrollPane);
+        mainPanel.add(Box.createVerticalStrut(30));
+
+        JPanel deconnexionPanel = new JPanel();
+
+        deconnexionLabel = new JLabel("Déconnexion");
+        deconnexionLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+        deconnexionLabel.setForeground(new Color(255, 0, 0));
+        deconnexionLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        deconnexionPanel.add(deconnexionLabel);
+        mainPanel.add(deconnexionPanel, BorderLayout.SOUTH);
 
         return mainPanel;
     }

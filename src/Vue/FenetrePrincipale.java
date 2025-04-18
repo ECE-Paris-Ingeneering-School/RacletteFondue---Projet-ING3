@@ -286,6 +286,7 @@ public class FenetrePrincipale {
         speadmin.btnStatistiques.addActionListener(listener);
         speadmin.searchButton.addActionListener(listener);
         speadmin.searchField.addMouseListener(listener);
+        speadmin.deconnexionLabel.addMouseListener(listener);
 
         for (JLabel nameLabel : speadmin.mapSpecialistesInfo.keySet()) {
 

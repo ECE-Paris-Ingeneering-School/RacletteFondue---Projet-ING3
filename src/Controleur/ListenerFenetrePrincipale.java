@@ -451,7 +451,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 fenetre.recherche.searchField.setText("");
             }
 
-        } else if (source == fenetre.accueil.deconnexionLabel) {
+        } else if (source == fenetre.accueil.deconnexionLabel || source == fenetre.speadmin.deconnexionLabel) {
 
             fenetre.connexion.passwordField.setText("");
 
