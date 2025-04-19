@@ -123,6 +123,14 @@ public class FenetrePrincipale {
         accueil.searchField.addMouseListener(listener);
         accueil.deconnexionLabel.addMouseListener(listener);
 
+        // AjouterSpecialisteAdmin
+        ajoutSpeAdmin.annulerButton.addActionListener(listener);
+        ajoutSpeAdmin.ajouterButton.addActionListener(listener);
+        ajoutSpeAdmin.btnSpecialiste.addActionListener(listener);
+        ajoutSpeAdmin.btnStatistiques.addActionListener(listener);
+
+
+
         // Création de la fenêtre principale
         JFrame fenetrePrincipale = new JFrame();
 
@@ -140,7 +148,7 @@ public class FenetrePrincipale {
         conteneurPrincipal.add(speadminPanel, SPECIALISTEADMIN);
         conteneurPrincipal.add(infodocteuradminPanel, INFODOCTEURADMIN);
         conteneurPrincipal.add(statsadminPanel, STATSADMIN);
-        conteneurPrincipal.add(ajoutSpeAdminPanel,SPECIALISTEADMIN);
+        conteneurPrincipal.add(ajoutSpeAdminPanel,INSERERDOCTEURADMIN);
 
         // Paramétrage de la fenetre principale
         fenetrePrincipale.add(conteneurPrincipal);
@@ -287,6 +295,7 @@ public class FenetrePrincipale {
         speadmin.btnStatistiques.addActionListener(listener);
         speadmin.searchButton.addActionListener(listener);
         speadmin.searchField.addMouseListener(listener);
+        speadmin.addSpecialistLabel.addMouseListener(listener);
 
         for (JLabel nameLabel : speadmin.mapSpecialistesInfo.keySet()) {
 
@@ -304,6 +313,8 @@ public class FenetrePrincipale {
         speadmin.repaint();
     }
 
+
+
     public void updateInfoDocteurAdmin(Specialiste specialiste) {
 
         infodocteuradmin.specialiste = specialiste;
@@ -315,7 +326,9 @@ public class FenetrePrincipale {
         infodocteuradmin.btnSpecialiste.addActionListener(listener);
         infodocteuradmin.btnDossierPatients.addActionListener(listener);
         infodocteuradmin.btnStatistiques.addActionListener(listener);
+
         infodocteuradmin.modifierButton.addActionListener(listener);
+        infodocteuradmin.supprimerButton.addActionListener(listener);
         infodocteuradmin.annulerButton.addActionListener(listener);
         infodocteuradmin.btnChargerImage.addActionListener(listener);
 

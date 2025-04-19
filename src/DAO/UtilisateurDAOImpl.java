@@ -334,18 +334,23 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     public void ajouterUtilisateur(Utilisateur utilisateur) throws EmailExistantException {
 
+
         try {
 
             // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
-            ResultSet resultat = statement.executeQuery("SELECT count(*) FROM utilisateur WHERE utilisateurMail=\"" + utilisateur.getUtilisateurMail() + "\"");
-            resultat.next();
+            ResultSet resultat;
 
-            if (resultat.getInt(1) != 0) {
+            if (utilisateur instanceof Patient){
+                resultat = statement.executeQuery("SELECT count(*) FROM utilisateur WHERE utilisateurMail=\"" + utilisateur.getUtilisateurMail() + "\"");
+                resultat.next();
 
-                throw new EmailExistantException();
+                if (resultat.getInt(1) != 0) {
+
+                    throw new EmailExistantException();
+                }
             }
 
             // Requete SQL

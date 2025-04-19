@@ -3,6 +3,7 @@ package Vue;
 import Modele.Adresse;
 import Modele.Specialiste;
 import Modele.Utilisateur;
+import org.jfree.chart.LegendItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +13,10 @@ public class AjouterSpecialisteAdmin extends JFrame {
     public JButton btnSpecialiste;
     public JButton btnDossierPatients;
     public JButton btnStatistiques;
+
     public JLabel imageField;
     public JButton btnChargerImage;
+
     public JTextField nomField;
     public JTextField specialiteField;
     public JTextField descriptionField;
@@ -22,6 +25,7 @@ public class AjouterSpecialisteAdmin extends JFrame {
     public JTextField rueField;
     public JTextField codePostalField;
     public JTextField villeField;
+
     public JButton ajouterButton;
     public JButton annulerButton;
     public JLabel erreurLabel;
@@ -94,42 +98,14 @@ public class AjouterSpecialisteAdmin extends JFrame {
 
 
         // Affichage image
-        //ImageIcon imageIcon = new ImageIcon("C:\\Users\\lucie\\OneDrive - Groupe INSEEC (POCE)\\Bureau\\ECE\\ECE3\\Paris\\Java\\RacletteFondue---Projet-ING3\\src\\Vue\\timothe.jpg");
-        ImageIcon imageIcon = new ImageIcon("");
+        ImageIcon imageIcon = new ImageIcon("src/Images/pdp_defaut.png");
         Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         imageField = new JLabel(new ImageIcon(image));
 
-        btnChargerImage = new JButton("Charger votre photo");
-        //btnChangerImage.setPreferredSize(new Dimension(200, 25)); // Augmenter la taille du bouton
-        btnChargerImage.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btnChargerImage.setBackground(new Color(45, 104, 196)); // Changer la couleur de fond
-        btnChargerImage.setForeground(Color.WHITE);
-        btnChargerImage.setFocusPainted(false);
-
-        btnChargerImage.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            int result = fileChooser.showOpenDialog(this);
-
-            if (result == JFileChooser.APPROVE_OPTION) {
-                java.io.File selectedFile = fileChooser.getSelectedFile();
-                ImageIcon newIcon = new ImageIcon(selectedFile.getAbsolutePath());
-                Image newImage = newIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                imageField.setIcon(new ImageIcon(newImage));
-            }
-        });
-
-        JLabel imageLabel = new JLabel("Photo de profil :");
-        imageLabel.setFont(labelFont);
-        gbc.gridx = 0;
         gbc.gridy = 0;
-        formPanel.add(imageLabel, gbc);
         gbc.gridx = 1;
         formPanel.add(imageField, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy++;
-        formPanel.add(btnChargerImage, gbc);
 
 
         // Champs

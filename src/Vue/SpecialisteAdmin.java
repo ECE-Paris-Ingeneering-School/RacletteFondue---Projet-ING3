@@ -20,6 +20,7 @@ public class SpecialisteAdmin extends JFrame {
     public JLabel locationLabel;
     public JLabel availabilityLabel;
     public JLabel imageLabel;
+    public JLabel addSpecialistLabel;
 
     public ArrayList<Specialiste> listeSpecialistes;
     public Map<JLabel, Specialiste> mapSpecialistesInfo = null;
@@ -45,6 +46,8 @@ public class SpecialisteAdmin extends JFrame {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         if (listeSpecialistes == null) {
+
+
 
             return mainPanel;
         }
@@ -81,7 +84,7 @@ public class SpecialisteAdmin extends JFrame {
 
 
         // Lien pour ajouter un spécialiste
-        JLabel addSpecialistLabel = new JLabel("+ Ajouter un spécialiste");
+        addSpecialistLabel = new JLabel("+ Ajouter un spécialiste");
         addSpecialistLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         addSpecialistLabel.setForeground(new Color(45, 104, 196));
         addSpecialistLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));

@@ -23,6 +23,7 @@ public class ModifierInfoDocteurAdmin extends JFrame {
     public JTextField codePostalField;
     public JTextField villeField;
     public JButton modifierButton;
+    public JButton supprimerButton;
     public JButton annulerButton;
     public JLabel erreurLabel;
     public ImageIcon cheminImage;
@@ -223,17 +224,26 @@ public class ModifierInfoDocteurAdmin extends JFrame {
         modifierButton.setForeground(Color.WHITE); // Changer la couleur du texte
         modifierButton.setFocusPainted(false);
 
+        // Bouton Supprimer
+        supprimerButton = new JButton("Supprimer");
+        supprimerButton.setPreferredSize(new Dimension(150, 50)); // Augmenter la taille du bouton
+        supprimerButton.setFont(new Font("Tahoma", Font.BOLD, 20)); // Augmenter la taille de la police
+        supprimerButton.setBackground(new Color(207, 9, 31)); // Changer la couleur de fond
+        supprimerButton.setForeground(Color.WHITE); // Changer la couleur du texte
+        supprimerButton.setFocusPainted(false);
+
 
         // Bouton Annuler
         annulerButton = new JButton("Annuler");
         annulerButton.setPreferredSize(new Dimension(150, 50));
         annulerButton.setFont(new Font("Tahoma", Font.BOLD, 20));
-        annulerButton.setBackground(new Color(255, 88, 88));
+        annulerButton.setBackground(new Color(69, 73, 78));
         annulerButton.setForeground(Color.WHITE);
         annulerButton.setFocusPainted(false);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(modifierButton);
+        buttonPanel.add(supprimerButton);
         buttonPanel.add(annulerButton);
 
         JPanel panelGeneral = new JPanel();
