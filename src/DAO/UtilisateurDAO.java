@@ -2,6 +2,7 @@ package DAO;
 
 import Modele.Exceptions.ConnexionException;
 import Modele.Exceptions.EmailExistantException;
+import Modele.Patient;
 import Modele.Specialiste;
 import Modele.Utilisateur;
 import java.util.ArrayList;
@@ -28,10 +29,17 @@ public interface UtilisateurDAO {
 
     /**
      * Méthode permettant de chercher des spécialistes avec un mot associé
-     * @param motRecherche le mot appartenant au spécialiste
-     * @return La liste des spécialistes trié en fonction du mot
+     * @param motRecherche le mot clé recherché
+     * @return La liste des spécialistes trié en fonction du terme recherché
      * **/
     public ArrayList<Specialiste> rechercheSpecialiste(String motRecherche);
+
+    /**
+     * Méthode permettant de chercher des patients avec un mot associé
+     * @param motRecherche le mot clé recherché
+     * @return La liste des patients trié en fonction du terme recherché
+    **/
+    public ArrayList<Patient> recherchePatient(String motRecherche);
 
     /**
      * Méthode permettant d'ajouter un utilisateur dans la base de données

@@ -3,7 +3,6 @@ package Controleur;
 import Modele.*;
 import Vue.FenetrePrincipale;
 import DAO.*;
-import Vue.RechercheDocteur;
 
 
 import javax.swing.*;
@@ -178,11 +177,11 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.RECHERCHE);
 
-    } else if (source == fenetre.speadmin.searchButton) {
+    } else if (source == fenetre.speAdmin.searchButton) {
 
             String recherche;
 
-            recherche = fenetre.speadmin.searchField.getText();
+            recherche = fenetre.speAdmin.searchField.getText();
 
             // ICI Requete du DAO pour rechercher dans la base de données
             ArrayList<Specialiste> listeSpecialistes = utilisateurDAO.rechercheSpecialiste(recherche);
@@ -190,8 +189,6 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             fenetre.updateSpecialistesAdmin(listeSpecialistes);
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
-
-
 
     } else if (source == fenetre.info.prendreRDVButton) {
 
@@ -389,7 +386,10 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                 }
 
-        } else if (source == fenetre.statsadmin.btnSpecialiste || source == fenetre.infodocteuradmin.btnSpecialiste || source == fenetre.infodocteuradmin.annulerButton) {
+        } else if (source == fenetre.statsAdmin.btnSpecialiste
+                || source == fenetre.infoDocteurAdmin.btnSpecialiste
+                || source == fenetre.dossiersPatientsAdmin.btnSpecialiste
+                || source == fenetre.infoPatientAdmin.btnSpecialiste || source == fenetre.infodocteuradmin.annulerButton) {
 
             ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
             ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
@@ -406,7 +406,45 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
 
-        } else if (source == fenetre.speadmin.btnStatistiques || source == fenetre.infodocteuradmin.btnStatistiques ) {
+        } else if (source == fenetre.speAdmin.btnDossierPatients
+                || source == fenetre.statsAdmin.btnDossierPatients
+                || source == fenetre.infoDocteurAdmin.btnDossierPatients
+                || source == fenetre.infoPatientAdmin.btnDossierPatients) {
+
+            // On récupère la liste de patients
+            ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
+            ArrayList<Patient> listePatients = new ArrayList<>();
+
+            for (Utilisateur utilisateur : listeUtilisateurs) {
+
+                if (utilisateur instanceof Patient) {
+
+                    listePatients.add((Patient) utilisateur);
+                }
+            }
+
+            // On met à jour les informations de la page
+            fenetre.updateDossierPatientsAdmin(listePatients);
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.DOSSIERSPATIENTSADMIN);
+
+        } else if (source == fenetre.dossiersPatientsAdmin.searchButton) {
+
+            String recherche;
+
+            recherche = fenetre.dossiersPatientsAdmin.searchField.getText();
+
+            // ICI Requete du DAO pour rechercher dans la base de données
+            ArrayList<Patient> listePatients = utilisateurDAO.recherchePatient(recherche);
+
+            fenetre.updateDossierPatientsAdmin(listePatients);
+
+            fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.DOSSIERSPATIENTSADMIN);
+
+        } else if (source == fenetre.speAdmin.btnStatistiques
+                || source == fenetre.infoDocteurAdmin.btnStatistiques
+                || source == fenetre.dossiersPatientsAdmin.btnStatistiques
+                || source == fenetre.infoPatientAdmin.btnStatistiques) {
 
             ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
             ArrayList<RDV> listeRDV = new ArrayList<>();
@@ -468,6 +506,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             fenetre.updateStatsAdmin(nombrePatients, nombreSpecialistes, mapRDV);
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.STATSADMIN);
+
         }
 
         for (JButton buttonCreneau : fenetre.dispordv.mapCreneaux.keySet()) {
@@ -527,23 +566,11 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INSCRIPTION);
 
-        } else if (source == fenetre.accueil.searchField || source == fenetre.recherche.searchField) { // Nettoyage de la barre de recherche au click de l'utilisateur
-
-            if (Objects.equals(fenetre.accueil.searchField.getText(), "Nom, spécialité, lieu...") && source == fenetre.accueil.searchField) {
-
-                fenetre.accueil.searchField.setText("");
-
-            } else if (Objects.equals(fenetre.recherche.searchField.getText(), "Nom, spécialité, lieu...") && source == fenetre.recherche.searchField) {
-
-                fenetre.recherche.searchField.setText("");
-            }
-
-        } else if (source == fenetre.accueil.deconnexionLabel || source == fenetre.speadmin.deconnexionLabel) {
+        } else if (source == fenetre.accueil.deconnexionLabel) {
 
             fenetre.connexion.passwordField.setText("");
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.CONNEXION);
-
 
         }
 
@@ -574,7 +601,6 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
         }
 
 
-
         for (JLabel labelAnnulation : fenetre.rendezvous.mapRDV.keySet()) {
 
             if (source == labelAnnulation) {
@@ -591,25 +617,24 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             }
         }
 
-        for (JLabel nameLabel : fenetre.speadmin.mapSpecialistesInfo.keySet()) {
+        for (JLabel nameLabel : fenetre.speAdmin.mapSpecialistesInfo.keySet()) {
 
             if (source == nameLabel) {
 
-                fenetre.updateInfoDocteurAdmin(fenetre.speadmin.mapSpecialistesInfo.get(nameLabel));
+                fenetre.updateInfoDocteurAdmin(fenetre.speAdmin.mapSpecialistesInfo.get(nameLabel));
 
                 fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INFODOCTEURADMIN);
 
             }
         }
 
-        for (JLabel availabilityLabel : fenetre.speadmin.mapSpecialistesDispo.keySet()) {
+        for (JLabel availabilityLabel : fenetre.speAdmin.mapSpecialistesDispo.keySet()) {
 
             if (source == availabilityLabel) {
 
-                ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.speadmin.mapSpecialistesDispo.get(availabilityLabel).getUtilisateurId());
+                ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.speAdmin.mapSpecialistesDispo.get(availabilityLabel).getUtilisateurId());
 
-
-                fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.speadmin.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
+                fenetre.updateDispoRDV(fenetre.utilisateurActuel,fenetre.speAdmin.mapSpecialistesDispo.get(availabilityLabel), listeRDV);
 
                 fenetre.dispordv.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
                 fenetre.dispordv.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -617,6 +642,19 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             }
         }
+
+        for (JLabel dossierLabel : fenetre.dossiersPatientsAdmin.mapPatients.keySet()) {
+
+            if (source == dossierLabel) {
+
+                ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.dossiersPatientsAdmin.mapPatients.get(dossierLabel).getUtilisateurId());
+
+                fenetre.updateInfoPatientAdmin(fenetre.dossiersPatientsAdmin.mapPatients.get(dossierLabel), listeRDV);
+
+                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INFOPATIENTADMIN);
+            }
+        }
+
 
     }
 

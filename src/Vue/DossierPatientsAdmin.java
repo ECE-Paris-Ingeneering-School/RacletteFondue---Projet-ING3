@@ -1,7 +1,6 @@
 package Vue;
 
 import Modele.Patient;
-import Modele.Utilisateur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +16,7 @@ public class DossierPatientsAdmin extends JFrame{
     public JButton searchButton;
     public JLabel nameLabel;
     public JLabel locationLabel;
-    public JLabel availabilityLabel;
+    public JLabel dossierLabel;
 
     public ArrayList<Patient> listePatients;
     public HashMap<JLabel, Patient> mapPatients;
@@ -26,7 +25,7 @@ public class DossierPatientsAdmin extends JFrame{
 
         mapPatients = new HashMap<>();
 
-        setTitle("Spécialiste");
+        setTitle("Dossiers patients");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -77,7 +76,6 @@ public class DossierPatientsAdmin extends JFrame{
         mainPanel.add(menuPanel);
         mainPanel.add(Box.createVerticalStrut(10)); // Réduire l'espace vertical ici
 
-
         // Barre de recherche
         JPanel searchPanel = new JPanel();
 
@@ -96,23 +94,9 @@ public class DossierPatientsAdmin extends JFrame{
         mainPanel.add(searchPanel);
         mainPanel.add(Box.createVerticalStrut(20)); // Réduire l'espace vertical ici
 
-        // Liste des docteurs
-        String[][] doctors = {
-                {"M. X", "Lyon", "voir le dossier"},
-                {"Mme Y", "Paris", "voir le dossier"},
-                {"Mlle Z", "Paris", "voir le dossier"},
-                {"M. A", "Paris", "voir le dossier"},
-                {"Mme B", "Paris", "voir le dossier"},
-                {"Mlle C", "Paris", "voir le dossier"},
-                {"M. F", "Paris", "voir le dossier"},
-                {"Mme G", "Paris", "voir le dossier"},
-                {"Mlle H", "Paris", "voir le dossier"},
-                {"M. P", "Paris", "voir le dossier"},
-                {"Mme Q", "Paris", "voir le dossier"},
-        };
 
         // Nombre de résultats
-        JLabel listeSpecialisteLabel = new JLabel("Liste des patients enregistrés : " + doctors.length);
+        JLabel listeSpecialisteLabel = new JLabel("Liste des patients enregistrés : " + listePatients.size());
         listeSpecialisteLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         listeSpecialisteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(listeSpecialisteLabel);
@@ -123,30 +107,33 @@ public class DossierPatientsAdmin extends JFrame{
         searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS));
         searchResultPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        for (String[] doctor : doctors) {
+        for (Patient patient : listePatients) {
+
             JPanel doctorPanel = new JPanel(new BorderLayout());
             doctorPanel.setPreferredSize(new Dimension(600, 50));
             doctorPanel.setMaximumSize(new Dimension(600, 50));
             doctorPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
             doctorPanel.setBackground(new Color(221, 235, 247));
 
-            nameLabel = new JLabel(doctor[0] + ", ");
+            nameLabel = new JLabel(patient.getUtilisateurId() + " | " + patient.getUtilisateurPrenom() + " " + patient.getUtilisateurNom() + ", ");
             nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
             doctorPanel.add(nameLabel, BorderLayout.WEST);
 
-            locationLabel = new JLabel(doctor[1]);
+            locationLabel = new JLabel(patient.getUtilisateurAdresse().getAdresseVille());
             locationLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
             doctorPanel.add(locationLabel, BorderLayout.CENTER);
 
-            availabilityLabel = new JLabel(doctor[2]);
-            availabilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-            availabilityLabel.setForeground(new Color(45, 104, 196));
-            availabilityLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            dossierLabel = new JLabel("Voir le dossier");
+            dossierLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+            dossierLabel.setForeground(new Color(45, 104, 196));
+            dossierLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-            doctorPanel.add(availabilityLabel, BorderLayout.EAST);
+            doctorPanel.add(dossierLabel, BorderLayout.EAST);
 
             searchResultPanel.add(doctorPanel);
             searchResultPanel.add(Box.createVerticalStrut(10));
+
+            mapPatients.put(dossierLabel, patient);
         }
 
         // Ajouter le panneau de résultats dans un JScrollPane pour le rendre défilable
@@ -194,7 +181,10 @@ public class DossierPatientsAdmin extends JFrame{
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Vue.DossierPatientsAdmin::new);
+
+        SwingUtilities.invokeLater(() -> {
+            new DossierPatientsAdmin().setVisible(true);
+        });
     }
 
 }

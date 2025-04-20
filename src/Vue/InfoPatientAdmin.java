@@ -1,9 +1,13 @@
 package Vue;
 
-import Modele.Utilisateur;
+import Modele.Patient;
+import Modele.RDV;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class InfoPatientAdmin extends JFrame {
 
@@ -11,22 +15,42 @@ public class InfoPatientAdmin extends JFrame {
     public JButton btnDossierPatients;
     public JButton btnStatistiques;
 
-    public Utilisateur utilisateur;
+    public Patient patient;
+    public ArrayList<RDV> listeRDV;
 
     public InfoPatientAdmin() {
+
         setTitle("Informations Patient");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
         setContentPane(buildPanel());
     }
 
     public JPanel buildPanel() {
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
+        if (patient == null || listeRDV == null) {
+
+            return mainPanel;
+        }
+
         // Titre
-        JLabel titleLabel = new JLabel("Mme Y - ADMIN");
+        String pronom;
+
+        if (patient.getUtilisateurSexe() == 'H') {
+
+            pronom = "M. ";
+
+        } else {
+
+            pronom = "Mme. ";
+        }
+
+        JLabel titleLabel = new JLabel(pronom + patient.getUtilisateurNom() + " - Informations");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -54,13 +78,6 @@ public class InfoPatientAdmin extends JFrame {
 
         mainPanel.add(menuPanel);
 
-
-        if (utilisateur == null) {
-
-            return mainPanel;
-        }
-
-
         // Infos perso
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new GridLayout(6, 2, 20, 10));
@@ -70,62 +87,54 @@ public class InfoPatientAdmin extends JFrame {
         Font labelFont = new Font("Tahoma", Font.PLAIN, 20);
 
         infoPanel.add(createInfoLabel("Nom :", labelFont));
-        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurNom(), labelFont));
+        infoPanel.add(createInfoLabel(patient.getUtilisateurNom(), labelFont));
 
         infoPanel.add(createInfoLabel("Prénom :", labelFont));
-        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurPrenom(), labelFont));
+        infoPanel.add(createInfoLabel(patient.getUtilisateurPrenom(), labelFont));
 
         infoPanel.add(createInfoLabel("Age :", labelFont));
-        infoPanel.add(createInfoLabel(String.valueOf(utilisateur.getUtilisateurAge()), labelFont));
+        infoPanel.add(createInfoLabel(String.valueOf(patient.getUtilisateurAge()), labelFont));
 
         infoPanel.add(createInfoLabel("Téléphone :", labelFont));
-        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurTel(), labelFont));
+        infoPanel.add(createInfoLabel(patient.getUtilisateurTel(), labelFont));
 
         infoPanel.add(createInfoLabel("Email :", labelFont));
-        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurMail(), labelFont));
-
-        infoPanel.add(createInfoLabel("Mot de passe :", labelFont));
-        infoPanel.add(createInfoLabel(utilisateur.getUtilisateurPassword(), labelFont));
+        infoPanel.add(createInfoLabel(patient.getUtilisateurMail(), labelFont));
 
         mainPanel.add(infoPanel);
         mainPanel.add(Box.createVerticalStrut(30));
-
-        // RDV passés et à venir
-        String[][] rdvPasses = {
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-        };
-
-        String[][] rdvAvenir = {
-                {"Dr. Juif", "Psychologue", "10/08/25", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "21/02/25", "16h15"},
-                {"Dr. Christ", "Dermatologue", "14/08/24", "16h15"},
-                {"Dr. Juif", "Psychologue", "09/02/24", "16h15"},
-        };
 
         JPanel contentPanel = new JPanel(new GridLayout(1, 2, 30, 0));
         contentPanel.setMaximumSize(new Dimension(1300, 400));
         contentPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        contentPanel.add(createScrollList("RDV passés", rdvPasses));
-        contentPanel.add(createScrollList("RDV à venir", rdvAvenir));
+        // Création des deux listes
+        ArrayList<RDV> listeRDVPasses = new ArrayList<>();
+        ArrayList<RDV> listeRDVFuturs = new ArrayList<>();
+
+        for (RDV rdv : listeRDV) {
+
+            if (rdv.getDate() > Instant.now().toEpochMilli()) {
+
+                listeRDVFuturs.add(rdv);
+
+            } else {
+
+                listeRDVPasses.add(rdv);
+            }
+        }
+
+        Collections.reverse(listeRDVPasses);
+
+        contentPanel.add(createScrollList("RDV passés", listeRDVPasses));
+        contentPanel.add(createScrollList("RDV à venir", listeRDVFuturs));
 
         mainPanel.add(contentPanel);
 
         return mainPanel;
     }
 
-    private JPanel createScrollList(String title, String[][] data) {
+    private JPanel createScrollList(String title, ArrayList<RDV> listeRDV) {
         JPanel sectionPanel = new JPanel();
         sectionPanel.setLayout(new BoxLayout(sectionPanel, BoxLayout.Y_AXIS));
 
@@ -138,8 +147,9 @@ public class InfoPatientAdmin extends JFrame {
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
 
-        for (String[] rdv : data) {
-            listPanel.add(createRdvPanel(rdv[0], rdv[1], rdv[2], rdv[3]));
+        for (RDV rdv : listeRDV) {
+
+            listPanel.add(createRdvPanel(rdv));
             listPanel.add(Box.createVerticalStrut(10));
         }
 
@@ -153,7 +163,7 @@ public class InfoPatientAdmin extends JFrame {
         return sectionPanel;
     }
 
-    private JPanel createRdvPanel(String nom, String specialite, String date, String heure) {
+    private JPanel createRdvPanel(RDV rdv) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(new Color(221, 235, 247));
@@ -169,13 +179,13 @@ public class InfoPatientAdmin extends JFrame {
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
         textPanel.setOpaque(false);
 
-        JLabel nomLabel = new JLabel(nom);
+        JLabel nomLabel = new JLabel(" Dr." + rdv.getSpecialiste().getUtilisateurNom());
         nomLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 
-        JLabel speLabel = new JLabel(specialite);
+        JLabel speLabel = new JLabel(" " + rdv.getSpecialiste().getSpecialisteSpecialite());
         speLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-        JLabel dateLabel = new JLabel(date + "  " + heure);
+        JLabel dateLabel = new JLabel(new java.text.SimpleDateFormat(" dd/MM/yyyy à HH:mm").format(new java.util.Date (rdv.getDate())));
         dateLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
         textPanel.add(nomLabel);
