@@ -133,6 +133,13 @@ public class FenetrePrincipale {
         accueil.searchField.addMouseListener(listener);
         accueil.deconnexionLabel.addMouseListener(listener);
 
+        // AjouterSpecialisteAdmin
+        ajoutSpeAdmin.annulerButton.addActionListener(listener);
+        ajoutSpeAdmin.ajouterButton.addActionListener(listener);
+        ajoutSpeAdmin.btnSpecialiste.addActionListener(listener);
+        ajoutSpeAdmin.btnStatistiques.addActionListener(listener);
+
+
         // Création de la fenêtre principale
         JFrame fenetrePrincipale = new JFrame();
 
@@ -300,6 +307,8 @@ public class FenetrePrincipale {
         speAdmin.searchButton.addActionListener(listener);
         speAdmin.searchField.addMouseListener(listener);
         speAdmin.deconnexionLabel.addMouseListener(listener);
+        speAdmin.addSpecialistLabel.addMouseListener(listener);
+
 
 
         for (JLabel nameLabel : speAdmin.mapSpecialistesInfo.keySet()) {
@@ -329,7 +338,9 @@ public class FenetrePrincipale {
         infoDocteurAdmin.btnSpecialiste.addActionListener(listener);
         infoDocteurAdmin.btnDossierPatients.addActionListener(listener);
         infoDocteurAdmin.btnStatistiques.addActionListener(listener);
+
         infoDocteurAdmin.modifierButton.addActionListener(listener);
+        infoDocteurAdmin.supprimerButton.addActionListener(listener);
         infoDocteurAdmin.annulerButton.addActionListener(listener);
         infoDocteurAdmin.btnChargerImage.addActionListener(listener);
 

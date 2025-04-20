@@ -1,8 +1,10 @@
 package Controleur;
 
 import Modele.*;
+import Modele.Exceptions.ChampsVidesException;
 import Vue.FenetrePrincipale;
 import DAO.*;
+import Vue.RechercheDocteur;
 
 
 import javax.swing.*;
@@ -14,10 +16,8 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.TreeMap;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class ListenerFenetrePrincipale implements ActionListener, MouseListener {
 
@@ -77,6 +77,72 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 fenetre.connexion.erreurLabel.setText(ex.getMessage());
             }
 
+
+        } else if (source == fenetre.ajoutSpeAdmin.ajouterButton) {
+
+
+
+            String nom = fenetre.ajoutSpeAdmin.nomField.getText();
+            String specialite = fenetre.ajoutSpeAdmin.specialiteField.getText();
+            String description = fenetre.ajoutSpeAdmin.descriptionField.getText();
+            String tarif = fenetre.ajoutSpeAdmin.tarifField.getText();
+
+
+
+            //Adresse
+            String numero = fenetre.ajoutSpeAdmin.numeroField.getText();
+            String rue = fenetre.ajoutSpeAdmin.rueField.getText();
+            String codePostal = fenetre.ajoutSpeAdmin.codePostalField.getText();
+            String ville = fenetre.ajoutSpeAdmin.villeField.getText();
+
+            Specialiste nouveauSpecialiste = null;
+
+            try {
+
+                if (nom.isEmpty() || specialite.isEmpty() || description.isEmpty() || tarif.isEmpty() || numero.isEmpty() || rue.isEmpty() || codePostal.isEmpty() ||  ville.isEmpty()) {
+
+                    throw new ChampsVidesException();
+
+                }
+                Adresse adresseSpecialiste = new Adresse(Integer.parseInt(codePostal), ville, rue, numero);
+
+                Specialiste specialiste = new Specialiste(0,nom,"",0,adresseSpecialiste,'M',"","","","",specialite,description,Double.parseDouble(tarif));
+
+                utilisateurDAO.ajouterUtilisateur(specialiste);
+
+                fenetre.ajoutSpeAdmin.nomField.setText("");
+                fenetre.ajoutSpeAdmin.specialiteField.setText("");
+                fenetre.ajoutSpeAdmin.descriptionField.setText("");
+                fenetre.ajoutSpeAdmin.tarifField.setText("");
+                fenetre.ajoutSpeAdmin.numeroField.setText("");
+                fenetre.ajoutSpeAdmin.rueField.setText("");
+                fenetre.ajoutSpeAdmin.codePostalField.setText("");
+                fenetre.ajoutSpeAdmin.villeField.setText("");
+                fenetre.ajoutSpeAdmin.erreurLabel.setText("");
+
+
+                ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
+                ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
+
+
+
+                for (Utilisateur utilisateur : listeUtilisateurs) {
+
+                    if (utilisateur instanceof Specialiste) {
+
+                        listeSpecialistes.add((Specialiste) utilisateur);
+                    }
+                }
+
+                fenetre.updateSpecialistesAdmin(listeSpecialistes);
+
+                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
+
+
+            } catch (Exception ex) {
+
+                fenetre.ajoutSpeAdmin.erreurLabel.setText(ex.getMessage());
+            }
 
         } else if (source == fenetre.inscription.inscrireButton) {
 
@@ -190,6 +256,8 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
 
+
+
     } else if (source == fenetre.info.prendreRDVButton) {
 
             ArrayList<RDV> listeRDV = rdvDAO.chercherRDV(fenetre.info.specialiste.getUtilisateurId());
@@ -252,7 +320,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                     JOptionPane.showMessageDialog(fenetre.compte, "Erreur lors de la sauvegarde de l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
 
-                java.io.File selectedFile = fileChooser.getSelectedFile();
+                File selectedFile = fileChooser.getSelectedFile();
                 ImageIcon newIcon = new ImageIcon(selectedFile.getAbsolutePath());
                 Image newImage = newIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 fenetre.compte.imageField.setIcon(new ImageIcon(newImage));
@@ -329,38 +397,66 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                     JOptionPane.showMessageDialog(fenetre.infodocteuradmin, "Erreur lors de la sauvegarde de l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
 
-                java.io.File selectedFile = fileChooser.getSelectedFile();
+                File selectedFile = fileChooser.getSelectedFile();
                 ImageIcon newIcon = new ImageIcon(selectedFile.getAbsolutePath());
                 Image newImage = newIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                fenetre.infodocteuradmin.imageField.setIcon(new ImageIcon(newImage));
+                fenetre.infoDocteurAdmin.imageField.setIcon(new ImageIcon(newImage));
 
             }
 
         } else if (source == fenetre.infodocteuradmin.modifierButton) {
 
 
-                String nom = fenetre.infodocteuradmin.nomField.getText();
-                String specialite = fenetre.infodocteuradmin.specialiteField.getText();
-                String description = fenetre.infodocteuradmin.descriptionField.getText();
-                String tarif = fenetre.infodocteuradmin.tarifField.getText();
-                String image = fenetre.infodocteuradmin.cheminImage.getDescription();
+            String nom = fenetre.infodocteuradmin.nomField.getText();
+            String specialite = fenetre.infodocteuradmin.specialiteField.getText();
+            String description = fenetre.infodocteuradmin.descriptionField.getText();
+            String tarif = fenetre.infodocteuradmin.tarifField.getText();
+            String image = fenetre.infodocteuradmin.cheminImage.getDescription();
 
-                //Adresse
-                String numero = fenetre.infodocteuradmin.numeroField.getText();
-                String rue = fenetre.infodocteuradmin.rueField.getText();
-                String codePostal = fenetre.infodocteuradmin.codePostalField.getText();
-                String ville = fenetre.infodocteuradmin.villeField.getText();
+            //Adresse
+            String numero = fenetre.infodocteuradmin.numeroField.getText();
+            String rue = fenetre.infodocteuradmin.rueField.getText();
+            String codePostal = fenetre.infodocteuradmin.codePostalField.getText();
+            String ville = fenetre.infodocteuradmin.villeField.getText();
 
+
+            try {
+
+                Adresse adresseSpecialiste = new Adresse(Integer.parseInt(codePostal), ville, rue, numero);
+
+                Specialiste specialiste = new Specialiste(fenetre.infodocteuradmin.specialiste.getUtilisateurId(), nom, "", 0, adresseSpecialiste, 'M', "", "", "", image, specialite, description, Double.parseDouble(tarif));
+
+
+                utilisateurDAO.modifierUtilisateur(specialiste);
+
+                ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
+                ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
+
+
+                for (Utilisateur utilisateur : listeUtilisateurs) {
+
+                    if (utilisateur instanceof Specialiste) {
+
+                        listeSpecialistes.add((Specialiste) utilisateur);
+                    }
+                }
+
+                fenetre.updateSpecialistesAdmin(listeSpecialistes);
+
+                fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
+
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+
+            }
+
+        }else if (source == fenetre.infodocteuradmin.supprimerButton) {
 
 
                 try {
 
-                    Adresse adresseSpecialiste = new Adresse(Integer.parseInt(codePostal), ville, rue, numero);
 
-                    Specialiste specialiste = new Specialiste(fenetre.infodocteuradmin.specialiste.getUtilisateurId(),nom,"",0,adresseSpecialiste,'M',"","","",image,specialite,description,Double.parseDouble(tarif));
-
-
-                    utilisateurDAO.modifierUtilisateur(specialiste);
+                    utilisateurDAO.supprimerUtilisateur(fenetre.infodocteuradmin.specialiste);
 
                     ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
                     ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
@@ -377,8 +473,6 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
 
                     fenetre.updateSpecialistesAdmin(listeSpecialistes);
 
-                    fenetre.updateSpecialistesAdmin(fenetre.speadmin.listeSpecialistes);
-
                     fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.SPECIALISTEADMIN);
 
                 } catch (Exception ex) {
@@ -389,7 +483,7 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
         } else if (source == fenetre.statsAdmin.btnSpecialiste
                 || source == fenetre.infoDocteurAdmin.btnSpecialiste
                 || source == fenetre.dossiersPatientsAdmin.btnSpecialiste
-                || source == fenetre.infoPatientAdmin.btnSpecialiste || source == fenetre.infodocteuradmin.annulerButton) {
+                || source == fenetre.infoPatientAdmin.btnSpecialiste || source == fenetre.infodocteuradmin.annulerButton || source == fenetre.ajoutSpeAdmin.btnSpecialiste || source == fenetre.ajoutSpeAdmin.annulerButton) {
 
             ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
             ArrayList<Specialiste> listeSpecialistes = new ArrayList<>();
@@ -446,6 +540,8 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
                 || source == fenetre.dossiersPatientsAdmin.btnStatistiques
                 || source == fenetre.infoPatientAdmin.btnStatistiques) {
 
+        } else if (source == fenetre.speadmin.btnStatistiques || source == fenetre.infodocteuradmin.btnStatistiques || source == fenetre.ajoutSpeAdmin.btnStatistiques ) {
+
             ArrayList<Utilisateur> listeUtilisateurs = utilisateurDAO.getAllUtilisateur();
             ArrayList<RDV> listeRDV = new ArrayList<>();
             TreeMap<Long, Integer> mapRDV = new TreeMap<>();
@@ -468,13 +564,13 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             }
 
             // On convertir la date actuelle en date lisible
-            String temp = new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date (fenetre.dateActuelle));
+            String temp = new SimpleDateFormat("dd/MM/yyyy").format(new Date (fenetre.dateActuelle));
 
             long nouveauTimestamp = 0;
 
             try {
 
-                nouveauTimestamp = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(temp + " 00:00:00").getTime();
+                nouveauTimestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(temp + " 00:00:00").getTime();
 
             } catch (Exception ex) {
 
@@ -571,6 +667,14 @@ public class ListenerFenetrePrincipale implements ActionListener, MouseListener 
             fenetre.connexion.passwordField.setText("");
 
             fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.CONNEXION);
+
+
+        } else if (source == fenetre.speadmin.addSpecialistLabel) {
+
+
+
+        fenetre.cl.show(fenetre.conteneurPrincipal, fenetre.INSERERDOCTEURADMIN);
+
 
         }
 

@@ -20,6 +20,7 @@ public class SpecialisteAdmin extends JFrame {
     public JLabel locationLabel;
     public JLabel availabilityLabel;
     public JLabel imageLabel;
+    public JLabel addSpecialistLabel;
     public JLabel deconnexionLabel;
 
     public ArrayList<Specialiste> listeSpecialistes;
@@ -78,11 +79,11 @@ public class SpecialisteAdmin extends JFrame {
         menuPanel.add(btnDossierPatients);
         menuPanel.add(btnStatistiques);
         mainPanel.add(menuPanel);
-        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(Box.createVerticalStrut(10)); // Réduire l'espace vertical ici
 
 
         // Lien pour ajouter un spécialiste
-        JLabel addSpecialistLabel = new JLabel("+ Ajouter un spécialiste");
+        addSpecialistLabel = new JLabel("+ Ajouter un spécialiste");
         addSpecialistLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         addSpecialistLabel.setForeground(new Color(45, 104, 196));
         addSpecialistLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -155,9 +156,6 @@ public class SpecialisteAdmin extends JFrame {
             nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
             doctorPanel.add(nameLabel, BorderLayout.WEST);
 
-            locationLabel = new JLabel(specialiste.getUtilisateurAdresse().getAdresseVille());
-            locationLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-            doctorPanel.add(locationLabel, BorderLayout.CENTER);
 
             availabilityLabel = new JLabel("Voir les dispos");
             availabilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
