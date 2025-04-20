@@ -217,6 +217,7 @@ public class FenetrePrincipale {
         info.btnCompte.addActionListener(listener);
         info.prendreRDVButton.addActionListener(listener);
 
+
         conteneurPrincipal.add(infoPanel, INFODOCTEUR);
 
         info.revalidate();
@@ -311,10 +312,13 @@ public class FenetrePrincipale {
         conteneurPrincipal.remove(infodocteuradminPanel);
 
         infodocteuradminPanel = infodocteuradmin.buildPanel();
+
         infodocteuradmin.btnSpecialiste.addActionListener(listener);
         infodocteuradmin.btnDossierPatients.addActionListener(listener);
         infodocteuradmin.btnStatistiques.addActionListener(listener);
         infodocteuradmin.modifierButton.addActionListener(listener);
+        infodocteuradmin.annulerButton.addActionListener(listener);
+        infodocteuradmin.btnChargerImage.addActionListener(listener);
 
         conteneurPrincipal.add(infodocteuradminPanel, INFODOCTEURADMIN);
 

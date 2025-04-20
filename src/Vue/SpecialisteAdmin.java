@@ -19,6 +19,7 @@ public class SpecialisteAdmin extends JFrame {
     public JLabel nameLabel;
     public JLabel locationLabel;
     public JLabel availabilityLabel;
+    public JLabel imageLabel;
     public JLabel deconnexionLabel;
 
     public ArrayList<Specialiste> listeSpecialistes;
@@ -107,7 +108,7 @@ public class SpecialisteAdmin extends JFrame {
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
         mainPanel.add(searchPanel);
-        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(Box.createVerticalStrut(20)); // Réduire l'espace vertical ici
 
 
         // Nombre de résultats
@@ -130,7 +131,26 @@ public class SpecialisteAdmin extends JFrame {
             doctorPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
             doctorPanel.setBackground(new Color(221, 235, 247));
 
-            nameLabel = new JLabel(specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / ");
+            String path;
+
+            if (specialiste.getUtilisateurImage().isEmpty()){
+                path = "src/Images/pdp_defaut.png";
+            }else {
+                path = specialiste.getUtilisateurImage();
+            }
+
+            //Image du spécialiste
+            imageLabel = new JLabel();
+            ImageIcon icon;
+            Image img = new ImageIcon(path).getImage().getScaledInstance(42, 40, Image.SCALE_SMOOTH);
+            icon = new ImageIcon(img);
+
+            imageLabel.setIcon(icon);
+            imageLabel.setPreferredSize(new Dimension(42, 40));
+            doctorPanel.add(imageLabel,BorderLayout.WEST);
+
+            //Description du spécialiste
+            nameLabel = new JLabel(" Dr. " + specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / "+specialiste.getUtilisateurAdresse().getAdresseVille());
             nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
             nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
             doctorPanel.add(nameLabel, BorderLayout.WEST);

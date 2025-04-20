@@ -25,6 +25,7 @@ public class ModifierInfoDocteurAdmin extends JFrame {
     public JButton modifierButton;
     public JButton annulerButton;
     public JLabel erreurLabel;
+    public ImageIcon cheminImage;
 
     public Specialiste specialiste;
 
@@ -89,10 +90,19 @@ public class ModifierInfoDocteurAdmin extends JFrame {
 
 
         // Affichage image
-        //ImageIcon imageIcon = new ImageIcon("C:\\Users\\lucie\\OneDrive - Groupe INSEEC (POCE)\\Bureau\\ECE\\ECE3\\Paris\\Java\\RacletteFondue---Projet-ING3\\src\\Vue\\timothe.jpg");
-        ImageIcon imageIcon = new ImageIcon("");
-        Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        if (specialiste.getUtilisateurImage().isEmpty()){
+
+            cheminImage = new ImageIcon("src/Images/pdp_defaut.png");
+        }
+        else {
+            cheminImage = new ImageIcon(specialiste.getUtilisateurImage());
+        }
+
+        Image image = cheminImage.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         imageField = new JLabel(new ImageIcon(image));
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        formPanel.add(imageField, gbc);
 
         btnChargerImage = new JButton("Modifier votre photo");
         //btnChangerImage.setPreferredSize(new Dimension(200, 25)); // Augmenter la taille du bouton
@@ -101,18 +111,6 @@ public class ModifierInfoDocteurAdmin extends JFrame {
         btnChargerImage.setForeground(Color.WHITE);
         btnChargerImage.setFocusPainted(false);
 
-        btnChargerImage.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            int result = fileChooser.showOpenDialog(this);
-
-            if (result == JFileChooser.APPROVE_OPTION) {
-                java.io.File selectedFile = fileChooser.getSelectedFile();
-                ImageIcon newIcon = new ImageIcon(selectedFile.getAbsolutePath());
-                Image newImage = newIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                imageField.setIcon(new ImageIcon(newImage));
-            }
-        });
 
         JLabel imageLabel = new JLabel("Photo de profil :");
         imageLabel.setFont(labelFont);

@@ -480,7 +480,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             // Modification des informations de spécialiste
             if (utilisateur instanceof Specialiste) {
 
-                requete = String.format("UPDATE specialiste SET specialisteSpecialite = \"%s\",specialisteDescription = \"%s\",specialisteTarif)= \"%s\" WHERE specialisteId=\"%s\"",
+                requete = String.format("UPDATE specialiste SET specialisteSpecialite = \"%s\",specialisteDescription = \"%s\",specialisteTarif= \"%s\" WHERE specialisteId=\"%s\"",
                         ((Specialiste) utilisateur).getSpecialisteSpecialite(),
                         ((Specialiste) utilisateur).getSpecialisteDescription(),
                         ((Specialiste) utilisateur).getSpecialisteTarif(),
