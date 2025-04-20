@@ -80,29 +80,42 @@ public class InfoPatientAdmin extends JFrame {
 
         // Infos perso
         JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new GridLayout(6, 2, 20, 10));
-        infoPanel.setMaximumSize(new Dimension(600, 200));
+        infoPanel.setLayout(new GridBagLayout());
+        infoPanel.setMaximumSize(new Dimension(800, 300));
         infoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(7, 30, 7, 30); // marges internes
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         Font labelFont = new Font("Tahoma", Font.PLAIN, 20);
 
-        infoPanel.add(createInfoLabel("Nom :", labelFont));
-        infoPanel.add(createInfoLabel(patient.getUtilisateurNom(), labelFont));
+// Incrémenter gbc.gridy à chaque ligne
+        gbc.gridy = 0;
 
-        infoPanel.add(createInfoLabel("Prénom :", labelFont));
-        infoPanel.add(createInfoLabel(patient.getUtilisateurPrenom(), labelFont));
+        addInfoRow(infoPanel, gbc, "Nom :", patient.getUtilisateurNom(), labelFont);
+        addInfoRow(infoPanel, gbc, "Prénom :", patient.getUtilisateurPrenom(), labelFont);
+        addInfoRow(infoPanel, gbc, "Age :", String.valueOf(patient.getUtilisateurAge()), labelFont);
+        addInfoRow(infoPanel, gbc, "Téléphone :", patient.getUtilisateurTel(), labelFont);
+        addInfoRow(infoPanel, gbc, "Email :", patient.getUtilisateurMail(), labelFont);
 
-        infoPanel.add(createInfoLabel("Age :", labelFont));
-        infoPanel.add(createInfoLabel(String.valueOf(patient.getUtilisateurAge()), labelFont));
+        String adresseComplete = patient.getUtilisateurAdresse().getAdresseNumero() + " "
+                + patient.getUtilisateurAdresse().getAdresseRue() + ", "
+                + patient.getUtilisateurAdresse().getAdresseCodePostal() + " "
+                + patient.getUtilisateurAdresse().getAdresseVille();
+        addInfoRow(infoPanel, gbc, "Adresse :", adresseComplete, labelFont);
 
-        infoPanel.add(createInfoLabel("Téléphone :", labelFont));
-        infoPanel.add(createInfoLabel(patient.getUtilisateurTel(), labelFont));
+        mainPanel.add(Box.createVerticalStrut(40));
 
-        infoPanel.add(createInfoLabel("Email :", labelFont));
-        infoPanel.add(createInfoLabel(patient.getUtilisateurMail(), labelFont));
+        JPanel infoWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        infoWrapper.setOpaque(false); // pour garder le fond transparent si besoin
+        infoWrapper.add(infoPanel);
 
-        mainPanel.add(infoPanel);
+        mainPanel.add(infoWrapper);
+
         mainPanel.add(Box.createVerticalStrut(30));
+
 
         JPanel contentPanel = new JPanel(new GridLayout(1, 2, 30, 0));
         contentPanel.setMaximumSize(new Dimension(1300, 400));
@@ -197,11 +210,21 @@ public class InfoPatientAdmin extends JFrame {
         return panel;
     }
 
-    private JLabel createInfoLabel(String text, Font font) {
-        JLabel label = new JLabel(text);
+
+    private void addInfoRow(JPanel panel, GridBagConstraints gbc, String labelText, String valueText, Font font) {
+        gbc.gridx = 0;
+        JLabel label = new JLabel(labelText);
         label.setFont(font);
-        return label;
+        panel.add(label, gbc);
+
+        gbc.gridx = 1;
+        JLabel value = new JLabel(valueText);
+        value.setFont(font);
+        panel.add(value, gbc);
+
+        gbc.gridy++;
     }
+
 
 
     private ImageIcon loadProfileImage() {

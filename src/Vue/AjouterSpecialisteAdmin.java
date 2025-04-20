@@ -90,7 +90,7 @@ public class AjouterSpecialisteAdmin extends JFrame {
         // Panel principal avec GridBagLayout
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Augmenter les marges pour une meilleure lisibilité
+        gbc.insets = new Insets(10, 10, 10, 10); // bloc utilisé pour les retours à la ligne
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
 

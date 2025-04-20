@@ -78,7 +78,7 @@ public class StatistiqueAdmin extends JFrame {
         menuPanel.add(btnStatistiques);
 
         mainPanel.add(menuPanel);
-        mainPanel.add(Box.createVerticalStrut(0)); // Réduire l'espace vertical ici
+        mainPanel.add(Box.createVerticalStrut(30));
 
         // Ajoute les graphiques côte à côte
         JPanel chartPanel = new JPanel();
@@ -87,9 +87,6 @@ public class StatistiqueAdmin extends JFrame {
         chartPanel.add(createBarChartPanel());
 
         mainPanel.add(chartPanel);
-
-        // Add margins
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         return mainPanel;
     }
