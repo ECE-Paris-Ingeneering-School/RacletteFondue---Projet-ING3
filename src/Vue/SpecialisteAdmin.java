@@ -155,7 +155,7 @@ public class SpecialisteAdmin extends JFrame {
             nameLabel = new JLabel(" Dr. " + specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / " + specialiste.getUtilisateurAdresse().getAdresseVille());
             nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
             nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            doctorPanel.add(nameLabel, BorderLayout.WEST);
+            doctorPanel.add(nameLabel, BorderLayout.CENTER);
 
             availabilityLabel = new JLabel("Voir les dispos");
             availabilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
