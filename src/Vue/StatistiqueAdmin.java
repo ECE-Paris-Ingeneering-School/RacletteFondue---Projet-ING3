@@ -111,19 +111,22 @@ public class StatistiqueAdmin extends JFrame {
 
         int maxAbundance = 6 * nombreSpecialistes;
 
-        ArrayList<Integer> nombreRDV = new ArrayList<>();
+        ArrayList<Integer> nombreRDVdispo = new ArrayList<>();
 
         for (Long dateRDV : mapRDV.keySet()) {
+            int rdvPris = mapRDV.get(dateRDV);
+            int rdvDispo = maxAbundance - rdvPris;
 
-            dataset.addValue(mapRDV.get(dateRDV), "RDV", new java.text.SimpleDateFormat("dd/MM").format(new java.util.Date (dateRDV)));
+            nombreRDVdispo.add(rdvDispo);
 
-            nombreRDV.add(mapRDV.get(dateRDV));
+            dataset.addValue(rdvDispo, "Disponibilités", new java.text.SimpleDateFormat("dd/MM").format(new java.util.Date(dateRDV)));
         }
 
+
         JFreeChart chart = ChartFactory.createBarChart(
-                "Mesure de l'abondance du nombre de RDV sur la semaine",
+                "Nombre de places disponibles de la semaine",
                 "Jours de la semaine",
-                "Nombre de RDV",
+                "Nombre de RDV disponibles",
                 dataset,
                 PlotOrientation.VERTICAL,
                 true, true, false
@@ -131,7 +134,7 @@ public class StatistiqueAdmin extends JFrame {
 
         CategoryPlot plot = chart.getCategoryPlot();
 
-        BarRenderer renderer = new CustomBarRenderer(maxAbundance, nombreRDV);
+        BarRenderer renderer = new CustomBarRenderer(maxAbundance, nombreRDVdispo);
 
         plot.setRenderer(renderer);
 
@@ -167,13 +170,13 @@ public class StatistiqueAdmin extends JFrame {
             int value = rdv.get(column);
 
             if (value < maxAbundance / 3) {
-                return Color.GREEN;
+                return Color.RED;
 
             } else if (value < 2 * maxAbundance / 3) {
                 return Color.ORANGE;
 
             } else {
-                return Color.RED;
+                return Color.GREEN;
             }
         }
     }
