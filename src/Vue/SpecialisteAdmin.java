@@ -136,7 +136,8 @@ public class SpecialisteAdmin extends JFrame {
 
             if (specialiste.getUtilisateurImage().isEmpty()){
                 path = "src/Images/pdp_defaut.png";
-            }else {
+
+            } else {
                 path = specialiste.getUtilisateurImage();
             }
 
@@ -151,11 +152,10 @@ public class SpecialisteAdmin extends JFrame {
             doctorPanel.add(imageLabel,BorderLayout.WEST);
 
             //Description du spécialiste
-            nameLabel = new JLabel(" Dr. " + specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / "+specialiste.getUtilisateurAdresse().getAdresseVille());
+            nameLabel = new JLabel(" Dr. " + specialiste.getUtilisateurNom() + ", " + specialiste.getSpecialisteSpecialite() + " / " + specialiste.getUtilisateurAdresse().getAdresseVille());
             nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
             nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
             doctorPanel.add(nameLabel, BorderLayout.WEST);
-
 
             availabilityLabel = new JLabel("Voir les dispos");
             availabilityLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
