@@ -1,7 +1,6 @@
 package DAO;
 
 import Modele.RDV;
-import Modele.Utilisateur;
 
 import java.util.ArrayList;
 
@@ -13,7 +12,7 @@ public interface RdvDAO {
     /**
      * Méthode permettant de chercher tous les RDV d'un utilisateur
      * @param utilisateurId L'ID du patient ou du spécialiste dont on veut les RDV
-     * @return La listre de tous les RDV de l'utilisateur
+     * @return La liste de tous les RDV de l'utilisateur
      * **/
     public ArrayList<RDV> chercherRDV(int utilisateurId);
 

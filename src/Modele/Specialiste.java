@@ -23,6 +23,7 @@ public class Specialiste extends Utilisateur {
 
     /**
      * Getteur retournant la spécialité du spécialiste
+     * @return La spécialité du spécialiste
      */
     public String getSpecialisteSpecialite() {
         return specialisteSpecialite;
@@ -30,6 +31,7 @@ public class Specialiste extends Utilisateur {
 
     /**
      * Getteur retournant la description du spécialiste
+     * @return La description du spécialiste
      */
     public String getSpecialisteDescription() {
         return specialisteDescription;
@@ -37,6 +39,7 @@ public class Specialiste extends Utilisateur {
 
     /**
      * Getteur retournant le tarif du spécialiste
+     * @return Le tarif du spécialiste
      */
     public double getSpecialisteTarif() {
         return specialisteTarif;

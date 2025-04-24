@@ -1,7 +1,8 @@
 package Modele.Exceptions;
 
-import Modele.Adresse;
-
+/**
+ * Exception levée si le format de l'adresse saisie est incorrect
+ * **/
 public class AdresseException extends Exception {
 
     public AdresseException() {

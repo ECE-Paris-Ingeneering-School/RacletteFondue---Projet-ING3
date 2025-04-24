@@ -2,7 +2,7 @@ package Modele;
 
 
 /**
- * Classe Admins qui hérite de la classe Utilisateur
+ * Classe Admin qui hérite de la classe Utilisateur
  */
 public class Admin extends Utilisateur{
 

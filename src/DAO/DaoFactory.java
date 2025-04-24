@@ -8,6 +8,7 @@ import java.sql.*;
  * il n'y en a qu'un seul, UtilisateurDao, qui correspond à une table de la base).
  */
 public class DaoFactory {
+
     /**
      * Attributs private pour la connexion JDBC
      */
@@ -15,7 +16,6 @@ public class DaoFactory {
     private String username;
     private String password;
 
-    // constructeur
     public DaoFactory(String url, String username, String password) {
         this.url = url;
         this.username = username;
@@ -69,10 +69,10 @@ public class DaoFactory {
      * Récupération du Dao pour les RDV
      * @return : objet de la classe RDVDAOImpl
      */
-    /*public RdvDAO getRDVDAO() {
+    public RdvDAO getRDVDAO() {
         // Retourner un objet de RdvDAOImpl qui implémente RdvDAO
         return new RdvDAOImpl(this);
-    }*/
+    }
 
 
     /**

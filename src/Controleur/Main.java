@@ -4,6 +4,9 @@ import Vue.*;
 
 import javax.swing.*;
 
+/**
+ * Classe principale
+ * **/
 public class Main {
 
     public static void main(String[] args) {

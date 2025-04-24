@@ -5,14 +5,14 @@ package Modele;
  */
 public class Adresse {
 
-    /**Attributs de la classe adresse */
+    /**Attributs de la classe adresse **/
     private int adresseCodePostal;
     private String adresseVille;
     private String adresseRue;
     private String adresseNumero;
 
 
-    /**Constructeur de l'adresse avec paramètre */
+    /**Constructeur de l'adresse avec paramètre **/
     public Adresse(int padresseCodePostal, String padresseVille, String padresseRue, String padresseNumero){
 
         this.adresseCodePostal = padresseCodePostal;
@@ -27,6 +27,7 @@ public class Adresse {
 
     /**
      * Getteur retournant le code postal de l'adresse
+     * @return Le code postal de l'adresse
      */
     public int getAdresseCodePostal() {
         return adresseCodePostal;
@@ -34,6 +35,7 @@ public class Adresse {
 
     /**
      * Getteur retournant la ville de l'adresse
+     * @return La ville de l'adresse
      */
     public String getAdresseVille() {
         return adresseVille;
@@ -41,6 +43,7 @@ public class Adresse {
 
     /**
      * Getteur retournant la rue de l'adresse
+     * @return La rue de l'adresse
      */
     public String getAdresseRue() {
         return adresseRue;
@@ -48,6 +51,7 @@ public class Adresse {
 
     /**
      * Getteur retournant le numéro de l'adresse
+     * @return Le numero de l'adresse
      */
     public String getAdresseNumero() {
         return adresseNumero;

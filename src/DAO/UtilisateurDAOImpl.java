@@ -23,15 +23,18 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     public Utilisateur chercherUtilisateur(int id) {
 
         try {
-            // connexion
+
+            // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
 
+            // Création de plusieurs statements pour effectuer plusieurs requêtes
             Statement[] statements = new Statement[8];
             for (int i=0; i<statements.length; i++) {
 
                 statements[i] = connexion.createStatement();
             }
 
+            // Initialisation des variables
             int utilisateurId = 0;
             String utilisateurNom = null;
             String utilisateurPrenom = null;
@@ -50,11 +53,13 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             String adresseNumero = "0";
 
 
-            // récupération des produits de la base de données avec la requete SELECT
+            // Récupération de l'utilisateur grâce à son identifiant
             ResultSet resultats = statements[0].executeQuery("SELECT * FROM utilisateur WHERE utilisateur.utilisateurId=\'" + id + "\'");
 
+            // On parcourt les résultats de la requête
             while (resultats.next()) {
 
+                // On récupère les données de l'utilisateur
                 utilisateurId = resultats.getInt("utilisateurId");
                 utilisateurNom = resultats.getString("utilisateurNom");
                 utilisateurPrenom = resultats.getString("utilisateurPrenom");
@@ -106,10 +111,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
             int typeUtilisateur = 0;
 
+            // On détermine alors le type de compte en question
             for (int i = 0; i < confirmations.length; i++) {
                 typeUtilisateur = confirmations[i] > confirmations[typeUtilisateur] ? i : typeUtilisateur;
             }
 
+            // On crée l'objet correspondant au type d'utilisateur déterminé précédemment
             switch (typeUtilisateur) {
 
                 // L'utilisateur est un patient
@@ -153,29 +160,31 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
         }
 
+        // On ne retourne rien si la méthode a rencontré un problème lors de son exécution
         return null;
     }
 
     public ArrayList<Utilisateur> getAllUtilisateur() {
 
+        // Initialisation des variables
         ArrayList<Utilisateur> utilisateursListe = new ArrayList<>();
         ArrayList<Utilisateur> patientListe = new ArrayList<>();
         ArrayList<Utilisateur> specialisteListe = new ArrayList<>();
 
         try {
 
-            // Connexion
+            // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
-            // Requete pour récupérer l'index max
+            // Requete pour récupérer l'identifiant du dernier utilisateur inscrit
             String requete = "SELECT MAX(utilisateurId) FROM utilisateur";
             ResultSet resultat = statement.executeQuery(requete);
             resultat.next();
 
             int indexMax = resultat.getInt(1);
 
-            // Parcours des utilisateurs dans la table Utilisateurs
+            // Parcours des utilisateurs dans la table Utilisateurs et tri des utilisateurs en fonction de leur type
             for (int i = 1; i < indexMax+1; i++) {
 
                 if (chercherUtilisateur(i).getUtilisateurId() != 0) {
@@ -197,6 +206,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                 }
             }
 
+            // Formation de la liste complète d'utilisateurs, contenant d'abord les Admin, puis les Spécialites et enfin les Patients
             utilisateursListe.addAll(specialisteListe);
             utilisateursListe.addAll(patientListe);
 
@@ -206,11 +216,13 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             System.out.println("Recherche des utilisateurs impossible");
         }
 
+        // On retourne la liste d'utilisateurs formée
         return utilisateursListe;
     }
 
     public ArrayList<Specialiste> rechercheSpecialiste(String motRecherche){
 
+        // Initialisation des variables
         ArrayList<Specialiste> listeSpecialisteRecherches = new ArrayList<>();
         int[] pertinence = new int[3];
         int maxIteration = 0;
@@ -241,8 +253,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
         try {
 
-            // Connexion
+            // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
+
+            // Création des statements pour effectuer plusieurs requêtes
             Statement[] statements = new Statement[4];
             for (int i=0; i<statements.length; i++) {
 
@@ -264,7 +278,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             pertinence[2] = resultat.getInt(1);
 
 
-            //On sélectionne l'element le plus pertinent
+            // On sélectionne l'element le plus pertinent
             for (int i = 0; i < pertinence.length; i++) {
                 if (pertinence[i] > maxIteration) {
                     maxIteration = pertinence[i];
@@ -272,7 +286,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                 }
             }
 
-            //On trie les spécialistes en fonction de l'element le plus pertinent
+            // On trie les spécialistes en fonction de l'element le plus pertinent
             if (indexMaxIteration == 0) {
 
                 resultat = statements[3].executeQuery("SELECT * FROM adresse, utilisateur, specialiste WHERE utilisateur.utilisateurId = specialiste.specialisteId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (specialiste.specialisteSpecialite = \""+ motRecherche +"\") DESC, specialiste.specialisteSpecialite ASC;");
@@ -287,7 +301,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
             }
 
-
+            // On parcourt les résultats de la requête
             while (resultat.next()) {
 
                 utilisateurId = resultat.getInt("utilisateurId");
@@ -314,12 +328,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
                 specialisteTrouve = new Specialiste(utilisateurId,utilisateurNom,utilisateurPrenom,utilisateurAge,specialisteAdresse,utilisateurSexe,utilisateurMail,utilisateurPassword,utilisateurTelephone,utilisateurImage,specialiteSpecialite,specialisteDescription,specialisteTarif);
 
+                // On ajoute le spécialiste à la liste des spécialistes trouvés
                 listeSpecialisteRecherches.add(specialisteTrouve);
 
-
             }
-
-
 
         } catch (SQLException e) {
 
@@ -327,13 +339,13 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             System.out.println("Recherche des spécialistes impossible");
         }
 
-
-
+        // On retourne la liste des spécialistes trouvés
         return listeSpecialisteRecherches;
     }
 
     public ArrayList<Patient> recherchePatient(String motRecherche) {
 
+        // Initialisation des variables
         ArrayList<Patient> listePatientRecherches = new ArrayList<>();
         int[] pertinence = new int[3];
         int maxIteration = 0;
@@ -360,8 +372,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
         try {
 
-            // Connexion
+            // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
+
+            // Création des statements pour exécuter plusieurs requêtes
             Statement[] statements = new Statement[3];
 
             for (int i=0; i<statements.length; i++) {
@@ -380,7 +394,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             pertinence[1] = resultat.getInt(1);
 
 
-            //On sélectionne l'element le plus pertinent
+            // On sélectionne l'element le plus pertinent
             for (int i = 0; i < pertinence.length; i++) {
                 if (pertinence[i] > maxIteration) {
                     maxIteration = pertinence[i];
@@ -388,8 +402,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                 }
             }
 
-            //On trie les spécialistes en fonction de l'element le plus pertinent
-           if (indexMaxIteration == 0) {
+            // On trie les patients en fonction de l'element le plus pertinent
+            if (indexMaxIteration == 0) {
 
                 resultat = statements[2].executeQuery("SELECT * FROM adresse, utilisateur, patient WHERE utilisateur.utilisateurId = patient.patientId AND utilisateur.utilisateurId = adresse.adresseId ORDER BY (utilisateur.utilisateurNom = \""+ motRecherche +"\") DESC, utilisateur.utilisateurNom ASC;");
 
@@ -399,7 +413,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
             }
 
-
+            // On parcourt les résultats de la requête
             while (resultat.next()) {
 
                 utilisateurId = resultat.getInt("utilisateurId");
@@ -422,6 +436,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
                 patientTrouve = new Patient(utilisateurId,utilisateurNom,utilisateurPrenom,utilisateurAge,specialisteAdresse,utilisateurSexe,utilisateurMail,utilisateurPassword,utilisateurTelephone,utilisateurImage);
 
+                // On ajoute le patient à la liste des patients trouvés
                 listePatientRecherches.add(patientTrouve);
             }
 
@@ -433,13 +448,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             System.out.println("Recherche des spécialistes impossible");
         }
 
-
-
+        // On renvoie la liste des patients trouvés
         return listePatientRecherches;
     }
 
     public void ajouterUtilisateur(Utilisateur utilisateur) throws EmailExistantException {
-
 
         try {
 
@@ -449,7 +462,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
             ResultSet resultat;
 
-            if (utilisateur instanceof Patient){
+            // On vérifie s'il n'existe pas déjà un patient ayant l'adresse email de l'utilisateur à ajouter
+            if (utilisateur instanceof Patient) {
+
                 resultat = statement.executeQuery("SELECT count(*) FROM utilisateur WHERE utilisateurMail=\"" + utilisateur.getUtilisateurMail() + "\"");
                 resultat.next();
 
@@ -459,7 +474,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                 }
             }
 
-            // Requete SQL
+            // Requete SQL permettant d'ajouter l'utilisateur à la BDD
             String requete = String.format("INSERT INTO utilisateur(utilisateurNom,utilisateurPrenom,utilisateurAge,utilisateurSexe,utilisateurMail,utilisateurPassword,utilisateurTel,utilisateurImage) VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\")",
                     utilisateur.getUtilisateurNom(),
                     utilisateur.getUtilisateurPrenom(),
@@ -475,12 +490,14 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             PreparedStatement preparedStatement = connexion.prepareStatement(requete);
             preparedStatement.executeUpdate();
 
+            // On récupère l'identifiant de l'utilisateur nouvellement ajouté
             String requete2 = "SELECT MAX(utilisateurId) FROM utilisateur";
             resultat = statement.executeQuery(requete2);
             resultat.next();
 
             int utilisateurId = resultat.getInt(1);
 
+            // On ajoute son identificant ou ses autres informations aux tables de la BDD appropriées en fonction du type d'utilisateur
             if (utilisateur instanceof Patient) {
 
                 requete = "INSERT INTO patient(patientId) VALUES ("+ utilisateurId + ")";
@@ -516,15 +533,15 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         }
     }
 
-    public void supprimerUtilisateur(Utilisateur utilisateur){
+    public void supprimerUtilisateur(Utilisateur utilisateur) {
+
         try {
 
-            // Connexion
+            // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
-
-            // Suppression des Rdv
+            // Suppression des RDV de l'utilisateur à supprimer
             statement.executeUpdate("DELETE FROM rdv WHERE rdvPatient=" + utilisateur.getUtilisateurId()+" OR rdvSpecialiste=" + utilisateur.getUtilisateurId());
 
             // Suppression du type d'utilisateur
@@ -602,7 +619,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                 preparedStatement  = connexion.prepareStatement(requete);
                 preparedStatement.executeUpdate();
 
-
             }
 
 
@@ -612,6 +628,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             System.out.println("Impossible de modifier l'utilisateur dans la base de données");
         }
 
+        // On renvoie l'utilisateur modifié
         return utilisateur;
 
     }
@@ -624,7 +641,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
-            // Modification des informations principales
+            // Requête de connexion
             String requete = String.format("SELECT utilisateurId FROM utilisateur WHERE utilisateurMail=\"%s\" AND utilisateurPassword=\"%s\"",
                     mail,
                     mdp
@@ -632,6 +649,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
             ResultSet resultat = statement.executeQuery(requete);
 
+            // Si la requête est positive on renvoie l'identifiant de l'utilisateur connecté, sinon lève une exception
             if (resultat.next()) {
 
                 return resultat.getInt(1);
@@ -647,9 +665,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             System.out.println("Mot de passe incorrect ou utilisateur inexistant");
         }
 
+        // Si l'utilisateur n'existe pas, on renvoie 0
         return 0;
     }
 
+    // Méthode statique main à vocation de tests
     public static void main(String[] args) {
 
         DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");

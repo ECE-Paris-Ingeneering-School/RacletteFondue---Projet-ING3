@@ -171,6 +171,9 @@ public class FenetrePrincipale {
 
     }
 
+    /**
+     * Méthode permettant de mettre à jour la page de recherche avec les résultats récupérés dans la BDD
+     * **/
     public void updateRecherche(ArrayList<Specialiste> listeSpecialistes) {
 
         recherche.resultatRecherche = listeSpecialistes;
@@ -201,7 +204,9 @@ public class FenetrePrincipale {
         recherche.revalidate();
         recherche.repaint();
     }
-
+    /**
+     * Méthode permettant de mettre à jour la page de RDV avec les résultats récupérés dans la BDD
+     * **/
     public void updateRendezvous(ArrayList<RDV> listeRDV) {
 
         rendezvous.listeRDV = listeRDV;
@@ -224,6 +229,9 @@ public class FenetrePrincipale {
         rendezvous.repaint();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la page d'informations de spécialiste avec les informations récupérées dans la BDD
+     * **/
     public void updateInfoDocteur(Specialiste specialiste) {
 
         info.specialiste = specialiste;
@@ -243,6 +251,9 @@ public class FenetrePrincipale {
         info.repaint();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la page de compte avec les informations récupérées dans la BDD
+     * **/
     public void updateCompte() {
 
         compte.utilisateur = utilisateurActuel;
@@ -261,7 +272,10 @@ public class FenetrePrincipale {
         compte.repaint();
     }
 
-    public void updateDispoRDV(Utilisateur utilisateurActuel,Specialiste specialiste, ArrayList<RDV> listeRDV) {
+    /**
+     * Méthode permettant de mettre à jour la page de disponibilités de RDV avec les informations récupérées dans la BDD
+     * **/
+    public void updateDispoRDV(Utilisateur utilisateurActuel, Specialiste specialiste, ArrayList<RDV> listeRDV) {
 
         dispordv.specialiste = specialiste;
         dispordv.listeRDV = listeRDV;
@@ -280,6 +294,9 @@ public class FenetrePrincipale {
         dispordv.repaint();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la page de confirmation de RDV avec les informations récupérés dans les pages précédentes
+     * **/
     public void updateConfirmationRDV(Specialiste specialiste, Utilisateur utilisateur, long date) {
 
         confrdv.specialiste = specialiste;
@@ -295,6 +312,9 @@ public class FenetrePrincipale {
         confrdv.repaint();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la page de recherche de spécialistes avec les résultats récupérés dans la BDD
+     * **/
     public void updateSpecialistesAdmin(ArrayList<Specialiste> listeSpecialistes) {
 
         speAdmin.listeSpecialistes = listeSpecialistes;
@@ -308,8 +328,6 @@ public class FenetrePrincipale {
         speAdmin.searchField.addMouseListener(listener);
         speAdmin.deconnexionLabel.addMouseListener(listener);
         speAdmin.addSpecialistLabel.addMouseListener(listener);
-
-
 
         for (JLabel nameLabel : speAdmin.mapSpecialistesInfo.keySet()) {
 
@@ -327,6 +345,9 @@ public class FenetrePrincipale {
         speAdmin.repaint();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la page d'informations de docteur avec les résultats récupérés dans la BDD
+     * **/
     public void updateInfoDocteurAdmin(Specialiste specialiste) {
 
         infoDocteurAdmin.specialiste = specialiste;
@@ -350,6 +371,9 @@ public class FenetrePrincipale {
         infoDocteurAdmin.repaint();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la page de statistiques avec les résultats récupérés dans la BDD
+     * **/
     public void updateStatsAdmin(int nombrePatients, int nombreSpecialistes, TreeMap<Long, Integer> mapRDV) {
 
         statsAdmin.nombrePatients = nombrePatients;
@@ -368,6 +392,9 @@ public class FenetrePrincipale {
         statsAdmin.repaint();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la page listant les patients avec les résultats récupérés dans la BDD
+     * **/
     public void updateDossierPatientsAdmin(ArrayList<Patient> listePatients) {
 
         dossiersPatientsAdmin.listePatients = listePatients;
@@ -391,6 +418,9 @@ public class FenetrePrincipale {
         dossiersPatientsAdmin.repaint();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la page d'informations de patient avec les informations récupérées dans la BDD
+     * **/
     public void updateInfoPatientAdmin(Patient patient, ArrayList<RDV> listeRDV) {
 
         infoPatientAdmin.patient = patient;

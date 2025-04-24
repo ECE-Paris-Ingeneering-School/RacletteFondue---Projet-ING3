@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * implémentation MySQL du stockage dans la base de données des méthodes définies dans l'interface RDVDao.
+ * Implémentation de l'interface RdvDAO
  */
 public class RdvDAOImpl implements RdvDAO {
 
@@ -24,35 +24,36 @@ public class RdvDAOImpl implements RdvDAO {
 
     public ArrayList<RDV> chercherRDV(int utilisateurId ) {
 
+        // Initialisation des variables
         int rechercheUtilisateurId = 0;
         int rechercheSpecialisteId = 0;
         long rechercheRdvDate = 0;
 
         ArrayList<RDV> rdvliste = new ArrayList<>();
 
-
         try {
-            // connexion
+            // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
 
-
+            // Création des statements permettant d'effectuer plusieurs requêtes imbriquées
             Statement[] statements = new Statement[4];
             for (int i=0; i<statements.length; i++) {
 
                 statements[i] = connexion.createStatement();
             }
 
-            // On récupère le type de compte qui correspond à l'id passé en paramètre
+            // On récupère le type de compte qui correspond à l'id passé en paramètre (Patient ou Spécialiste)
             int[] confirmations = new int[2];
 
             ResultSet resultatConfirmations;
 
+            // On cherche si le compte en question est un Patient
             resultatConfirmations = statements[0].executeQuery("SELECT count(*) FROM patient WHERE patientId = " + utilisateurId);
             resultatConfirmations.next();
 
             confirmations[0] = resultatConfirmations.getInt(1);
 
-
+            // On cherche si le compte en question est un Spécialiste
             resultatConfirmations = statements[1].executeQuery("SELECT count(*) FROM specialiste WHERE specialisteId = " + utilisateurId);
             resultatConfirmations.next();
 
@@ -60,12 +61,14 @@ public class RdvDAOImpl implements RdvDAO {
 
             int typeUtilisateur = 0;
 
+            // On détermine alors le type d'utilisateur (Patient ou Spécialiste)
             for (int i = 0; i < confirmations.length; i++) {
                 typeUtilisateur = confirmations[i] > confirmations[typeUtilisateur] ? i : typeUtilisateur;
             }
 
             ResultSet resultRecherche = null;
 
+            // On cherche la liste de RDV en fonction du type de compte
             if (typeUtilisateur == 0) {
 
                 resultRecherche = statements[2].executeQuery("SELECT * FROM rdv WHERE rdvPatient = \'"+ utilisateurId + "\' ORDER BY rdvDate ASC");
@@ -76,7 +79,7 @@ public class RdvDAOImpl implements RdvDAO {
 
             }
 
-
+            // On récupère chaque RDV que l'on ajoute dans la liste de RDV
             while (resultRecherche.next()) {
 
                 rechercheSpecialisteId = resultRecherche.getInt("rdvSpecialiste");
@@ -93,27 +96,28 @@ public class RdvDAOImpl implements RdvDAO {
             e.printStackTrace();
             System.out.println("Recherche des RDV de l'utilisateur impossible");
 
-            }
+        }
 
-
+        // On retourne la liste de RDV
         return rdvliste;
     }
 
-    public void ajouterRDV(RDV rdv){
+    public void ajouterRDV(RDV rdv) {
+
         try {
 
             // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
-            // Requete SQL
+            // Requete SQL permettant d'ajouter le rdv passé en paramètre dans la BDD
             String requete = String.format("INSERT INTO rdv(rdvSpecialiste, rdvPatient, rdvDate) VALUES (\"%s\", \"%s\", \"%s\")",
                     rdv.getSpecialiste().getUtilisateurId(),
                     rdv.getUtilisateur().getUtilisateurId(),
                     rdv.getDate()
             );
 
-
+            // Exécution de la requête
             PreparedStatement preparedStatement = connexion.prepareStatement(requete);
             preparedStatement.executeUpdate();
 
@@ -125,14 +129,15 @@ public class RdvDAOImpl implements RdvDAO {
         }
     }
 
-    public void supprimerRDV(RDV rdv){
+    public void supprimerRDV(RDV rdv) {
+
         try {
 
-            // Connexion
+            // Connexion à la BDD
             Connection connexion = daoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
-            // Suppression du rdv
+            // Requête de suppression du RDV passé en paramètre
             statement.executeUpdate("DELETE FROM rdv WHERE rdv.rdvSpecialiste  = \""+rdv.getSpecialiste().getUtilisateurId() +"\" AND rdv.rdvPatient = \""+rdv.getUtilisateur().getUtilisateurId()+"\"AND rdv.rdvDate = " + rdv.getDate());
 
         } catch (SQLException e) {
@@ -142,6 +147,7 @@ public class RdvDAOImpl implements RdvDAO {
         }
     }
 
+    // Méthode statique main à vocation de tests
     public static void main(String[] args) {
 
         /*DaoFactory dao = DaoFactory.getInstance("projetjava", "root", "");
