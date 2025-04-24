@@ -2,6 +2,7 @@ package Vue;
 
 import Modele.Patient;
 import Modele.RDV;
+import Modele.Specialiste;
 
 import javax.swing.*;
 import java.awt.*;
@@ -171,7 +172,7 @@ public class InfoPatientAdmin extends JFrame {
         panel.setMaximumSize(new Dimension(550, 100));
 
         JLabel imageLabel = new JLabel();
-        imageLabel.setIcon(loadProfileImage());
+        imageLabel.setIcon(loadProfileImage(rdv.getSpecialiste()));
         imageLabel.setPreferredSize(new Dimension(64, 64));
         panel.add(imageLabel, BorderLayout.WEST);
 
@@ -204,24 +205,35 @@ public class InfoPatientAdmin extends JFrame {
     }
 
 
-    private ImageIcon loadProfileImage() {
-        String path = "Images/pdp_defaut.png";
-
-        try {
-            Image img = new ImageIcon(path).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
-            return new ImageIcon(img);
-        } catch (Exception e) {
-            Image img = new ImageIcon("Images/pdp_defaut.png").getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
-            return new ImageIcon(img);
-        }
-    }
-
 
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
         button.setBackground(new Color(221, 235, 247));
         button.setFocusPainted(false);
+    }
+
+    private ImageIcon loadProfileImage(Specialiste specialiste) {
+
+        String path;
+
+        if (specialiste.getUtilisateurImage().isEmpty()){
+            path = "src/Images/pdp_defaut.png";
+        }else {
+            path = specialiste.getUtilisateurImage();
+        }
+
+        ImageIcon icon;
+        try {
+            Image img = new ImageIcon(path).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+            icon = new ImageIcon(img);
+        } catch (Exception e) {
+            // Image par défaut si erreur
+            Image img = new ImageIcon("Images/pdp_defaut.png").getImage().getScaledInstance(64, 84, Image.SCALE_SMOOTH);
+            icon = new ImageIcon(img);
+        }
+
+        return icon;
     }
 
     public static void main(String[] args) {
