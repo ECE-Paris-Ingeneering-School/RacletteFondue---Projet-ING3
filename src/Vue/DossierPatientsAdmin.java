@@ -7,6 +7,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/**
+ * La classe DossierPatientAdmin représente la page où l'admin peut voir
+ * la liste des patient inscrits sur le site et procéder par recherche.
+ */
 public class DossierPatientsAdmin extends JFrame{
 
     public JButton btnSpecialiste;
@@ -21,6 +26,11 @@ public class DossierPatientsAdmin extends JFrame{
     public ArrayList<Patient> listePatients;
     public HashMap<JLabel, Patient> mapPatients;
 
+
+    /**
+     * Constructeur de la classe DossierPatientsAdmin.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public DossierPatientsAdmin() {
 
         mapPatients = new HashMap<>();
@@ -33,6 +43,12 @@ public class DossierPatientsAdmin extends JFrame{
         setContentPane(buildPanel());
     }
 
+
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant la liste des patients déjà inscrits et la barre de recherche.
+     */
     public JPanel buildPanel() {
 
         // Panel principal
@@ -74,7 +90,7 @@ public class DossierPatientsAdmin extends JFrame{
         menuPanel.add(btnStatistiques);
 
         mainPanel.add(menuPanel);
-        mainPanel.add(Box.createVerticalStrut(10)); // Réduire l'espace vertical ici
+        mainPanel.add(Box.createVerticalStrut(10));
 
         // Barre de recherche
         JPanel searchPanel = new JPanel();
@@ -150,6 +166,11 @@ public class DossierPatientsAdmin extends JFrame{
         return mainPanel;
     }
 
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -157,6 +178,12 @@ public class DossierPatientsAdmin extends JFrame{
         button.setFocusPainted(false);
     }
 
+    /**
+     * Ajoute un texte de substitution (placeholder) à un champ de texte.
+     *
+     * @param textField   Le champ de texte auquel ajouter le placeholder.
+     * @param placeholder Le texte du placeholder.
+     */
     private void addPlaceholder(JTextField textField, String placeholder) {
         textField.setForeground(Color.GRAY);
         textField.setText(placeholder);
@@ -177,13 +204,6 @@ public class DossierPatientsAdmin extends JFrame{
                     textField.setText(placeholder);
                 }
             }
-        });
-    }
-
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(() -> {
-            new DossierPatientsAdmin().setVisible(true);
         });
     }
 

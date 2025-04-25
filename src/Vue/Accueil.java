@@ -3,6 +3,11 @@ package Vue;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * La classe Accueil représente la fenêtre sur laquelle l'utilisateur arrive après sa connexion.
+ * Elle hérite de JFrame et configure l'interface utilisateur avec divers composants Swing.
+ */
 public class Accueil extends JFrame {
 
     public JButton btnAccueil;
@@ -13,6 +18,10 @@ public class Accueil extends JFrame {
     public JLabel deconnexionLabel;
 
 
+    /**
+     * Constructeur de la classe Accueil.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public Accueil() {
         setTitle("Accueil");
         setSize(1920, 1080);
@@ -24,6 +33,11 @@ public class Accueil extends JFrame {
     }
 
 
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant tous les composants de l'interface.
+     */
     public JPanel buildPanel() {
 
         // Panel principal
@@ -123,6 +137,11 @@ public class Accueil extends JFrame {
         return mainPanel;
     }
 
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -130,6 +149,12 @@ public class Accueil extends JFrame {
         button.setFocusPainted(false);
     }
 
+    /**
+     * Ajoute un texte de substitution (placeholder) à un champ de texte.
+     *
+     * @param textField   Le champ de texte auquel ajouter le placeholder.
+     * @param placeholder Le texte du placeholder.
+     */
     private void addPlaceholder(JTextField textField, String placeholder) {
         textField.setForeground(Color.GRAY);
         textField.setText(placeholder);
@@ -150,12 +175,6 @@ public class Accueil extends JFrame {
                     textField.setText(placeholder);
                 }
             }
-        });
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new Accueil().setVisible(true);
         });
     }
 }

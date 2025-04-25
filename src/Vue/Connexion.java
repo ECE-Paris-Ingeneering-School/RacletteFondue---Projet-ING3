@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+/**
+ * La classe Connexion représente la page où l'utilisateur (patient ou admin) peut se connecter au site.
+ */
 public class Connexion extends JFrame {
 
     public JTextField mailField;
@@ -13,6 +17,11 @@ public class Connexion extends JFrame {
     public JLabel createAccountLabel;
     public JLabel erreurLabel;
 
+
+    /**
+     * Constructeur de la classe Connexion.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public Connexion() {
 
         setTitle("Connexion");
@@ -23,6 +32,12 @@ public class Connexion extends JFrame {
         setContentPane(buildPanel());
     }
 
+
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant les champs login et mdp.
+     */
     public JPanel buildPanel() {
 
         // Titre "Connexion"
@@ -116,9 +131,5 @@ public class Connexion extends JFrame {
         return panelGeneral;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new Connexion().setVisible(true);
-        });
-    }
+
 }

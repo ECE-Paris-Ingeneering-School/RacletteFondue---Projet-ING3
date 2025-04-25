@@ -8,6 +8,11 @@ import org.jfree.chart.LegendItem;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * La classe AjouterSpecialisteAdmin représente une fenêtre permettant à un administrateur
+ * d'ajouter un spécialiste. Un formulaire avec les caractéristiques du spécialiste est à remplir.
+ */
 public class AjouterSpecialisteAdmin extends JFrame {
 
     public JButton btnSpecialiste;
@@ -33,19 +38,24 @@ public class AjouterSpecialisteAdmin extends JFrame {
     public Specialiste specialiste;
 
 
+    /**
+     * Constructeur de la classe AjouterSpecialisteAdmin.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public AjouterSpecialisteAdmin() {
         setTitle("Ajouter Specialiste");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1920, 1080);
         setLocationRelativeTo(null);
 
-        //Adresse adresse1 = new Adresse(75015, "", "",  "");
-        //specialiste = new Specialiste(1, "","", 54, adresse1, 'H', "", "", "", "", "", "", 40);
-
-
         setContentPane(buildPanel());
     }
 
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant le formulaire spécialiste de l'interface.
+     */
     public JPanel buildPanel() {
 
         JPanel mainPanel = new JPanel();
@@ -234,6 +244,12 @@ public class AjouterSpecialisteAdmin extends JFrame {
         return panelGeneral;
     }
 
+    /**
+     * Ajoute un texte de substitution (placeholder) à un champ de texte.
+     *
+     * @param textField   Le champ de texte auquel ajouter le placeholder.
+     * @param placeholder Le texte du placeholder.
+     */
     private void addPlaceholder(JTextField textField, String placeholder) {
         textField.setForeground(Color.GRAY);
         textField.setText(placeholder);
@@ -258,6 +274,11 @@ public class AjouterSpecialisteAdmin extends JFrame {
     }
 
 
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -265,13 +286,4 @@ public class AjouterSpecialisteAdmin extends JFrame {
         button.setFocusPainted(false);
     }
 
-    public static void main(String[] args) {
-
-
-
-        SwingUtilities.invokeLater(() -> {
-
-            new AjouterSpecialisteAdmin().setVisible(true);
-        });
-    }
 }

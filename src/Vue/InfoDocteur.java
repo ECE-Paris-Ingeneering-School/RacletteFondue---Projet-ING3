@@ -5,6 +5,11 @@ import Modele.Specialiste;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * La classe InfoDocteur représente la page où le patient peut voir
+ * les informations du spécialiste.
+ */
 public class InfoDocteur extends JFrame {
 
     public JLabel titleLabel;
@@ -24,6 +29,11 @@ public class InfoDocteur extends JFrame {
     public JLabel imageField;
     public Specialiste specialiste;
 
+
+    /**
+     * Constructeur de la classe InfoDocteur.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public InfoDocteur() {
         setTitle("Information spécialiste");
         setSize(1920, 1080);
@@ -33,6 +43,11 @@ public class InfoDocteur extends JFrame {
         setContentPane(buildPanel());
     }
 
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant les informations du spécialiste.
+     */
     public JPanel buildPanel() {
 
         // Panel principal
@@ -208,6 +223,11 @@ public class InfoDocteur extends JFrame {
     }
 
 
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -215,10 +235,5 @@ public class InfoDocteur extends JFrame {
         button.setFocusPainted(false);
     }
 
-    public static void main(String[] args) {
 
-        SwingUtilities.invokeLater(() -> {
-            new InfoDocteur().setVisible(true);
-        });
-    }
 }

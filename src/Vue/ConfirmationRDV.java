@@ -6,6 +6,12 @@ import Modele.Utilisateur;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * La classe ConfirmationRDV représente la page où le patient
+ * a le récapitulatif des informations de son RDV sélectionné avant de confirmer.
+ * Classe héritant de JDialog.
+ */
 public class ConfirmationRDV extends JDialog {
 
     public JButton confirmerButton;
@@ -15,6 +21,11 @@ public class ConfirmationRDV extends JDialog {
     public Utilisateur utilisateur;
     public long date;
 
+
+    /**
+     * Constructeur de la classe ConfirmationRDV.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public ConfirmationRDV() {
         setTitle("Confirmation");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -24,6 +35,11 @@ public class ConfirmationRDV extends JDialog {
         setContentPane(buildPanel());
     }
 
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant le récapitulatif des informations du RDV sélectionné.
+     */
     public JPanel buildPanel() {
 
         JPanel panelGeneral = new JPanel();
@@ -90,9 +106,4 @@ public class ConfirmationRDV extends JDialog {
         return panelGeneral;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new ConfirmationRDV().setVisible(true);
-        });
-    }
 }

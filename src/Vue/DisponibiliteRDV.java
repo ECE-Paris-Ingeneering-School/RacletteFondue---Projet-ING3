@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * La classe DisoonibiliteRDV représente la page où le patinet peut voir
+ * le tableau des disponibilités du spécialiste choisi.
+ * La classe DisoonibiliteRDV hérite de JDialog.
+ */
 public class DisponibiliteRDV extends JDialog {
 
     public JButton buttonCreneau;
@@ -20,6 +26,11 @@ public class DisponibiliteRDV extends JDialog {
     public ArrayList<RDV> listeRDV = null;
     public Map<JButton, Long> mapCreneaux = null;
 
+
+    /**
+     * Constructeur de la classe DisponibiliteRDV.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public DisponibiliteRDV() {
 
         mapCreneaux = new HashMap<JButton, Long>();
@@ -36,14 +47,14 @@ public class DisponibiliteRDV extends JDialog {
         setContentPane(buildPanel());
     }
 
+
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant le tableau des disponibilités du spécialiste.
+     */
     public JPanel buildPanel() {
 
-        // Titre "Disponibilité"
-        /*JLabel titleLabel = new JLabel("Disponibilité");
-        titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
-        titleLabel.setForeground(new Color(45, 104, 196));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(titleLabel, BorderLayout.NORTH);*/
 
         // Panel principal avec GridBagLayout
         JPanel tablePanel = new JPanel(new GridLayout(7, 7));
@@ -170,15 +181,8 @@ public class DisponibiliteRDV extends JDialog {
             timeStamp = timeStamp + 7200000;
         }
 
-        //JPanel panelGeneral = new JPanel();
-        //panelGeneral.add(tablePanel, BorderLayout.CENTER);
 
         return tablePanel;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new DisponibiliteRDV().setVisible(true);
-        });
-    }
 }

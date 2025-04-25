@@ -5,7 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 
 
-
+/**
+ * La classe Compte représente la page où le patinet a accès à ses
+ * informations et peut les modifier.
+ */
 public class Compte extends JFrame {
 
     public JButton btnAccueil;
@@ -32,6 +35,10 @@ public class Compte extends JFrame {
     public Utilisateur utilisateur;
 
 
+    /**
+     * Constructeur de la classe Compte.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public Compte() {
         setTitle("Informations du compte");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,6 +49,11 @@ public class Compte extends JFrame {
     }
 
 
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant les informations du patient.
+     */
     public JPanel buildPanel() {
 
         JPanel mainPanel = new JPanel();
@@ -265,6 +277,11 @@ public class Compte extends JFrame {
         return panelGeneral;
     }
 
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -272,9 +289,4 @@ public class Compte extends JFrame {
         button.setFocusPainted(false);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new Compte().setVisible(true);
-        });
-    }
 }

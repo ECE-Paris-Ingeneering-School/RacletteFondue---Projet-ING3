@@ -10,6 +10,11 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
+/**
+ * La classe InfoPatientAdmin représente la page où l'admin peut voir
+ * les informations du patient.
+ */
 public class InfoPatientAdmin extends JFrame {
 
     public JButton btnSpecialiste;
@@ -19,6 +24,11 @@ public class InfoPatientAdmin extends JFrame {
     public Patient patient;
     public ArrayList<RDV> listeRDV;
 
+
+    /**
+     * Constructeur de la classe InfoPatientAdmin.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public InfoPatientAdmin() {
 
         setTitle("Informations Patient");
@@ -29,6 +39,12 @@ public class InfoPatientAdmin extends JFrame {
         setContentPane(buildPanel());
     }
 
+
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant les informations du patient.
+     */
     public JPanel buildPanel() {
 
         JPanel mainPanel = new JPanel();
@@ -55,10 +71,12 @@ public class InfoPatientAdmin extends JFrame {
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 42));
         titleLabel.setForeground(new Color(45, 104, 196));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(titleLabel);
         mainPanel.add(Box.createVerticalStrut(20));
 
+        // Menu boutons
         JPanel menuPanel = new JPanel();
 
         btnSpecialiste = new JButton("Spécialistes");
@@ -66,18 +84,17 @@ public class InfoPatientAdmin extends JFrame {
 
         btnDossierPatients = new JButton("Dossier Patients");
         styleMenuButton(btnDossierPatients);
-        btnDossierPatients.setForeground(Color.WHITE);
-        btnDossierPatients.setBackground(new Color(45, 104, 196));
-
 
         btnStatistiques = new JButton("Statistiques");
         styleMenuButton(btnStatistiques);
+
 
         menuPanel.add(btnSpecialiste);
         menuPanel.add(btnDossierPatients);
         menuPanel.add(btnStatistiques);
 
         mainPanel.add(menuPanel);
+        mainPanel.add(Box.createVerticalStrut(10));
 
         // Infos perso
         JPanel infoPanel = new JPanel();
@@ -147,6 +164,13 @@ public class InfoPatientAdmin extends JFrame {
         return mainPanel;
     }
 
+    /**
+     * Crée un panneau défilant contenant la liste des rendez-vous.
+     *
+     * @param title    Le titre de la section.
+     * @param listeRDV La liste des rendez-vous à afficher.
+     * @return Le panneau contenant la liste des rendez-vous.
+     */
     private JPanel createScrollList(String title, ArrayList<RDV> listeRDV) {
         JPanel sectionPanel = new JPanel();
         sectionPanel.setLayout(new BoxLayout(sectionPanel, BoxLayout.Y_AXIS));
@@ -176,6 +200,12 @@ public class InfoPatientAdmin extends JFrame {
         return sectionPanel;
     }
 
+    /**
+     * Crée un panneau représentant un rendez-vous.
+     *
+     * @param rdv Le rendez-vous à afficher.
+     * @return Le panneau contenant les informations du rendez-vous.
+     */
     private JPanel createRdvPanel(RDV rdv) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -211,6 +241,15 @@ public class InfoPatientAdmin extends JFrame {
     }
 
 
+    /**
+     * Ajoute une ligne d'information au panneau.
+     *
+     * @param panel     Le panneau auquel ajouter la ligne.
+     * @param gbc       Les contraintes de mise en page.
+     * @param labelText Le texte du label.
+     * @param valueText Le texte de la valeur.
+     * @param font      La police à utiliser.
+     */
     private void addInfoRow(JPanel panel, GridBagConstraints gbc, String labelText, String valueText, Font font) {
         gbc.gridx = 0;
         JLabel label = new JLabel(labelText);
@@ -227,6 +266,11 @@ public class InfoPatientAdmin extends JFrame {
 
 
 
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -234,6 +278,13 @@ public class InfoPatientAdmin extends JFrame {
         button.setFocusPainted(false);
     }
 
+
+    /**
+     * Charge l'image de profil du spécialiste.
+     *
+     * @param specialiste Le spécialiste dont l'image doit être chargée.
+     * @return L'icône de l'image de profil du spécialiste.
+     */
     private ImageIcon loadProfileImage(Specialiste specialiste) {
 
         String path;
@@ -257,7 +308,4 @@ public class InfoPatientAdmin extends JFrame {
         return icon;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new InfoPatientAdmin().setVisible(true));
-    }
 }
