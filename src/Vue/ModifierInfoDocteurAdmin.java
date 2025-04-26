@@ -7,6 +7,11 @@ import Modele.Utilisateur;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * La classe ModifierInfoDocteurAdmin représente une fenêtre permettant à un administrateur
+ * de modifier les informations d'un spécialiste (prix, adresse, description, etc).
+ */
 public class ModifierInfoDocteurAdmin extends JFrame {
 
     public JButton btnSpecialiste;
@@ -30,6 +35,11 @@ public class ModifierInfoDocteurAdmin extends JFrame {
 
     public Specialiste specialiste;
 
+
+    /**
+     * Constructeur de la classe ModifierInfoDocteurAdmin.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public ModifierInfoDocteurAdmin() {
         setTitle("Modifier Specialiste");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,6 +53,12 @@ public class ModifierInfoDocteurAdmin extends JFrame {
         setContentPane(buildPanel());
     }
 
+
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant les informations à modifier du spécialiste.
+     */
     public JPanel buildPanel() {
 
         JPanel mainPanel = new JPanel();
@@ -259,6 +275,12 @@ public class ModifierInfoDocteurAdmin extends JFrame {
 
 
 
+
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -266,13 +288,5 @@ public class ModifierInfoDocteurAdmin extends JFrame {
         button.setFocusPainted(false);
     }
 
-    public static void main(String[] args) {
 
-
-
-        SwingUtilities.invokeLater(() -> {
-
-            new ModifierInfoDocteurAdmin().setVisible(true);
-        });
-    }
 }

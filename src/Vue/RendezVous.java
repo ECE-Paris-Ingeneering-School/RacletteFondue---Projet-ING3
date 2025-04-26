@@ -12,6 +12,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
+
+/**
+ * La classe RendezVous représente une fenêtre permettant à un patient
+ * d'avoir une vision d'ensemble sur ses RDV passés et à venir.
+ */
 public class RendezVous extends JFrame {
 
     public JButton btnAccueil;
@@ -23,6 +28,10 @@ public class RendezVous extends JFrame {
     public ArrayList<RDV> listeRDV = null;
 
 
+    /**
+     * Constructeur de la classe RendezVous.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public RendezVous() {
 
         mapRDV = new HashMap<JLabel, RDV>();
@@ -35,6 +44,13 @@ public class RendezVous extends JFrame {
         setContentPane(buildPanel());
     }
 
+    /**
+     * Crée un panneau avec une liste déroulante de rendez-vous.
+     *
+     * @param title   Le titre de la section.
+     * @param listeRDV La liste des rendez-vous à afficher.
+     * @return Le panneau contenant la liste déroulante des rendez-vous.
+     */
     private JPanel createScrollList(String title, ArrayList<RDV> listeRDV) {
         JPanel sectionPanel = new JPanel();
         sectionPanel.setLayout(new BoxLayout(sectionPanel, BoxLayout.Y_AXIS));
@@ -64,6 +80,12 @@ public class RendezVous extends JFrame {
         return sectionPanel;
     }
 
+    /**
+     * Crée un panneau pour un rendez-vous spécifique.
+     *
+     * @param rdv Le rendez-vous à afficher.
+     * @return Le panneau contenant les informations du rendez-vous.
+     */
     private JPanel createRdvPanel(RDV rdv) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -115,6 +137,13 @@ public class RendezVous extends JFrame {
         return panel;
     }
 
+
+    /**
+     * Charge la photo de profil d'un spécialiste.
+     *
+     * @param specialiste Le spécialiste dont la photo de profil doit être chargée.
+     * @return L'icône de la photo de profil du spécialiste.
+     */
     private ImageIcon loadProfileImage(Specialiste specialiste) {
 
         String path;
@@ -138,6 +167,11 @@ public class RendezVous extends JFrame {
         return icon;
     }
 
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -145,6 +179,11 @@ public class RendezVous extends JFrame {
         button.setFocusPainted(false);
     }
 
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant la liste scollable des RDV passés et à venir.
+     */
     public JPanel buildPanel() {
 
         // Panel principal
@@ -220,10 +259,4 @@ public class RendezVous extends JFrame {
         return mainPanel;
     }
 
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(() -> {
-            new RendezVous().setVisible(true);
-        });
-    }
 }

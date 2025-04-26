@@ -3,6 +3,11 @@ package Vue;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * La classe Inscription représente la page où l'utilisateur (patient ou admin) peut se créer un compte
+ * en remplissant ses informations personnelles pour accéder au site.
+ */
 public class Inscription extends JFrame {
 
     public JTextField mailField;
@@ -21,6 +26,11 @@ public class Inscription extends JFrame {
     public JButton inscrireButton;
     public JLabel erreurLabel;
 
+
+    /**
+     * Constructeur de la classe Inscription.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public Inscription() {
         setTitle("Créer un compte");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,6 +40,13 @@ public class Inscription extends JFrame {
         setContentPane(buildPanel());
     }
 
+
+    /**
+     * Ajoute un texte de substitution (placeholder) à un champ de texte.
+     *
+     * @param textField   Le champ de texte auquel ajouter le placeholder.
+     * @param placeholder Le texte du placeholder.
+     */
     private void addPlaceholder(JTextField textField, String placeholder) {
         textField.setForeground(Color.GRAY);
         textField.setText(placeholder);
@@ -54,6 +71,11 @@ public class Inscription extends JFrame {
     }
 
 
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant les champs requis pour une inscription.
+     */
     public JPanel buildPanel() {
 
         // Titre "Inscription"
@@ -257,9 +279,4 @@ public class Inscription extends JFrame {
         return panelGeneral;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new Inscription().setVisible(true);
-        });
-    }
 }

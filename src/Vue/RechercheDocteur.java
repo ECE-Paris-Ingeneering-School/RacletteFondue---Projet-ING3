@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * La classe RechercheDocteur représente une fenêtre permettant à un patient
+ * de rechercher un spécialiste. Les résultats trouvés s'affichent en conséquence.
+ */
 public class RechercheDocteur extends JFrame {
 
     public JButton btnAccueil;
@@ -23,6 +28,11 @@ public class RechercheDocteur extends JFrame {
     public Map<JLabel, Specialiste> mapSpecialistesInfo = null;
     public Map<JLabel, Specialiste> mapSpecialistesDispo = null;
 
+
+    /**
+     * Constructeur de la classe RechercheDocteur.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public RechercheDocteur() {
 
         mapSpecialistesInfo = new HashMap<JLabel, Specialiste>();
@@ -36,6 +46,12 @@ public class RechercheDocteur extends JFrame {
         setContentPane(buildPanel());
     }
 
+
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant la section de recherche et les résultats trouvés.
+     */
     public JPanel buildPanel() {
 
         // Panel principal
@@ -176,6 +192,12 @@ public class RechercheDocteur extends JFrame {
         return mainPanel;
     }
 
+    /**
+     * Ajoute un texte de substitution (placeholder) à un champ de texte.
+     *
+     * @param textField   Le champ de texte auquel ajouter le placeholder.
+     * @param placeholder Le texte du placeholder.
+     */
     private void addPlaceholder(JTextField textField, String placeholder) {
         textField.setForeground(Color.GRAY);
         textField.setText(placeholder);
@@ -199,6 +221,12 @@ public class RechercheDocteur extends JFrame {
         });
     }
 
+
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -206,10 +234,4 @@ public class RechercheDocteur extends JFrame {
         button.setFocusPainted(false);
     }
 
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(() -> {
-            new RechercheDocteur().setVisible(true);
-        });
-    }
 }

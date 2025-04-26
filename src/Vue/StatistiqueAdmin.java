@@ -18,6 +18,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+
+/**
+ * La classe StatistiqueAdmin représente la page d'accès au statistiques du site (pour un admin).
+ * La fenêtre propose différents graphiques afin de mieux visualiser les informations.
+ */
 public class StatistiqueAdmin extends JFrame {
 
     public JButton btnSpecialiste;
@@ -29,6 +34,11 @@ public class StatistiqueAdmin extends JFrame {
     public int nombreSpecialistes;
     public TreeMap<Long, Integer> mapRDV;
 
+
+    /**
+     * Constructeur de la classe StatistiqueAdmin.
+     * Initialise la fenêtre avec ses propriétés et son contenu.
+     */
     public StatistiqueAdmin() {
         setTitle("Graphiques du spécialiste");
         setSize(1920, 1080);
@@ -38,6 +48,12 @@ public class StatistiqueAdmin extends JFrame {
         setContentPane(buildPanel());
     }
 
+
+    /**
+     * Construit l'interface graphique et
+     *
+     * @return Le panneau principal contenant les diagrammes statistiques.
+     */
     public JPanel buildPanel() {
 
         // Panel principal
@@ -91,6 +107,13 @@ public class StatistiqueAdmin extends JFrame {
         return mainPanel;
     }
 
+
+    /**
+     * Crée un panneau contenant un graphique camembert (pie chart) représentant la répartition
+     * du nombre de patients et du nombre de spécialistes incrits sur la plateforme.
+     *
+     * @return Le panneau contenant le graphique camembert.
+     */
     private JPanel createPieChartPanel() {
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Spécialistes", nombreSpecialistes);
@@ -105,6 +128,13 @@ public class StatistiqueAdmin extends JFrame {
         return new ChartPanel(chart);
     }
 
+
+    /**
+     * Crée un panneau contenant un histogramme (bar chart) représentant le nombre de RDV
+     * disponibles de la semaine.
+     *
+     * @return Le panneau contenant l'histogramme.
+     */
     private JPanel createBarChartPanel() {
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -141,6 +171,12 @@ public class StatistiqueAdmin extends JFrame {
         return new ChartPanel(chart);
     }
 
+
+    /**
+     * Applique un style aux boutons du menu.
+     *
+     * @param button Le bouton à styliser.
+     */
     private void styleMenuButton(JButton button) {
         button.setPreferredSize(new Dimension(250, 70));
         button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -148,12 +184,11 @@ public class StatistiqueAdmin extends JFrame {
         button.setFocusPainted(false);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new StatistiqueAdmin().setVisible(true);
-        });
-    }
 
+    /**
+     * Classe interne personnalisée pour le rendu des barres du graphique en barres.
+     * Change la couleur des barres par jour en fonction de la disponibilité des rendez-vous.
+     */
     private static class CustomBarRenderer extends BarRenderer {
 
         private final int maxAbundance;
