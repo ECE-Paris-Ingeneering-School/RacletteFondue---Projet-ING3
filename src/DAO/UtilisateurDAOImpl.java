@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 /**
- * implémentation MySQL du stockage dans la base de données des méthodes définies dans l'interface UtilisateurDao.
+ * Implémentation MySQL du stockage dans la base de données des méthodes définies dans l'interface UtilisateurDao.
  */
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 

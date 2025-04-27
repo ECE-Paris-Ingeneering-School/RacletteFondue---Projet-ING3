@@ -6,7 +6,7 @@ import java.awt.*;
 
 
 /**
- * La classe Compte représente la page où le patinet a accès à ses
+ * La classe Compte représente la page où le patient a accès à ses
  * informations et peut les modifier.
  */
 public class Compte extends JFrame {

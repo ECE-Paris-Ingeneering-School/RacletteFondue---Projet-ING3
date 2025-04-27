@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * La classe DisoonibiliteRDV représente la page où le patinet peut voir
  * le tableau des disponibilités du spécialiste choisi.
- * La classe DisoonibiliteRDV hérite de JDialog.
+ * La classe DisponibiliteRDV hérite de JDialog.
  */
 public class DisponibiliteRDV extends JDialog {
 
@@ -49,7 +49,7 @@ public class DisponibiliteRDV extends JDialog {
 
 
     /**
-     * Construit l'interface graphique et
+     * Construit l'interface graphique
      *
      * @return Le panneau principal contenant le tableau des disponibilités du spécialiste.
      */

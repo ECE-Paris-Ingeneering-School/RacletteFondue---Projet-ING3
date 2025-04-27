@@ -24,12 +24,12 @@ import java.util.*;
  * **/
 public class ListenerFenetrePrincipale implements ActionListener, MouseListener {
 
-    FenetrePrincipale fenetre;
-    DaoFactory dao;
-    UtilisateurDAOImpl utilisateurDAO;
-    RdvDAOImpl rdvDAO;
+    public FenetrePrincipale fenetre;
+    public DaoFactory dao;
+    public UtilisateurDAOImpl utilisateurDAO;
+    public RdvDAOImpl rdvDAO;
 
-    public ListenerFenetrePrincipale(FenetrePrincipale fenetre) {
+    public ListenerFenetrePrincipale(FenetrePrincipale fenetre)  {
 
         this.fenetre = fenetre;
         this.dao = DaoFactory.getInstance("projetjava", "root", "");

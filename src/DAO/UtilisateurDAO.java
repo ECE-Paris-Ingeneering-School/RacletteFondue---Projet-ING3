@@ -15,7 +15,7 @@ public interface UtilisateurDAO {
 
     /**
      * Méthode permettant de récupérer tous les utilisateurs de la BDD
-     * @return : Liste retournée des objets utilisateur récupérés
+     * @return Liste des objets utilisateur récupérés
      */
     public ArrayList<Utilisateur> getAllUtilisateur();
 

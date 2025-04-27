@@ -41,7 +41,7 @@ public class DaoFactory {
         url = "jdbc:mysql://localhost:3306/" + database;
 
         // Instancier une instance l'objet de DaoFactory
-        DaoFactory instance = new DaoFactory(url, username,password );
+        DaoFactory instance = new DaoFactory(url, username, password);
 
         // Retourner cette instance
         return instance;
