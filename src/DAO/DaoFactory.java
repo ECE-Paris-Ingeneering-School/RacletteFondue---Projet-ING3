@@ -24,7 +24,9 @@ public class DaoFactory {
 
     /**
      * Méthode qui retourne 1 objet de DaoFactory
-     * @param : url, username et password de la base de données
+     * @param database Url de la base de données
+     * @param username Identifiant du compte phpmyadmin
+     * @param password Mot de passe du compte phpmyadmin
      * @return : objet de la classe DaoFactoru
      */
     public static DaoFactory getInstance(String database, String username, String password) {
